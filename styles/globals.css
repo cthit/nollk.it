@@ -10,4 +10,7 @@
     @apply text-white;
     text-rendering: optimizeLegibility;
   }
+  .drop-sh {
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
+  }
 }

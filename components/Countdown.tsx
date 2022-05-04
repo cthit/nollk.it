@@ -39,8 +39,8 @@ export default function Countdown() {
 
   return (
     <div className="font-po absolute left-[20%] top-1/4 drop-shadow-md">
-      <div className="text-7xl">{timeLeft.hours} : {timeLeft.minutes} : {timeLeft.seconds}</div>
-      <div className="text-4xl">till mottagningen</div>
+      <div className="text-7xl drop-sh">{timeLeft.hours} : {timeLeft.minutes} : {timeLeft.seconds}</div>
+      <div className="text-4xl drop-sh">till mottagningen</div>
     </div>
   )
 } 
