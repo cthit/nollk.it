@@ -1,0 +1,30 @@
+.headerGrid {
+  display: grid;
+  grid-template-columns: 0.8fr 2fr 0.1fr 4fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.headerItem {
+  display: flex;
+  justify-content: center;
+}
+
+.nollkitItems {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+.mottagningenItems {
+  grid-column: 4 / 5;
+  grid-row: 1 / 2;
+}
+
+.underLine {
+  display: flex;
+  align-items: center;
+}
+
+.hLine {
+  border-top: 1px solid white;
+  flex-grow: 1;
+}
