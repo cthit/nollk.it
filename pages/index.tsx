@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Countdown from '../components/Countdown'
 import Header from '../components/Header'
+import ToDo from '../components/ToDo'
 
 const Home: NextPage = () => {
   return (
@@ -21,6 +22,7 @@ const Home: NextPage = () => {
           <Header />
         </div>
         <Countdown />
+        <ToDo />
       </div>
     </>
   )
