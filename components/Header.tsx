@@ -1,24 +1,27 @@
-import HeaderItem from "./HeaderItem";
 import styles from './Header.module.css'
+import Link from "next/link";
+
 
 export default function Header() {
   return (
     <div className={`${styles.headerGrid} mt-6 font-light`}>
       <div className="w-full flex flex-col items-end relative">
-        <a className="w-20 h-20 absolute -top-5" href="./">
-          <img src="/img/nollkit22.png" alt="NollKIT'22" />
-        </a>
+        <Link href="/">
+          <a className="w-20 h-20 absolute -top-5">
+            <img src="/img/nollkit22.png" alt="NollKIT'22" />
+          </a>
+        </Link>
       </div>
       <div className={`${styles.nollkitItems} ${styles.headerItem}`}>
-        <HeaderItem>Vi är NollKIT</HeaderItem>
-        <HeaderItem>Pateter</HeaderItem>
+        <HeaderItem href="/nollkit">Vi är NollKIT</HeaderItem>
+        <HeaderItem href="/pateter">Pateter</HeaderItem>
       </div>
       <div className="border-l border-white mx-3"></div>
       <div className={`${styles.mottagningenItems} ${styles.headerItem}`}>
-        <HeaderItem>Mottagingen</HeaderItem>
-        <HeaderItem>Nolldeklaration</HeaderItem>
-        <HeaderItem>Modul</HeaderItem>
-        <HeaderItem>Schema</HeaderItem>
+        <HeaderItem href="/mottagningen">Mottagingen</HeaderItem>
+        <HeaderItem href="/nolldeklaration">Nolldeklaration</HeaderItem>
+        <HeaderItem href="/modul">Modul</HeaderItem>
+        <HeaderItem href="/schema">Schema</HeaderItem>
       </div>
       <div className={`${styles.underLine}`}>
         <div className={`${styles.hLine}`}></div>
@@ -37,5 +40,20 @@ export default function Header() {
         <div className={`${styles.hLine}`}></div>
       </div>
     </div>
+  )
+}
+
+interface HeaderItemProps {
+  href: string,
+  children: string
+}
+
+function HeaderItem(props: HeaderItemProps) {
+  return (
+    <Link href={props.href}>
+      <a className="text-lg text-center px-5 hover:bg-opacity-5 hover:bg-slate-500 hover:cursor-pointer">
+        {props.children}
+      </a>
+    </Link>
   )
 }
