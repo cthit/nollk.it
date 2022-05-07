@@ -55,7 +55,7 @@ const Nollkit: NextPage = () => {
       </Head>
 
       <Page blackout>
-        <div className="absolute w-screen flex flex-col items-center top-[20%] overflow-hidden">
+        <div className="absolute w-full flex flex-col items-center top-[20%] overflow-hidden">
           <div className="w-1/2 flex flex-col">
             <div className="w-full flex flex-col items-center mb-60"> 
               <div className="font-po text-6xl mb-6">Vi är NollKIT</div>
