@@ -8,11 +8,14 @@ interface PageProps {
 export default function Page(props: PageProps) {
   return(
     <>
-      <div className="fixed w-screen h-screen overflow-hidden flex flex-col items-center">
+      {!props.blackout && 
+      <div className="fixed w-screen h-screen overflow-hidden flex flex-col items-center bg-black">
         <div className="bg-[url('/img/nollkit21sky.jpg')] bg-cover w-[113%] h-full"></div>
-      </div>
+      </div>}
       {props.blackout &&
-        <div className="fixed w-screen h-screen bg-black/75"></div>
+        <div className="fixed w-screen h-screen overflow-hidden flex flex-col items-center bg-black">
+        <div className="bg-[url('/img/nollkit21sky.jpg')] bg-cover w-[113%] h-full opacity-60"></div>
+      </div>
       }
       {props.children}
       <div className={`fixed top-0 w-screen h-28 bg-gradient-to-b to-black/0 ${props.blackout ? "from-black/80" : "from-black/25"}`}></div>
