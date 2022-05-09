@@ -64,6 +64,10 @@ const Schema: NextPage = () => {
             firstDay={1}
             contentHeight={"auto"}
             nowIndicator={true}
+            headerToolbar={ { left: "", center:"", right: "prev,today,next" } }
+            buttonIcons={ { prev: "chevron-left", next: "chevron-right" } }
+            buttonText={ { today: "Idag" } }
+            buttonHints={ {prev: "Föregående vecka", today: "Hoppa till idag", next: "Nästa vecka"} }
           />
         </div>
       </Page>
