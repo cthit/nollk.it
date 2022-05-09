@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Page from '../components/Page'
 
-const Index: NextPage = () => {
+const Modul: NextPage = () => {
   return (
     <>
       <Head>
@@ -37,4 +37,4 @@ const Index: NextPage = () => {
   )
 }
 
-export default Index
+export default Modul
