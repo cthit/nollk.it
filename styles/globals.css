@@ -14,3 +14,33 @@
     text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
   }
 }
+
+/* Styling for FullCalendar */
+
+.fc .fc-timegrid-col.fc-day-today {
+  background-color: hsla(0, 0%, 100%, 0.1);
+}
+
+.fc .fc-timegrid-slot-label-cushion {
+  text-align: center;
+  vertical-align: text-top;
+  padding-left: 12px;
+  padding-right: 12px;
+  font-size: x-small;
+}
+
+.fc th, .fc td {
+  border: 1px solid hsla(0, 0%, 100%, 0.1);
+  border-left: 1px solid hsla(0, 0%, 100%, 0.3);
+  border-right: 1px solid hsla(0, 0%, 100%, 0.3);
+}
+
+.fc-theme-standard .fc-scrollgrid {
+  border: 1px solid hsla(0, 0%, 100%, 0.1);
+}
+
+.fc-theme-standard td {
+  border: 1px solid hsla(0, 0%, 100%, 0.1);
+  border-left: 1px solid hsla(0, 0%, 100%, 0.3);
+  border-right: 1px solid hsla(0, 0%, 100%, 0.3);
+}

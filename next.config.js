@@ -1,4 +1,13 @@
 /** @type {import('next').NextConfig} */
+
+// We transpile some modules for CSS issue reasons
+const withTM = require("next-transpile-modules")([
+  "@fullcalendar/common",
+  "@fullcalendar/react",
+  "@fullcalendar/timegrid",
+  "@fullcalendar/daygrid",
+]);
+
 const nextConfig = {
   reactStrictMode: true,
   async redirects() {
@@ -12,4 +21,6 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+module.exports = withTM({
+  ...nextConfig
+})
