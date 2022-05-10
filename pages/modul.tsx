@@ -12,7 +12,7 @@ const Modul: NextPage = () => {
       </Head>
 
       <Page blackout>
-        <div className="absolute w-full flex flex-col items-center top-[20%] overflow-hidden">
+        <div className="absolute w-full flex flex-col items-center top-60 overflow-hidden">
           <div className="w-1/2 flex flex-col items-center">
             <div className="w-1/2 flex flex-col"> 
               <div className="font-po text-6xl mb-6 text-center">Nollmodulen</div>

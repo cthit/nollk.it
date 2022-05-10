@@ -9,12 +9,13 @@
   html {
     @apply text-white;
     text-rendering: optimizeLegibility;
+    background-color: black;
   }
   .drop-sh {
     text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
   }
   .patet-info {
-    color: #000;
+
   }
   .fp-watermark, .fp-watermark a, .fp-warning, .fullpage > .section > .fp-watermark {
     opacity: 0 !important;

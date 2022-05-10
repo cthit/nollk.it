@@ -2,9 +2,55 @@ import { NextPage } from "next"
 import Head from "next/head"
 import Page from "../components/Page"
 import ReactFullpage from '@fullpage/react-fullpage'
-import Patet from "../components/Patet"
+import Precursor from "../components/Precursor"
 
 const Pateter: NextPage = () => {
+
+    interface Member {
+        name: string,
+        role: string,
+    }
+
+    type Committee = {
+        name: string,
+        image: string,
+        imageDesc: string,
+        members: Member[]
+    }
+
+    const allNollkit: Committee[] = [
+        {
+            name: "NollKIT'21",
+            image: "/img/nollkit21sky.jpg",
+            imageDesc: "Från vänster",
+            members: [
+                { name: 'Eimer "Florett" Ahlstedt', role: 'Kassör' },
+                { name: 'Clara "Champis" Simonsson', role: 'Ordförande' },
+                { name: 'Sebastian "Kvalle" Kvaldén', role: 'Uppdragschef' },
+                { name: 'Dadi "Klakinn" Andrason', role: 'Eventchef' },
+                { name: 'Julia "Bieber" Böckert', role: 'Phadderchef' },
+                { name: 'Sara "SÄPO" Borg', role: 'Infochef' },
+                { name: 'Jacob "Drake" Bengtsson', role: 'PR-chef' },
+                { name: 'Erik "Knuten" Henriksson', role: 'Vice ordförande' },
+            ]
+        },
+        {
+            name: "NollKIT'20",
+            image: "/img/nollkit22.png",
+            imageDesc: "Från vänster",
+            members: [
+                { name: 'Måns "Mums" Josefsson', role: 'Ordförande' },
+                { name: 'Albert "Tabbe" Lund', role: 'Kassör' },
+                { name: 'Jon "Snow" Emilsson', role: 'Eventchef' },
+                { name: 'Josefin "josen" Nord', role: 'Phadderchef' },
+                { name: 'Vilhelm "Drill" Hedquist', role: 'PR-chef' },
+                { name: 'Ida "Ide" Dahl', role: 'Infochef' },
+                { name: 'Felix "Heinz" Holmesten', role: 'Vice ordförande' },
+            ],
+        }
+    ]
+
+
     return <ReactFullpage
         licenseKey={'gplv3-license'}
         scrollingSpeed={700} /* Options here */
@@ -28,12 +74,11 @@ const Pateter: NextPage = () => {
 
                             </Page>
                         </div>
-                        <div className="section">
-                            <Patet></Patet>
-                        </div>
-                        <div className="section">
-                            <Patet></Patet>
-                        </div>
+                        {allNollkit.map((committee, index) => (
+                            <div key={index} className="section">
+                                <Precursor precursor={committee} />
+                            </div>
+                        ))}
                     </ReactFullpage.Wrapper>
                 </>
             )
