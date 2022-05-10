@@ -51,15 +51,15 @@ const Nollkit: NextPage = () => {
       <Head>
         <title>Vi är NollKIT</title>
         <meta name="description" content="Vi är NollKIT" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
 
       <Page blackout>
-        <div className="absolute w-screen flex flex-col items-center top-[20%] overflow-hidden">
+        <div className="absolute w-full flex flex-col items-center top-[20%] overflow-hidden">
           <div className="w-1/2 flex flex-col">
             <div className="w-full flex flex-col items-center mb-60"> 
               <div className="font-po text-6xl mb-6">Vi är NollKIT</div>
-              <div className="w-1/2 font-light">
+              <div className="w-1/2 font-light text-justify">
                 Hej du Nollan! När du tar dina första steg in på Chalmers är det vi åtta som har planerat fyra veckor med aktiviteter och arrangemang allt för att du ska lära känna din klass bättre och kunna få reda på vad Chalmers som skola har att erbjuda. 
                 <br/><br/>
                 För att hela denna resan ska gå runt har vi lite olika ansvarsområden som kan läsa om nedan. Vi ser framåt att träffa er alla i augusti!
