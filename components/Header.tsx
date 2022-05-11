@@ -51,7 +51,7 @@ interface HeaderItemProps {
 function HeaderItem(props: HeaderItemProps) {
   return (
     <Link href={props.href}>
-      <a className="text-lg text-center px-5 hover:bg-opacity-5 hover:bg-slate-500 hover:cursor-pointer">
+      <a className="text-lg text-center px-5 neo">
         {props.children}
       </a>
     </Link>
