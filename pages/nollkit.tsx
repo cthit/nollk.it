@@ -55,7 +55,7 @@ const Nollkit: NextPage = () => {
       </Head>
 
       <Page blackout>
-        <div className="absolute w-full flex flex-col items-center top-[20%] overflow-hidden">
+        <div className="absolute w-full flex flex-col items-center top-60 overflow-hidden">
           <div className="w-1/2 flex flex-col">
             <div className="w-full flex flex-col items-center mb-60"> 
               <div className="font-po text-6xl mb-6">Vi är NollKIT</div>
@@ -72,7 +72,7 @@ const Nollkit: NextPage = () => {
                   if (i % 2 === 0 ) {
                     return (
                       <div key={n.role} className="w-full grid grid-cols-5 gap-5 mb-8">
-                        <div className={`col-span-2 bg-cover bg-top aspect-[4/5]`} style={{backgroundImage: `url('/img/nollkit/${n.role}.jpg`}}></div>
+                        <div className={`col-span-2 bg-cover bg-top aspect-[4/5]`} style={{backgroundImage: `url('/bilder/nollkit/${n.role}.jpg`}}></div>
                         <NollkitDesc {...n} />
                       </div>
                     )
@@ -80,7 +80,7 @@ const Nollkit: NextPage = () => {
                     return (
                       <div key={n.role} className="w-full grid grid-cols-5 gap-5 mb-8">
                         <NollkitDesc {...n} />
-                        <div className={`col-span-2 bg-cover bg-top aspect-[4/5]`} style={{backgroundImage: `url('/img/nollkit/${n.role}.jpg`}}></div>
+                        <div className={`col-span-2 bg-cover bg-top aspect-[4/5]`} style={{backgroundImage: `url('/bilder/nollkit/${n.role}.jpg`}}></div>
                       </div>
                     )
                   }
