@@ -42,23 +42,16 @@
       inset 4px 4px 6px 0 rgba(40, 47, 55, .2);
       transition: all 1s ease;
   } 
-  
-  .fp-watermark, .fp-watermark a, .fp-warning, .fullpage > .section > .fp-watermark {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    display: none !important;
-  }
+
   .bg-full {
     background-size: 100% 100%;
   }
   .max-h-75vh {
     max-height: 75vh;
   }
-
 }
 
 /* Styling for FullCalendar */
-
 .fc .fc-timegrid-col.fc-day-today {
   background-color: hsla(0, 0%, 100%, 0.1);
 }
@@ -111,4 +104,11 @@
 
 .fc .fc-timegrid-now-indicator-arrow {
   display: none;
+}
+
+/* Styling fix for fullpage */
+.fp-watermark, .fp-watermark a, .fp-warning, .fullpage > .section > .fp-watermark {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  display: none !important;
 }

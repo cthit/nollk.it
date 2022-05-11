@@ -8,7 +8,7 @@ export default function Header() {
       <div className="w-full flex flex-col items-end relative">
         <Link href="/">
           <a className="w-20 h-20 absolute -top-5">
-            <img src="/bilder/nollkit22.png" alt="NollKIT'22" />
+            <img src="/bilder/märke/2022.png" alt="NollKIT'22" />
           </a>
         </Link>
       </div>

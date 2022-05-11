@@ -22,13 +22,6 @@ const Modul: NextPage = () => {
               <a className="text-xl mt-8 cursor-pointer underline text-center" href="/modul/2021.pdf">
                 Läs årets modul här
               </a>
-              <div>
-                <div className="mt-24 font-po text-2xl">Gamla moduler</div>
-                <a href="/modul/2020.pdf" className="block hover:underline">2020</a>
-                <a href="/modul/2019.pdf" className="block hover:underline">2019</a>
-                <a href="/modul/2018.pdf" className="block hover:underline">2018</a>
-                <a href="/modul/2017.pdf" className="block hover:underline">2017</a>
-              </div>
             </div>
           </div>
         </div>
