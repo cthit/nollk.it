@@ -14,15 +14,15 @@ const Pateter: NextPage = () => {
 
     type Committee = {
         name: string,
-        image: string,
         imageDesc: string,
+        year: string,
         members: Member[]
     }
 
     const allNollkit: Committee[] = [
         {
             name: "NollKIT'21",
-            image: "/bilder/nollkit21sky.jpg",
+            year: "2021",
             imageDesc: "Från vänster",
             members: [
                 { name: 'Eimer "Florett" Ahlstedt', role: 'Kassör' },
@@ -37,7 +37,7 @@ const Pateter: NextPage = () => {
         },
         {
             name: "NollKIT'20",
-            image: "/bilder/nollkit22.png",
+            year: "2020",
             imageDesc: "Från vänster",
             members: [
                 { name: 'Måns "Mums" Josefsson', role: 'Ordförande' },
@@ -51,7 +51,7 @@ const Pateter: NextPage = () => {
         },
         {
             name: "NollKIT'20",
-            image: "/bilder/skev1.jpg",
+            year: "2020",
             imageDesc: "Från vänster",
             members: [
                 { name: 'Måns "Mums" Josefsson', role: 'Ordförande' },
@@ -65,7 +65,7 @@ const Pateter: NextPage = () => {
         },
         {
             name: "NollKIT'20",
-            image: "/bilder/skev2.jpg",
+            year: "2020",
             imageDesc: "Från vänster",
             members: [
                 { name: 'Måns "Mums" Josefsson', role: 'Ordförande' },

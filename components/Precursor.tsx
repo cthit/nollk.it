@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Page from "./Page";
 
 type Member = {
@@ -7,8 +8,8 @@ type Member = {
 
 type Committee = {
     name: string,
-    image: string,
     imageDesc: string,
+    year: string,
     members: Member[]
 }
 
@@ -19,7 +20,7 @@ const Precursor = ({precursor}: {precursor: Committee} ) => {
             <div className="w-full h-full flex flex-col bg-opacity-90 bg-black justify-center overflow-visible">
                 <div className="drop-sh flex flex-row justify-evenly overflow-visible max-h-[70%] items-center">
                     <div className="imagebox max-w-[50%] h-full max-h-full flex flex-row items-center justify-center">
-                        <img src={precursor.image} alt={precursor.name} className="overflow-visible max-h-75vh" />
+                        <img src={`/bilder/kommitte/${precursor.year}.jpg`} alt={precursor.name} className="overflow-visible max-h-75vh" />
                     </div>
                     <div className="committee-desc">
                         <h1 className="text-white text-6xl font-po mb-8">{precursor.name}</h1>
@@ -34,7 +35,11 @@ const Precursor = ({precursor}: {precursor: Committee} ) => {
                                 </span>
                             </div>
                         ))}
-                        <a href="/modul/" className="modul"></a>
+                        <div className="mt-4">
+                            <Link href={`/modul/${precursor.year}.pdf`}>
+                                <a className="text-xl font-bold hover:underline">Modul</a>
+                            </Link>
+                        </div>
                     </div>
                    
                 </div>
