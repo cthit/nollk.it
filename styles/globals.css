@@ -9,6 +9,7 @@
   html {
     @apply text-white;
     text-rendering: optimizeLegibility;
+    background-color: black;
   }
   .drop-sh {
     text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
@@ -42,6 +43,18 @@
       transition: all 1s ease;
   } 
   
+  .fp-watermark, .fp-watermark a, .fp-warning, .fullpage > .section > .fp-watermark {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    display: none !important;
+  }
+  .bg-full {
+    background-size: 100% 100%;
+  }
+  .max-h-75vh {
+    max-height: 75vh;
+  }
+
 }
 
 /* Styling for FullCalendar */
@@ -94,4 +107,8 @@
 
 .fc .fc-button-primary {
   box-shadow: none !important;
+}
+
+.fc .fc-timegrid-now-indicator-arrow {
+  display: none;
 }
