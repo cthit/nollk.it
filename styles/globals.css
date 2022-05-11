@@ -14,13 +14,16 @@
   .drop-sh {
     text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
   }
-  .patet-info {
-
-  }
   .fp-watermark, .fp-watermark a, .fp-warning, .fullpage > .section > .fp-watermark {
     opacity: 0 !important;
     visibility: hidden !important;
     display: none !important;
+  }
+  .bg-full {
+    background-size: 100% 100%;
+  }
+  .max-h-75vh {
+    max-height: 75vh;
   }
 }
 

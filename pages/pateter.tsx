@@ -21,7 +21,7 @@ const Pateter: NextPage = () => {
     const allNollkit: Committee[] = [
         {
             name: "NollKIT'21",
-            image: "/img/nollkit21sky.jpg",
+            image: "/bilder/nollkit21sky.jpg",
             imageDesc: "Från vänster",
             members: [
                 { name: 'Eimer "Florett" Ahlstedt', role: 'Kassör' },
@@ -36,7 +36,35 @@ const Pateter: NextPage = () => {
         },
         {
             name: "NollKIT'20",
-            image: "/img/nollkit22.png",
+            image: "/bilder/nollkit22.png",
+            imageDesc: "Från vänster",
+            members: [
+                { name: 'Måns "Mums" Josefsson', role: 'Ordförande' },
+                { name: 'Albert "Tabbe" Lund', role: 'Kassör' },
+                { name: 'Jon "Snow" Emilsson', role: 'Eventchef' },
+                { name: 'Josefin "josen" Nord', role: 'Phadderchef' },
+                { name: 'Vilhelm "Drill" Hedquist', role: 'PR-chef' },
+                { name: 'Ida "Ide" Dahl', role: 'Infochef' },
+                { name: 'Felix "Heinz" Holmesten', role: 'Vice ordförande' },
+            ],
+        },
+        {
+            name: "NollKIT'20",
+            image: "/bilder/skev1.jpg",
+            imageDesc: "Från vänster",
+            members: [
+                { name: 'Måns "Mums" Josefsson', role: 'Ordförande' },
+                { name: 'Albert "Tabbe" Lund', role: 'Kassör' },
+                { name: 'Jon "Snow" Emilsson', role: 'Eventchef' },
+                { name: 'Josefin "josen" Nord', role: 'Phadderchef' },
+                { name: 'Vilhelm "Drill" Hedquist', role: 'PR-chef' },
+                { name: 'Ida "Ide" Dahl', role: 'Infochef' },
+                { name: 'Felix "Heinz" Holmesten', role: 'Vice ordförande' },
+            ],
+        },
+        {
+            name: "NollKIT'20",
+            image: "/bilder/skev2.jpg",
             imageDesc: "Från vänster",
             members: [
                 { name: 'Måns "Mums" Josefsson', role: 'Ordförande' },
@@ -61,16 +89,16 @@ const Pateter: NextPage = () => {
                         <Head>
                             <title>Pateter</title>
                         </Head>
-                        <div className="section">
-                            <Page blackout={true}>
-                                <div className="patetdesc absolute left-[25%] top-[15%] drop-sh w-1/2 flex flex-col items-center">
-                                    <div className="text-5xl font-po mb-5">
-                                        <h1>Pateter</h1>
-                                    </div>
-                                    <div className="font-light w-[75%] text-xl">
-                                        På Chalmers är patet ett allmänt namn för personer som tidigare suttit i en förening/kommitté. De som har suttit i just NollKIT tidigare år kallas för NollQIT. De kan vara bra att ha lite då och då, både för NollKIT och för Nollan, eftersom de alltid svarar glatt på frågor om NollKIT råkar vara borta för stunden.
-                                    </div>
-                                </div>
+                                <div className="section bg-cover h-full overflow-hidden" style={{backgroundImage: "url('/bilder/nollkit21sky.jpg')"}} >
+                                    <div className="bg-black bg-opacity-40 h-full">
+                                        <div className="patetdesc absolute left-[25%] top-[15%] drop-sh w-1/2 flex flex-col items-center">
+                                            <div className="text-5xl font-po mb-5">
+                                                <h1>Pateter</h1>
+                                            </div>
+                                            <div className="font-light w-[75%] text-xl">
+                                                På Chalmers är patet ett allmänt namn för personer som tidigare suttit i en förening/kommitté. De som har suttit i just NollKIT tidigare år kallas för NollQIT. De kan vara bra att ha lite då och då, både för NollKIT och för Nollan, eftersom de alltid svarar glatt på frågor om NollKIT råkar vara borta för stunden.
+                                            </div>
+                                        </div>
 
                             </Page>
                         </div>

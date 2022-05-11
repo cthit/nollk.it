@@ -72,7 +72,7 @@ const Nollkit: NextPage = () => {
                   if (i % 2 === 0 ) {
                     return (
                       <div key={n.role} className="w-full grid grid-cols-5 gap-5 mb-8">
-                        <div className={`col-span-2 bg-cover bg-top aspect-[4/5]`} style={{backgroundImage: `url('/img/nollkit/${n.role}.jpg`}}></div>
+                        <div className={`col-span-2 bg-cover bg-top aspect-[4/5]`} style={{backgroundImage: `url('/bilder/nollkit/${n.role}.jpg`}}></div>
                         <NollkitDesc {...n} />
                       </div>
                     )
@@ -80,7 +80,7 @@ const Nollkit: NextPage = () => {
                     return (
                       <div key={n.role} className="w-full grid grid-cols-5 gap-5 mb-8">
                         <NollkitDesc {...n} />
-                        <div className={`col-span-2 bg-cover bg-top aspect-[4/5]`} style={{backgroundImage: `url('/img/nollkit/${n.role}.jpg`}}></div>
+                        <div className={`col-span-2 bg-cover bg-top aspect-[4/5]`} style={{backgroundImage: `url('/bilder/nollkit/${n.role}.jpg`}}></div>
                       </div>
                     )
                   }
