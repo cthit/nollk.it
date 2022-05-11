@@ -66,3 +66,7 @@
 .fc .fc-button-primary {
   box-shadow: none !important;
 }
+
+.fc .fc-timegrid-now-indicator-arrow {
+  display: none;
+}

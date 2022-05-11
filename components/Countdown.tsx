@@ -42,10 +42,10 @@ export default function Countdown() {
 
   return (
     <div className="font-po absolute left-[20%] top-1/4 drop-sh grid grid-cols-2 grid-rows-3 items-end">
-      <div className="text-7xl row-span-2 col-span-1">{timeLeft.days}</div>
+      <div className="text-7xl row-span-2 col-span-1 text-right pr-4">{timeLeft.days}</div>
       <div className="text-2xl row-span-1 col-span-1">{timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds}</div>
       <div className="text-5xl row-span-1 col-span-1">dagar</div>
-      <div className="text-3xl row-span-1 col-span-2">till mottagningen</div>
+      <div className="text-3xl row-span-1 col-span-2 text-right">till mottagningen</div>
     </div>
   )
 } 
