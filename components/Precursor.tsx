@@ -22,15 +22,19 @@ const Precursor = ({precursor}: {precursor: Committee} ) => {
                         <img src={precursor.image} alt={precursor.name} className="overflow-visible max-h-75vh" />
                     </div>
                     <div className="committee-desc">
-                        <h1 className="text-white text-3xl font-bold">{precursor.name}</h1>
-                        <p className="text-white text-xl">{precursor.imageDesc}</p>
+                        <h1 className="text-white text-6xl font-po mb-8">{precursor.name}</h1>
+                        <p className="text-white italic text-2xl">{precursor.imageDesc}:</p>
                         {precursor.members.map((member, index) => (
-                            <div key={index} className="member-info">
-                                <span>
-                                    {member.name}: {member.role}
+                            <div key={index} className="my-2 text-xl">
+                                <span className="grid grid-cols-2 gap-6">
+                                    {member.name} 
+                                    <span className="italic">
+                                        {member.role}
+                                    </span>
                                 </span>
                             </div>
                         ))}
+                        <a href="/modul/" className="modul"></a>
                     </div>
                    
                 </div>

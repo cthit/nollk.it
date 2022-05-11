@@ -3,6 +3,7 @@ import Head from "next/head"
 import Page from "../components/Page"
 import ReactFullpage from '@fullpage/react-fullpage'
 import Precursor from "../components/Precursor"
+import Header from "../components/Header"
 
 const Pateter: NextPage = () => {
 
@@ -79,16 +80,18 @@ const Pateter: NextPage = () => {
     ]
 
 
-    return <ReactFullpage
-        licenseKey={'gplv3-license'}
-        scrollingSpeed={700} /* Options here */
-        render={() => {
-            return (
-                <>
-                    <ReactFullpage.Wrapper>
-                        <Head>
-                            <title>Pateter</title>
-                        </Head>
+    return (
+        <>
+            <ReactFullpage
+                licenseKey={'gplv3-license'}
+                scrollingSpeed={700} /* Options here */
+                render={() => {
+                    return (
+                        <>
+                            <ReactFullpage.Wrapper>
+                                <Head>
+                                    <title>Pateter</title>
+                                </Head>
                                 <div className="section bg-cover h-full overflow-hidden" style={{backgroundImage: "url('/bilder/nollkit21sky.jpg')"}} >
                                     <div className="bg-black bg-opacity-40 h-full">
                                         <div className="patetdesc absolute left-[25%] top-[15%] drop-sh w-1/2 flex flex-col items-center">
@@ -100,17 +103,24 @@ const Pateter: NextPage = () => {
                                             </div>
                                         </div>
 
-                            </Page>
-                        </div>
-                        {allNollkit.map((committee, index) => (
-                            <div key={index} className="section">
-                                <Precursor precursor={committee} />
-                            </div>
-                        ))}
-                    </ReactFullpage.Wrapper>
-                </>
-            )
-        }} />
+                                    </div>
+
+                                </div>
+                                {allNollkit.map((committee, index) => (
+                                    <div key={index} className="section">
+                                        <Precursor precursor={committee} />
+                                    </div>
+                                ))}
+                            </ReactFullpage.Wrapper>
+                        </>
+                    )
+                }}
+            />
+            <div className="absolute top-0 flex flex-col items-center w-full">
+                <Header />
+            </div>
+        </>
+    )
 }
 
 export default Pateter
