@@ -75,8 +75,141 @@ const Pateter: NextPage = () => {
         { name: 'Viktor "Vifraa" Franzén', role: 'Uppdragschef' },
         { name: 'Nils-Martin "Pon" Robeling', role: 'PR-chef' },
       ],
-    }
-  ]
+    },
+    {
+      name: "NollKIT'17",
+      year: "2017",
+      imageDesc: "Från vänster",
+      members: [
+        { name: 'Jacob "Mintuw" Rohdin', role: 'Organisatör' },
+        { name: 'Gabriel "GW" Wallin ', role: 'Ordförande' },
+        { name: 'Linnea "Prim" Bark', role: 'Phadderchef' },
+        { name: 'Eli "Rudolf" Knoph', role: 'PR-chef' },
+        { name: 'Olof "Blixxten" Enström', role: 'Kassör' },
+        { name: 'Omar "Ouei" Oueidat', role: 'Uppdragschef' },
+      ],
+    },
+    {
+      name: "NollKIT'16",
+      year: "2016",
+      imageDesc: "Från vänster",
+      members: [
+        { name: 'Johanna "Yoschü" Schüldt', role: 'Modulchef' },
+        { name: 'Frej "Täcket" Karlsson', role: 'Kassör' },
+        { name: 'Pedram "Admin" Shirmohammad', role: 'Organisatör' },
+        { name: 'Albin "L’Oréal" Bååw', role: 'Ordförande' },
+        { name: 'Emilia "Vesslan" Vestlund', role: 'Uppdragschef' },
+        { name: 'Amanda "Rabban" Jonsson', role: 'Phadderchef' },
+        { name: 'Martin "Tino" Tran', role: 'PR-chef' },
+      ],
+    },
+    {
+      name: "NollKIT'15",
+      year: "2015",
+      imageDesc: "Från vänster",
+      members: [
+        { name: 'Katarina "Lovre" Bergbom', role: 'PR-chef' },
+        { name: 'Mats "Maddy" Högberg', role: 'Organisatör' },
+        { name: 'Ina "Chezz" Tran', role: 'Phadderchef' },
+        { name: 'Tina "Tiny" Mostafavi', role: 'Ordförande' },
+        { name: 'Johannes "Jolle" Hildén', role: 'Modulchef' },
+        { name: 'Christian "Saser" Persson', role: 'Kassör' },
+        { name: 'Viktoria "Bowg" Bogren', role: 'Uppdragschef' },
+      ],
+    },
+    {
+      name: "NollKIT'14",
+      year: "2014",
+      imageDesc: "Från vänster",
+      members: [
+      ],
+    },
+    {
+      name: "NollKIT'13",
+      year: "2013",
+      imageDesc: "Från vänster",
+      members: [
+      ],
+    },
+    {
+      name: "NollKIT'12",
+      year: "2012",
+      imageDesc: "Från vänster",
+      members: [
+      ],
+    },
+    {
+      name: "NollKIT'11",
+      year: "2011",
+      imageDesc: "Från vänster",
+      members: [
+      ],
+    },
+    {
+      name: "NollKIT'10",
+      year: "2010",
+      imageDesc: "Från vänster",
+      members: [
+      ],
+    },
+    {
+      name: "NollKIT'09",
+      year: "2009",
+      imageDesc: "Från vänster",
+      members: [
+      ],
+    },
+    {
+      name: "NollKIT'08",
+      year: "2008",
+      imageDesc: "Från vänster",
+      members: [
+      ],
+    },
+    {
+      name: "NollKIT'07",
+      year: "2007",
+      imageDesc: "Från vänster",
+      members: [
+      ],
+    },
+    {
+      name: "NollKIT'06",
+      year: "2006",
+      imageDesc: "Från vänster",
+      members: [
+      ],
+    },
+    {
+      name: "NollKIT'05",
+      year: "2005",
+      imageDesc: "Från vänster",
+      members: [
+      ],
+    },
+    {
+      name: "NollKIT'04",
+      year: "2004",
+      imageDesc: "Från vänster",
+      members: [
+      ],
+    },
+    {
+      name: "NollKIT'03",
+      year: "2003",
+      imageDesc: "Från vänster",
+      members: [
+      ],
+    },
+    {
+      name: "NollKIT'02",
+      year: "2002",
+      imageDesc: "Från vänster",
+      members: [
+      ],
+    },
+    
+    ]
 
 
   return (
