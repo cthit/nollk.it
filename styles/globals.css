@@ -76,10 +76,6 @@
   border: 1px solid hsla(0, 0%, 100%, 0.1);
 }
 
-.fc .fc-timegrid-now-indicator-line {
-  border-color: #09cddadd
-}
-
 .fc .fc-button-group > .fc-button {
   background-color: hsla(0, 0%, 100%, 0);
   border: none;
@@ -100,6 +96,10 @@
 
 .fc .fc-button-primary {
   box-shadow: none !important;
+}
+
+.fc .fc-timegrid-now-indicator-line {
+  border-color: hsla(0, 0%, 100%, 0.8);
 }
 
 .fc .fc-timegrid-now-indicator-arrow {
