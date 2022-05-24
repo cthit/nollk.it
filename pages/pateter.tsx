@@ -4,6 +4,7 @@ import Precursor from "../components/Precursor"
 import Header from "../components/Header"
 import ReactPageScroller from 'react-page-scroller';
 import { useState } from "react";
+import PageInfo from "../components/PageInfo";
 
 const Pateter: NextPage = () => {
 
@@ -235,12 +236,9 @@ const Pateter: NextPage = () => {
           >
             <div className="section">
               <div className="absolute left-[25%] top-[15%] drop-sh w-1/2 flex flex-col items-center">
-                <div className="text-5xl font-po mb-5">
-                  <h1>Pateter</h1>
-                </div>
-                <div className="font-light w-[75%] text-xl">
+                <PageInfo heading="Pateter">
                   På Chalmers är patet ett allmänt namn för personer som tidigare suttit i en förening/kommitté. De som har suttit i just NollKIT tidigare år kallas för NollQIT. De kan vara bra att ha lite då och då, både för NollKIT och för Nollan, eftersom de alltid svarar glatt på frågor om NollKIT råkar vara borta för stunden.
-                </div>
+                </PageInfo>
               </div>
             </div>
             {allNollkit.map((committee, index) => (
@@ -252,7 +250,7 @@ const Pateter: NextPage = () => {
         </div>
       </div>
       <div className="absolute top-0 flex flex-col items-center w-full">
-        <Header />
+        <Header blackout={true}/>
       </div>
     </div>
   )
