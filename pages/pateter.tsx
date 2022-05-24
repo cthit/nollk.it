@@ -1,8 +1,10 @@
 import { NextPage } from "next"
 import Head from "next/head"
 import ReactFullpage from '@fullpage/react-fullpage'
+import fullpageApi from '@fullpage/react-fullpage'
 import Precursor from "../components/Precursor"
 import Header from "../components/Header"
+import Document from "next/document"
 
 const Pateter: NextPage = () => {
 
@@ -17,6 +19,9 @@ const Pateter: NextPage = () => {
     year: string,
     members: Member[]
   }
+
+
+  
 
   const allNollkit: Committee[] = [
     {
@@ -217,13 +222,34 @@ const Pateter: NextPage = () => {
       <ReactFullpage
         licenseKey={'gplv3-license'}
         scrollingSpeed={700} /* Options here */
-        render={() => {
+        navigation={true}
+        render={(fullpageApi) => {
+          
+          const onKeyPress = (e: KeyboardEvent) => {
+            const keyDown = e.repeat
+            if (!keyDown) {
+              if (e.key === 'ArrowDown') {
+                fullpageApi.fullpageApi.moveSectionDown();
+                console.log("dab")
+
+              } else if (e.key === 'ArrowUp') {
+                fullpageApi.fullpageApi.moveSectionUp();
+                console.log("dab2")
+              }
+            }
+          }
+          
+          globalThis?.window?.addEventListener('keydown', (e) => onKeyPress(e));
+         
+
           return (
             <>
               <ReactFullpage.Wrapper>
+
                 <Head>
                   <title>Pateter</title>
                 </Head>
+
                 <div className="section bg-cover h-full overflow-hidden" style={{ backgroundImage: "url('/bilder/bakgrund/2021.jpg')" }} >
                   <div className="bg-black bg-opacity-40 h-full">
                     <div className="absolute left-[25%] top-[15%] drop-sh w-1/2 flex flex-col items-center">
