@@ -212,18 +212,28 @@ const Pateter: NextPage = () => {
 
   ]
 
+  const changeBgOpacity = (index: number) => {
+    const fp = document.getElementById("first-page")
+    if (!fp) return
+    if (index === 0) {
+      fp.style.background = "rgba(0,0,0,0.4)"
+    } else {
+      fp.style.background = "rgba(0,0,0,0.9)"
+    }
+  }
 
   return (
     <div className="fullPage">
 
       <div className="section bg-cover bg-center h-full overflow-hidden w-screen" style={{ backgroundImage: "url('/bilder/bakgrund/2021.jpg')" }} >
-        <div className={`bg-black h-full bg-opacity-40`}>
+        <div id="first-page" className={`bg-black h-full transition bg-opacity-40 duration-700`}>
           <ReactPageScroller
             animationTimer={700}
             animationTimerBuffer={300}
             renderAllPagesOnFirstRender={true}
+            onBeforePageScroll={changeBgOpacity}
           >
-            <div id="first-page" className="section">
+            <div className="section">
               <div className="absolute left-[25%] top-[15%] drop-sh w-1/2 flex flex-col items-center">
                 <div className="text-5xl font-po mb-5">
                   <h1>Pateter</h1>
