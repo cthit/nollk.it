@@ -3,6 +3,7 @@ import Head from "next/head"
 import Precursor from "../components/Precursor"
 import Header from "../components/Header"
 import ReactPageScroller from 'react-page-scroller';
+import { useState } from "react";
 
 const Pateter: NextPage = () => {
 
@@ -216,13 +217,13 @@ const Pateter: NextPage = () => {
     <div className="fullPage">
 
       <div className="section bg-cover bg-center h-full overflow-hidden w-screen" style={{ backgroundImage: "url('/bilder/bakgrund/2021.jpg')" }} >
-        <div className="bg-black bg-opacity-40 h-full">
+        <div className={`bg-black h-full bg-opacity-40`}>
           <ReactPageScroller
             animationTimer={700}
-            animationTimerBuffer={500}
-            
+            animationTimerBuffer={300}
+            renderAllPagesOnFirstRender={true}
           >
-            <div className="section">
+            <div id="first-page" className="section">
               <div className="absolute left-[25%] top-[15%] drop-sh w-1/2 flex flex-col items-center">
                 <div className="text-5xl font-po mb-5">
                   <h1>Pateter</h1>
