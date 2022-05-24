@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import PageInfo from '../components/PageInfo'
 import Page from '../components/Page'
 
 interface NollkitMember {
@@ -57,15 +58,11 @@ const Nollkit: NextPage = () => {
       <Page blackout>
         <div className="absolute w-full flex flex-col items-center top-60 overflow-hidden">
           <div className="w-1/2 flex flex-col">
-            <div className="w-full flex flex-col items-center mb-60"> 
-              <div className="font-po text-6xl mb-6">Vi är NollKIT</div>
-              <div className="w-1/2 font-light text-justify">
-                Hej du Nollan! När du tar dina första steg in på Chalmers är det vi åtta som har planerat fyra veckor med aktiviteter och arrangemang allt för att du ska lära känna din klass bättre och kunna få reda på vad Chalmers som skola har att erbjuda. 
-                <br/><br/>
-                För att hela denna resan ska gå runt har vi lite olika ansvarsområden som kan läsa om nedan. Vi ser framåt att träffa er alla i augusti!
-              </div>
-            </div>
-
+            <PageInfo heading="Vi är NollKIT">
+              Hej du Nollan! När du tar dina första steg in på Chalmers är det vi åtta som har planerat fyra veckor med aktiviteter och arrangemang allt för att du ska lära känna din klass bättre och kunna få reda på vad Chalmers som skola har att erbjuda.
+              <br /><br />
+              För att hela denna resan ska gå runt har vi lite olika ansvarsområden som kan läsa om nedan. Vi ser framåt att träffa er alla i augusti!  
+            </PageInfo>
             <div>
               {
                 nollkit.map( (n, i) => {
