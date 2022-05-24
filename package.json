@@ -9,13 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@fullpage/react-fullpage": "^0.1.23",
     "@fullcalendar/react": "^5.11.1",
     "@fullcalendar/timegrid": "^5.11.0",
     "next": "12.1.6",
     "next-transpile-modules": "^9.0.0",
     "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "react-dom": "18.1.0",
+    "react-page-scroller": "^2.2.1"
   },
   "devDependencies": {
     "@types/node": "17.0.31",

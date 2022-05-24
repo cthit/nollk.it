@@ -1,8 +1,9 @@
 import { NextPage } from "next"
 import Head from "next/head"
-import ReactFullpage from '@fullpage/react-fullpage'
 import Precursor from "../components/Precursor"
 import Header from "../components/Header"
+import ReactPageScroller from 'react-page-scroller';
+import { useState } from "react";
 
 const Pateter: NextPage = () => {
 
@@ -208,50 +209,42 @@ const Pateter: NextPage = () => {
       members: [
       ],
     },
-    
-    ]
+
+  ]
 
 
   return (
-    <>
-      <ReactFullpage
-        licenseKey={'gplv3-license'}
-        scrollingSpeed={700} /* Options here */
-        render={() => {
-          return (
-            <>
-              <ReactFullpage.Wrapper>
-                <Head>
-                  <title>Pateter</title>
-                </Head>
-                <div className="section bg-cover h-full overflow-hidden" style={{ backgroundImage: "url('/bilder/bakgrund/2021.jpg')" }} >
-                  <div className="bg-black bg-opacity-40 h-full">
-                    <div className="absolute left-[25%] top-[15%] drop-sh w-1/2 flex flex-col items-center">
-                      <div className="text-5xl font-po mb-5">
-                        <h1>Pateter</h1>
-                      </div>
-                      <div className="font-light w-[75%] text-xl">
-                        På Chalmers är patet ett allmänt namn för personer som tidigare suttit i en förening/kommitté. De som har suttit i just NollKIT tidigare år kallas för NollQIT. De kan vara bra att ha lite då och då, både för NollKIT och för Nollan, eftersom de alltid svarar glatt på frågor om NollKIT råkar vara borta för stunden.
-                      </div>
-                    </div>
+    <div className="fullPage">
 
-                  </div>
-
+      <div className="section bg-cover bg-center h-full overflow-hidden w-screen" style={{ backgroundImage: "url('/bilder/bakgrund/2021.jpg')" }} >
+        <div className={`bg-black h-full bg-opacity-40`}>
+          <ReactPageScroller
+            animationTimer={700}
+            animationTimerBuffer={300}
+            renderAllPagesOnFirstRender={true}
+          >
+            <div id="first-page" className="section">
+              <div className="absolute left-[25%] top-[15%] drop-sh w-1/2 flex flex-col items-center">
+                <div className="text-5xl font-po mb-5">
+                  <h1>Pateter</h1>
                 </div>
-                {allNollkit.map((committee, index) => (
-                  <div key={index} className="section">
-                    <Precursor precursor={committee} />
-                  </div>
-                ))}
-              </ReactFullpage.Wrapper>
-            </>
-          )
-        }}
-      />
+                <div className="font-light w-[75%] text-xl">
+                  På Chalmers är patet ett allmänt namn för personer som tidigare suttit i en förening/kommitté. De som har suttit i just NollKIT tidigare år kallas för NollQIT. De kan vara bra att ha lite då och då, både för NollKIT och för Nollan, eftersom de alltid svarar glatt på frågor om NollKIT råkar vara borta för stunden.
+                </div>
+              </div>
+            </div>
+            {allNollkit.map((committee, index) => (
+              <div key={index} className="section">
+                <Precursor precursor={committee} />
+              </div>
+            ))}
+          </ReactPageScroller>
+        </div>
+      </div>
       <div className="absolute top-0 flex flex-col items-center w-full">
         <Header />
       </div>
-    </>
+    </div>
   )
 }
 

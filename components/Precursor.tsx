@@ -16,8 +16,8 @@ type Committee = {
 const Precursor = ({precursor}: {precursor: Committee} ) => {
     
     return (
-        <div className="fixed w-screen h-screen overflow-hidden flex flex-col items-center bg-cover" style={{backgroundImage: "url('/bilder/nollkit21sky.jpg')"}}>
-            <div className="w-full h-full flex flex-col bg-opacity-90 bg-black justify-center overflow-visible">
+        <div className="fixed w-screen h-screen">
+            <div className="w-full h-full flex flex-col bg-opacity-75 bg-black justify-center overflow-visible">
                 <div className="drop-sh flex flex-row justify-evenly overflow-visible max-h-[70%] items-center">
                     <div className="imagebox max-w-[50%] h-full max-h-full flex flex-row items-center justify-center">
                         <img src={`/bilder/kommitte/${precursor.year}.jpg`} alt={precursor.name} className="overflow-visible max-h-75vh" />
