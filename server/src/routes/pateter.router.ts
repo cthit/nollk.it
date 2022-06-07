@@ -32,6 +32,21 @@ pateterRouter.get("/:id", async (req: Request, res: Response) => {
     }
 });
 
+pateterRouter.get("/year/:id", async (req: Request, res: Response) => {
+    const year: String = req?.params?.id;
+    try {
+        const query = { year };
+        const pateter = (await collections.nollkit.findOne(query) as Pateter);
+
+        if (pateter) {
+            res.status(200).send(pateter);
+        }
+
+    } catch (error) {
+        res.status(404).send(`Unable to find pateter with year: ${year}`);
+    }
+});
+
 pateterRouter.post("/", async (req: Request, res: Response) => {
     try {
         const newPateter = req.body as Pateter;
