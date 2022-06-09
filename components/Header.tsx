@@ -48,10 +48,11 @@ export default function Header(props: HeaderProps) {
     <>
       {/* Background gradient */}
       <div className={`fixed -z-10 top-0 w-screen h-28 pointer-events-none bg-gradient-to-b to-black/0 ${props.blackout ? "from-black/80" : "from-black/25"}`}></div>
-      
-      {
+
+      {/* {
         useMediaQuery({ query: '(max-width: 900px)' }) ? <MobileHeader /> : <DesktopHeader />
-      }
+      } */}
+      <MobileHeader />
     </>
   )
 }
@@ -75,11 +76,11 @@ function DesktopHeader() {
 
   function getGridColsString(): string {
     // Sets the correct column sizes depending on how many items there are
-    return "0.8fr " + headerCategories.map( (category, index) => (index !== 0 ? "0.1fr " : "") + category.items.length + "fr ").join("")
+    return "0.8fr " + headerCategories.map((category, index) => (index !== 0 ? "0.1fr " : "") + category.items.length + "fr ").join("")
   }
 
   return (
-    <div className="mt-6 font-light grid grid-rows-2" style={{gridTemplateColumns: getGridColsString()}}>
+    <div className="mt-6 font-light grid grid-rows-2" style={{ gridTemplateColumns: getGridColsString() }}>
 
       <div className="w-full flex flex-col items-end relative">
         <Link href="/">
@@ -89,7 +90,7 @@ function DesktopHeader() {
         </Link>
       </div>
 
-      { headerCategories.map((category, index) => (
+      {headerCategories.map((category, index) => (
         <React.Fragment key={category.name}>
           {
             index !== 0 ? <div className="border-l border-white mx-3"></div> : null
@@ -102,7 +103,7 @@ function DesktopHeader() {
         </React.Fragment>
       ))}
 
-      { headerCategories.map( category => (
+      {headerCategories.map(category => (
         <React.Fragment key={category.name}>
           <div className="flex items-center">
             <div className="border-t border-t-white grow"></div>
@@ -119,10 +120,31 @@ function DesktopHeader() {
 }
 
 function MobileHeader() {
+
+  function Hamburger() {
+    return (
+      <div className="h-full aspect-square bg-black">
+        
+      </div>
+    )
+  }
+
   return (
-    <>
-      
-    </>
+    <div className="w-full h-full px-5 relative">
+
+      <div className="border-b border-b-white w-full h-20 relative flex items-center justify-end">
+        <div className="h-14">
+          <Hamburger />
+        </div>
+      </div>
+
+      <Link href="/">
+        <a className="w-24 h-24 absolute top-2 left-12">
+          <img src="/bilder/märke/2022.png" alt="NollKIT'22" />
+        </a>
+      </Link>
+
+    </div>
   )
 }
 
