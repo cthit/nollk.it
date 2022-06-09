@@ -84,7 +84,7 @@ function DesktopHeader() {
           }
           <div className="col-span-1 flex justify-center">
             {category.items.map(item => (
-              <Link href={`/${item.href}`}>
+              <Link href={`/${item.href}`} key={item.text}>
                 <a className="text-lg text-center px-5 whitespace-nowrap neo">
                   {item.text}
                 </a>
@@ -123,7 +123,7 @@ function MobileHeader() {
               <p className="text-xl italic mt-8 mb-3">{category.name}</p>
               {
                 category.items.map(item => (
-                  <Link href={`/${item.href}`}>
+                  <Link href={`/${item.href}`} key={item.text}>
                     <a className="px-3 pb-1 text-lg font-light block neo w-fit">
                       {item.text}
                     </a>
