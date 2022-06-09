@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useMediaQuery } from 'react-responsive';
 
 type HeaderProps = {
@@ -44,6 +44,7 @@ const headerCategories = [
 ]
 
 export default function Header(props: HeaderProps) {
+
   return (
     <>
       {/* Background gradient */}
@@ -59,23 +60,8 @@ export default function Header(props: HeaderProps) {
 
 function DesktopHeader() {
 
-  interface HeaderItemProps {
-    href: string,
-    children: string
-  }
-
-  function HeaderItem(props: HeaderItemProps) {
-    return (
-      <Link href={props.href}>
-        <a className="text-lg text-center px-5 whitespace-nowrap neo">
-          {props.children}
-        </a>
-      </Link>
-    )
-  }
-
   function getGridColsString(): string {
-    // Sets the correct column sizes depending on how many items there are
+    // Sets the correct column sizes depending on how many items there are in each category
     return "0.8fr " + headerCategories.map((category, index) => (index !== 0 ? "0.1fr " : "") + category.items.length + "fr ").join("")
   }
 
@@ -97,7 +83,11 @@ function DesktopHeader() {
           }
           <div className="col-span-1 flex justify-center">
             {category.items.map(item => (
-              <HeaderItem key={item.text} href={`/${item.href}`}>{item.text}</HeaderItem>
+              <Link href={`/${item.href}`}>
+                <a className="text-lg text-center px-5 whitespace-nowrap neo">
+                  {item.text}
+                </a>
+              </Link>
             ))}
           </div>
         </React.Fragment>
@@ -110,7 +100,7 @@ function DesktopHeader() {
           </div>
           <div className="flex items-center">
             <div className="border-t border-t-white grow"></div>
-            <div className="px-3 text-xs font-light">{category.name}</div>
+            <p className="px-3 text-xs font-light">{category.name}</p>
             <div className="border-t border-t-white grow"></div>
           </div>
         </React.Fragment>
@@ -121,30 +111,59 @@ function DesktopHeader() {
 
 function MobileHeader() {
 
+  const [isOpen, setOpen] = useState(false)
+
   function Hamburger() {
     return (
-      <div className="h-full aspect-square bg-black">
-        
+      <div className="h-full aspect-square flex flex-col justify-center bg-black/5 cursor-pointer" onClick={() => setOpen(!isOpen)}>
+        <div className={`flex flex-col justify-around transition-all ${isOpen ? "h-0" : "h-full"}`}>
+          <div className={`border-b-2 border-b-white transition-all ${isOpen ? "rotate-4" : "rotate-0"}`}></div>
+
+          <div className={`border-b-2 border-b-white transition ${isOpen ? "opacity-0" : "opacity-100"}`}></div>
+
+          <div className={`border-b-2 border-b-white transition-all ${isOpen ? "-rotate-4" : "rotate-0"}`}></div>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="w-full h-full px-5 relative">
-
-      <div className="border-b border-b-white w-full h-20 relative flex items-center justify-end">
-        <div className="h-14">
-          <Hamburger />
-        </div>
+    <>
+      <div className={`fixed top-0 left-0 w-full h-full pt-28 bg-black/90 ${isOpen ? "block" : "hidden"}`}>
+        {
+          headerCategories.map(category => (
+            <div key={category.name} className="ml-20">
+              <p className="text-xl italic mt-8 mb-3">{category.name}</p>
+              {
+                category.items.map(item => (
+                  <Link href={`/${item.href}`}>
+                    <a className="ml-2 pb-1 text-lg font-light block neo w-fit">
+                      {item.text}
+                    </a>
+                  </Link>
+                ))
+              }
+            </div>
+          ))
+        }
       </div>
 
-      <Link href="/">
-        <a className="w-24 h-24 absolute top-2 left-12">
-          <img src="/bilder/märke/2022.png" alt="NollKIT'22" />
-        </a>
-      </Link>
+      <div className="w-full h-full px-5 relative">
 
-    </div>
+        <div className="border-b border-b-white w-full pr-5 h-20 flex items-center justify-end">
+          <div className="h-12">
+            <Hamburger />
+          </div>
+        </div>
+
+        <Link href="/">
+          <a className="w-24 h-24 absolute top-2 left-12">
+            <img src="/bilder/märke/2022.png" alt="NollKIT'22" />
+          </a>
+        </Link>
+
+      </div>
+    </>
   )
 }
 
