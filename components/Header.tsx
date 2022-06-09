@@ -1,6 +1,5 @@
 import Link from "next/link";
 import React, { useState } from "react";
-import { useMediaQuery } from 'react-responsive';
 
 type HeaderProps = {
   blackout: boolean
@@ -50,10 +49,12 @@ export default function Header(props: HeaderProps) {
       {/* Background gradient */}
       <div className={`fixed -z-10 top-0 w-screen h-28 pointer-events-none bg-gradient-to-b to-black/0 ${props.blackout ? "from-black/80" : "from-black/25"}`}></div>
 
-      {/* {
-        useMediaQuery({ query: '(max-width: 900px)' }) ? <MobileHeader /> : <DesktopHeader />
-      } */}
-      <MobileHeader />
+      <div className="w-full lg:hidden">
+        <MobileHeader />
+      </div>
+      <div className="hidden lg:block">
+        <DesktopHeader />
+      </div>
     </>
   )
 }
@@ -113,23 +114,9 @@ function MobileHeader() {
 
   const [isOpen, setOpen] = useState(false)
 
-  function Hamburger() {
-    return (
-      <div className="h-full aspect-square flex flex-col justify-center bg-black/5 cursor-pointer" onClick={() => setOpen(!isOpen)}>
-        <div className={`flex flex-col justify-around transition-all ${isOpen ? "h-0" : "h-full"}`}>
-          <div className={`border-b-2 border-b-white transition-all ${isOpen ? "rotate-4" : "rotate-0"}`}></div>
-
-          <div className={`border-b-2 border-b-white transition ${isOpen ? "opacity-0" : "opacity-100"}`}></div>
-
-          <div className={`border-b-2 border-b-white transition-all ${isOpen ? "-rotate-4" : "rotate-0"}`}></div>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <>
-      <div className={`fixed top-0 left-0 w-full h-full pt-28 bg-black/90 ${isOpen ? "block" : "hidden"}`}>
+      <div className={`fixed top-0 left-0 w-full h-full pt-28 bg-black/90 transition duration-300 ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
         {
           headerCategories.map(category => (
             <div key={category.name} className="ml-20">
@@ -137,7 +124,7 @@ function MobileHeader() {
               {
                 category.items.map(item => (
                   <Link href={`/${item.href}`}>
-                    <a className="ml-2 pb-1 text-lg font-light block neo w-fit">
+                    <a className="px-3 pb-1 text-lg font-light block neo w-fit">
                       {item.text}
                     </a>
                   </Link>
@@ -152,7 +139,7 @@ function MobileHeader() {
 
         <div className="border-b border-b-white w-full pr-5 h-20 flex items-center justify-end">
           <div className="h-12">
-            <Hamburger />
+            <Hamburger isOpen={isOpen} setOpen={setOpen} />
           </div>
         </div>
 
@@ -164,6 +151,24 @@ function MobileHeader() {
 
       </div>
     </>
+  )
+}
+
+function Hamburger({ isOpen: isOpen, setOpen: setOpen }: { isOpen: boolean, setOpen: (isOpen: boolean) => void }) {
+  const whiteline = "border-b-2 border-b-white w-full absolute transition-all"
+  return (
+    <div className="h-full aspect-square relative flex flex-col justify-center cursor-pointer select-none" onClick={() => setOpen(!isOpen)}>
+
+      <div className={`relative transition-all duration-200 ${isOpen ? "h-0.5" : "h-3/4 "}`}>
+        <div className={`${whiteline} top-0     ${isOpen ? " rotate-45 duration-300" : "rotate-0 duration-50"}`}></div>
+        <div className={`${whiteline} bottom-0  ${isOpen ? "-rotate-45 duration-300" : "rotate-0 duration-50"}`}></div>
+      </div>
+
+      <div>
+        <div className={`${whiteline} top-1/2 -translate-y-1/2 ${isOpen ? "opacity-0 duration-200" : "opacity-100 duration-300"}`}></div>
+      </div>
+      
+    </div>
   )
 }
 
