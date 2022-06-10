@@ -47,12 +47,12 @@ export default function Header(props: HeaderProps) {
   return (
     <>
       {/* Background gradient */}
-      <div className={`fixed -z-10 top-0 w-screen h-28 pointer-events-none bg-gradient-to-b to-black/0 ${props.blackout ? "from-black/80" : "from-black/25"}`}></div>
+      <div className={`fixed top-0 w-screen -z-10 h-28 bg-gradient-to-b to-black/0 ${props.blackout ? "from-black/80" : "from-black/25"}`}></div>
 
-      <div className="w-full lg:hidden">
+      <div className="w-full lg:hidden pointer-events-auto">
         <MobileHeader />
       </div>
-      <div className="hidden lg:block">
+      <div className="hidden lg:block pointer-events-auto">
         <DesktopHeader />
       </div>
     </>
@@ -84,7 +84,7 @@ function DesktopHeader() {
           }
           <div className="col-span-1 flex justify-center">
             {category.items.map(item => (
-              <Link href={`/${item.href}`}>
+              <Link href={`/${item.href}`} key={item.text}>
                 <a className="text-lg text-center px-5 whitespace-nowrap neo">
                   {item.text}
                 </a>
@@ -123,7 +123,7 @@ function MobileHeader() {
               <p className="text-xl italic mt-8 mb-3">{category.name}</p>
               {
                 category.items.map(item => (
-                  <Link href={`/${item.href}`}>
+                  <Link href={`/${item.href}`} key={item.text}>
                     <a className="px-3 pb-1 text-lg font-light block neo w-fit">
                       {item.text}
                     </a>

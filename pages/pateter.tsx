@@ -24,7 +24,7 @@ const Pateter: NextPage = () => {
     {
       name: "NollKIT'21",
       year: "2021",
-      imageDesc: "Från uppe vänster",
+      imageDesc: "Uppifrån vänster",
       members: [
         { name: 'Sebastian "Kvalle" Kvaldén', role: 'Uppdragschef' },
         { name: 'Erik "Knuten" Henriksson', role: 'Vice ordförande' },
@@ -122,8 +122,15 @@ const Pateter: NextPage = () => {
     {
       name: "NollKIT'14",
       year: "2014",
-      imageDesc: "Från vänster",
+      imageDesc: "Uppifrån vänster",
       members: [
+        { name: 'Louise "Lollo" Lorentzon', role: 'Modulchef' },
+        { name: 'Anna “Chikki” Nylander', role: 'Uppdragschef' },
+        { name: 'Hampus “HåDD” Dahlin', role: 'Ordförande' },
+        { name: 'Daniel “Eineving” Eineving', role: 'Kassör' },
+        { name: 'Simon “siMsOn” Nielsen', role: 'PR-chef' },
+        { name: 'Oskar “RutAn” Rutqvist', role: 'Phadderchef' },
+        { name: 'Simon “Pendla” Petersson', role: 'Infochef' },
       ],
     },
     {
@@ -131,55 +138,111 @@ const Pateter: NextPage = () => {
       year: "2013",
       imageDesc: "Från vänster",
       members: [
+        { name: 'William “golvmopp” Dahlberg', role: 'Infochef' },
+        { name: 'Sara “Soya” Nadi', role: 'PR-chef' },
+        { name: 'Danny “Lam(m)” Lam', role: 'Nolluppdragschef' },
+        { name: 'Oskar “Rascal” Nyberg', role: 'Ordförande' },
+        { name: 'Victor “Trivoc” Nilsson', role: 'Kassör' },
+        { name: 'Julia “Jules” Friberg', role: 'Modulchef' },
+        { name: 'Oskar “PJ” Dahlberg', role: 'Phadderchef' },
       ],
     },
     {
       name: "NollKIT'12",
       year: "2012",
-      imageDesc: "Från vänster",
+      imageDesc: "Uppifrån vänster",
       members: [
+        { name: 'Jonathan “Kara” Kara', role: 'Nolluppdragschef' },
+        { name: 'Johan “Horv” Andersson', role: 'Phadderchef' },
+        { name: 'Paula “PoW” Eriksson', role: 'Ordförande' },
+        { name: 'Daniel “Roras” Augurell', role: 'Sponschef' },
+        { name: 'Daniel “DBBE” Bergqvist', role: 'Kassör' },
+        { name: 'Linus “Mushu” Karlsson', role: 'PR-chef' },
+        { name: 'Magnus “Bosch” Huttu', role: 'Modulchef' },
       ],
     },
     {
       name: "NollKIT'11",
       year: "2011",
-      imageDesc: "Från vänster",
+      imageDesc: "Uppifrån vänster",
       members: [
+        { name: 'Samuel “samwise” Tiensuu', role: 'Phadderchef' },
+        { name: 'Marika “Kohina” Hansson', role: 'Ordförande' },
+        { name: 'Jack “weeeeeew” Pettersson', role: 'Nolluppdragschef' },
+        { name: 'Cecilia “Vatten” Geijer', role: 'Kassör' },
+        { name: 'Magnus “µ” Larsson', role: 'PR-chef' },
+        { name: 'Josefina “Juice” Andreasson', role: 'Modulchef' },
+        { name: 'Mathias “møhl” Forsén', role: 'Sponschef' },
       ],
     },
     {
       name: "NollKIT'10",
       year: "2010",
-      imageDesc: "Från vänster",
+      imageDesc: "Uppifrån vänster",
       members: [
+        { name: 'Ludvig “JC” Gjälby', role: 'Sponschef' },
+        { name: 'Anders “Lall” Larsson', role: 'PR-chef' },
+        { name: 'Julia “Jule” Adamsson', role: 'Phadderchef' },
+        { name: 'Tomas “Tompa” Urdell', role: 'Kassör' },
+        { name: 'Markus “_us” Pettersson', role: 'Nolluppdragschef' },
+        { name: 'Oscar “Poscar” Söderlund', role: 'Modulchef' },
+        { name: 'Daniel “Vind” Ström', role: 'Ordförande' },
       ],
     },
     {
       name: "NollKIT'09",
       year: "2009",
-      imageDesc: "Från vänster",
+      imageDesc: "Uppifrån vänster",
       members: [
+        { name: 'David “Zorek” Sundelius', role: 'Phadderchef' },
+        { name: 'Gustav “Ægarn” Landén', role: 'Modulchef' },
+        { name: 'Björn “Björne” Lexell', role: 'Kassör' },
+        { name: 'David “Björk” Björkheim', role: 'PR-chef' },
+        { name: 'Jessica “Solitude” Andersson', role: 'Sponschef' },
+        { name: 'Fredrik “Freddie” Axelsson', role: 'Ordförande' },
+        { name: 'Fiona “Fiona” Rolander', role: 'Nolluppdragschef' },
       ],
     },
     {
       name: "NollKIT'08",
       year: "2008",
-      imageDesc: "Från vänster",
+      imageDesc: "Uppifrån",
       members: [
+        { name: 'Alexander “Widar den vidunderlige” Widar', role: 'Nolluppdragschef' },
+        { name: 'Birger “Jalle” Rydback', role: 'Phadderchef' },
+        { name: 'Erik “Thinner” Larkö', role: 'Ordförande' },
+        { name: 'John “JohnL” Lundberg', role: 'PR-chef' },
+        { name: 'Carl “Eng” Engstöm', role: 'Modulchef' },
+        { name: 'Erik “Bark” Axelsson', role: 'Kassör' },
+        { name: 'Lisa “Chihua” Ryrholm', role: 'Sponschef' },
       ],
     },
     {
       name: "NollKIT'07",
       year: "2007",
-      imageDesc: "Från vänster",
+      imageDesc: "Uppifrån vänster",
       members: [
+        { name: 'Marcus “MaKKan” Sundberg', role: 'Kassör' },
+        { name: 'Hans “Hasse” Andersson', role: 'PR-chef' },
+        { name: 'Erik “Igno” Jutemar', role: 'Phadderchef' },
+        { name: 'Olof “Grul” Kamp', role: 'Modulchef' },
+        { name: 'Josef “Findus” Eklann', role: 'Ordförande' },
+        { name: 'Patric Westberg', role: 'PR-chef' },
+        { name: 'Nathalie “Natta” Nilsson', role: 'Nolluppdragschef' },
       ],
     },
     {
       name: "NollKIT'06",
       year: "2006",
-      imageDesc: "Från vänster",
+      imageDesc: "Uppifrån vänster",
       members: [
+        { name: 'Johan “Boberg” Boberg', role: 'Kassör' },
+        { name: 'Nicklas “Viddo” Gummesson', role: 'PR- och sponsorchef' },
+        { name: 'Gustav “Gussoh” Sohtell', role: 'Modulchef' },
+        { name: 'Sebastian “sebbz” Jansson', role: 'Ordförande' },
+        { name: 'Frida Polheimer', role: 'Kassör' },
+        { name: 'Josefine “Jossan” Nimstedt', role: 'Ölchef' },
+        { name: 'Andreas “Dukken” Duchen', role: 'Phadderchef' },
       ],
     },
     {
@@ -187,6 +250,13 @@ const Pateter: NextPage = () => {
       year: "2005",
       imageDesc: "Från vänster",
       members: [
+        { name: 'Joakim Bick', role: 'Phadderchef' },
+        { name: 'Niklas Fröjdh', role: 'Kassör' },
+        { name: 'Martin Ruzicka', role: 'PR-chef' },
+        { name: 'Mathias Hellman', role: 'Ordförande' },
+        { name: 'Carolin Gunnarsson', role: 'Nolluppdragschef' },
+        { name: 'Markus Westerström', role: 'Modulchef' },
+        { name: 'Olle Markljung ', role: 'Öhlchef' },
       ],
     },
     {
@@ -194,20 +264,43 @@ const Pateter: NextPage = () => {
       year: "2004",
       imageDesc: "Från vänster",
       members: [
+        { name: 'Odin Renhammar', role: 'Phadderchef' },
+        { name: 'Carl-David Granbäck', role: 'Modulchef' },
+        { name: 'Olessia Larsson', role: 'PR-chef' },
+        { name: 'Kristian Nagel', role: 'Öhlchef' },
+        { name: 'Alfred Olsson', role: 'Nolluppdragschef' },
+        { name: 'Johan Ung', role: 'Ordförande' },
+        { name: 'Christoffer Noring', role: 'Kassör' },
       ],
     },
     {
       name: "NollKIT'03",
       year: "2003",
-      imageDesc: "Från vänster",
+      imageDesc: "Uppifrån vänster",
       members: [
+        { name: 'Therese Berge', role: 'Sponsor & PR-ansvarig' },
+        { name: 'Stefan Janson', role: 'Öhl & Häfvansvarig' },
+        { name: 'Karin Andersson', role: 'Ordförande' },
+        { name: 'Per Rehnberg', role: 'Phadderansvarig' },
+        { name: 'Fredrik Möllerstrand', role: 'Vide Ordförande' },
+        { name: 'Andreas Eliasson', role: 'Kassör' },
+        { name: 'Hedvig Kamp', role: 'Modulansvarig' },
       ],
     },
     {
       name: "NollKIT'02",
       year: "2002",
-      imageDesc: "Från vänster",
+      imageDesc: "Lite oklart",
       members: [
+        { name: 'Petra Bodström', role: 'Phadderchef' },
+        { name: 'Fredrik Jones', role: 'pHadderchef' },
+        { name: 'Erik Nylund', role: 'Öl- och matansvarig' },
+        { name: 'Daniel Olofsson', role: 'Vice ordförande och sponsoransvarig' },
+        { name: 'Anna Sjödin', role: 'Modulansvarig' },
+        { name: 'Emma Svensson', role: 'Kassör' },
+        { name: 'Mikael Svensson', role: 'Transport- och prylansvarig' },
+        { name: 'Daniel Åvall', role: 'Webansvarig' },
+        { name: 'Björn Östlund', role: 'Ordförande' },
       ],
     },
 
@@ -217,7 +310,7 @@ const Pateter: NextPage = () => {
     const fp = document.getElementById("first-page")
     if (!fp) return
     if (index === 0) {
-      fp.style.background = "rgba(0,0,0,0.4)"
+      fp.style.background = "rgba(0,0,0,0.8)"
     } else {
       fp.style.background = "rgba(0,0,0,0.9)"
     }
@@ -226,31 +319,31 @@ const Pateter: NextPage = () => {
   return (
     <div className="fullPage">
 
-      <div className="section bg-cover bg-center h-full overflow-hidden w-screen" style={{ backgroundImage: "url('/bilder/bakgrund/2021.jpg')" }} >
-        <div id="first-page" className={`bg-black h-full transition bg-opacity-40 duration-700`}>
+      <div className="bg-cover bg-top h-full overflow-hidden w-screen" style={{ backgroundImage: "url('/bilder/bakgrund/2021.jpg')" }} >
+        <div id="first-page" className={`bg-black h-full transition duration-700 bg-opacity-80`}>
           <ReactPageScroller
             animationTimer={700}
             animationTimerBuffer={300}
             renderAllPagesOnFirstRender={true}
             onBeforePageScroll={changeBgOpacity}
           >
-            <div className="section">
-              <div className="absolute left-[25%] top-[15%] drop-sh w-1/2 flex flex-col items-center">
+            <div className="absolute top-20 w-full flex flex-col items-center overflow-hidden">
+              <div className="flex flex-col items-center w-10/12 lg:w-3/4">
                 <PageInfo heading="Pateter">
                   På Chalmers är patet ett allmänt namn för personer som tidigare suttit i en förening/kommitté. De som har suttit i just NollKIT tidigare år kallas för NollQIT. De kan vara bra att ha lite då och då, både för NollKIT och för Nollan, eftersom de alltid svarar glatt på frågor om NollKIT råkar vara borta för stunden.
                 </PageInfo>
               </div>
             </div>
             {allNollkit.map((committee, index) => (
-              <div key={index} className="section">
+              <div key={index}>
                 <Precursor precursor={committee} />
               </div>
             ))}
           </ReactPageScroller>
         </div>
       </div>
-      <div className="absolute top-0 flex flex-col items-center w-full">
-        <Header blackout={true}/>
+      <div className="fixed flex flex-col items-center w-screen top-0 z-50 pointer-events-none">
+        <Header blackout={true} />
       </div>
     </div>
   )

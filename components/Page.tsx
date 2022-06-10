@@ -6,14 +6,23 @@ interface PageProps {
 }
 
 export default function Page(props: PageProps) {
-  return(
+  return (
     <>
-      <div className="fixed w-screen h-screen overflow-hidden flex flex-col items-center bg-black">
-        <div className={`bg-cover bg-top w-full h-full ${props.blackout ? "opacity-60" : ""}`} style={{backgroundImage: "url('/bilder/bakgrund/2021.jpg')"}}></div>
+      {/* Background */}
+      <div className="fixed w-screen h-screen overflow-hidden flex flex-col items-center bg-black -z-50">
+        <div className={`bg-cover bg-top w-full h-full ${props.blackout ? "opacity-20" : ""}`} style={{ backgroundImage: "url('/bilder/bakgrund/2021.jpg')" }}></div>
       </div>
-      {props.children}
-      <div className="fixed flex flex-col items-center w-screen top-0">
-        <Header blackout={props.blackout ?? false}/>
+
+      {/* Content */}
+      <div className="absolute top-20 w-full flex flex-col items-center overflow-hidden">
+        <div className="flex flex-col items-center w-10/12 lg:w-3/4">
+          {props.children}
+        </div>
+      </div>
+
+      {/* Header */}
+      <div className="fixed flex flex-col items-center w-screen top-0 z-50 pointer-events-none">
+        <Header blackout={props.blackout ?? false} />
       </div>
     </>
   )
