@@ -7,67 +7,63 @@ import Page from '../components/Page'
 */
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import { useEffect, useState } from 'react'
+import momentPlugin from '@fullcalendar/moment'
 
 
 const Schema: NextPage = () => {
 
-  // Can't set locale directly, causes hydration error
-  const [locale, setLocale] = useState("")
-  useEffect(() => setLocale("se"), [])
-
   const mottagning = [
-    { start: '2022-05-10T09:30', end: '2022-05-10T14:45', title: 'EPIC GAMER TESTEVENT' },
+    { start: '2022-06-10T09:30', end: '2022-06-10T14:45', title: 'EPIC GAMER TESTEVENT' },
     { start: '2022-08-16T09:30', end: '2022-08-16T14:45', title: 'Första dagen' },
     { start: '2018-08-18T15:30', end: '2018-08-18T19:15', title: 'Bricktillverkning' },
     { start: '2018-08-19T17:01', end: '2018-08-19T21:00', title: 'sexIT Gasque' },
-  ].map( e => {
+  ].map(e => {
     return {
-      ...e, 
-      backgroundColor: "rgba(0,0,0,0.7)",
-      borderColor: "#09cdda"
+      ...e,
+      backgroundColor: "#0ab"
     }
   })
 
   const introcourses = [
-    { start: '2022-05-10T11:30', end: '2022-05-10T17:45', title: 'tråkig introkurs' },
-  ].map( e => {
+    { start: '2022-06-10T17:00', end: '2022-06-10T18:00', title: 'EPIC2' },
+    { start: '2022-08-16T15:30', end: '2022-08-16T17:45', title: 'tråkig introkurs' },
+  ].map(e => {
     return {
-      ...e, 
-      backgroundColor: "rgba(0,0,0,0.7)",
-      borderColor: "#0f0"
+      ...e,
+      backgroundColor: "#293"
     }
   })
 
-  const allEvents = [...mottagning, ...introcourses ]
+  const allEvents = [...mottagning, ...introcourses]
+
 
   return (
     <>
       <Head>
         <title>Schema</title>
-        <meta name="description" content="Här finns schemat, både för " />
+        <meta name="description" content="Här finns schemat, både för mottagningen och introkurserna" />
         <link rel="icon" href="/favicon.png" />
       </Head>
 
       <Page blackout>
-        <div className="w-10/12 h-1/3 pl-[17%] pt-24">
+        <div className="my-4 h-1/5 w-full">
           <FullCalendar
-            plugins={[ timeGridPlugin ]}
-            events={ allEvents }
-            dayHeaderFormat={ { month: "numeric", day: "numeric" } }
-            locale={ locale }
+            plugins={[timeGridPlugin, momentPlugin]}
+            events={allEvents}
+            dayHeaderFormat={"D/M"}
             allDaySlot={false}
-            slotMinTime={ "07:00:00" }
-            slotMaxTime={ "28:00:00" }
-            slotDuration={ "01:00:00" }
-            slotLabelFormat={ { hour: "2-digit", minute: "2-digit" } }
+            slotMinTime={"07:00:00"}
+            slotMaxTime={"28:00:00"}
+            slotDuration={"01:00:00"}
+            slotLabelFormat={{ hour: "2-digit", minute: "2-digit", hour12: false }}
+            eventTimeFormat={{ hour: "2-digit", minute: "2-digit", hour12: false }}
             firstDay={1}
             contentHeight={"auto"}
             nowIndicator={true}
-            headerToolbar={ { left: "", center:"", right: "prev,today,next" } }
-            buttonIcons={ { prev: "chevron-left", next: "chevron-right" } }
-            buttonText={ { today: "Idag" } }
-            buttonHints={ {prev: "Föregående vecka", today: "Hoppa till idag", next: "Nästa vecka"} }
+            headerToolbar={{ left: "", center: "", right: "prev,today,next" }}
+            buttonIcons={{ prev: "chevron-left", next: "chevron-right" }}
+            buttonText={{ today: "Idag" }}
+            buttonHints={{ prev: "Föregående vecka", today: "Hoppa till idag", next: "Nästa vecka" }}
           />
         </div>
       </Page>

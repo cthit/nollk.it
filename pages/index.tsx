@@ -14,10 +14,10 @@ const Index: NextPage = () => {
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <Page>
-        <Countdown />
-        <ToDo />
-      </Page>
+      <Page />
+
+      <Countdown />
+      <ToDo />
     </>
   )
 }
