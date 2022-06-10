@@ -75,7 +75,9 @@
 
 /* Transparent borders */
 .fc-theme-standard .fc-scrollgrid {
-  border: 1px solid hsla(0, 0%, 100%, 0.1);
+  border: none;
+  border-top: 1px solid hsla(0, 0%, 100%, 0.1);
+  border-left: 1px solid hsla(0, 0%, 100%, 0.1);
 }
 
 /* Transparent borders */
@@ -117,8 +119,8 @@
 
 /* Current time indicator line */
 .fc .fc-timegrid-now-indicator-line {
-  border-color: hsla(0, 0%, 100%, 0.8);
-  border-width: 1px;
+  border: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.8);
 }
 
 /* Hides current time indicator arrow */
@@ -129,6 +131,10 @@
 /* Calendar event blocks */
 .fc-timegrid-event .fc-event-main {
   padding: 2px 4px 0;
+}
+
+.fc-timegrid-event-harness-inset .fc-timegrid-event {
+  box-shadow: none;
 }
 
 /* Remove event border */

@@ -21,7 +21,7 @@ export default function Page(props: PageProps) {
       </div>
 
       {/* Header */}
-      <div className="fixed flex flex-col items-center w-screen top-0 z-50">
+      <div className="fixed flex flex-col items-center w-screen top-0 z-50 pointer-events-none">
         <Header blackout={props.blackout ?? false} />
       </div>
     </>

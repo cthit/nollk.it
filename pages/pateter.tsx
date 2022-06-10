@@ -310,7 +310,7 @@ const Pateter: NextPage = () => {
     const fp = document.getElementById("first-page")
     if (!fp) return
     if (index === 0) {
-      fp.style.background = "rgba(0,0,0,0.4)"
+      fp.style.background = "rgba(0,0,0,0.8)"
     } else {
       fp.style.background = "rgba(0,0,0,0.9)"
     }
@@ -319,31 +319,31 @@ const Pateter: NextPage = () => {
   return (
     <div className="fullPage">
 
-      <div className="section bg-cover bg-center h-full overflow-hidden w-screen" style={{ backgroundImage: "url('/bilder/bakgrund/2021.jpg')" }} >
-        <div id="first-page" className={`bg-black h-full transition bg-opacity-40 duration-700`}>
+      <div className="bg-cover bg-top h-full overflow-hidden w-screen" style={{ backgroundImage: "url('/bilder/bakgrund/2021.jpg')" }} >
+        <div id="first-page" className={`bg-black h-full transition duration-700 bg-opacity-80`}>
           <ReactPageScroller
             animationTimer={700}
             animationTimerBuffer={300}
             renderAllPagesOnFirstRender={true}
             onBeforePageScroll={changeBgOpacity}
           >
-            <div className="section">
-              <div className="absolute left-[25%] top-[15%] drop-sh w-1/2 flex flex-col items-center">
+            <div className="absolute top-20 w-full flex flex-col items-center overflow-hidden">
+              <div className="flex flex-col items-center w-10/12 lg:w-3/4">
                 <PageInfo heading="Pateter">
                   På Chalmers är patet ett allmänt namn för personer som tidigare suttit i en förening/kommitté. De som har suttit i just NollKIT tidigare år kallas för NollQIT. De kan vara bra att ha lite då och då, både för NollKIT och för Nollan, eftersom de alltid svarar glatt på frågor om NollKIT råkar vara borta för stunden.
                 </PageInfo>
               </div>
             </div>
             {allNollkit.map((committee, index) => (
-              <div key={index} className="section">
+              <div key={index}>
                 <Precursor precursor={committee} />
               </div>
             ))}
           </ReactPageScroller>
         </div>
       </div>
-      <div className="absolute top-0 flex flex-col items-center w-full">
-        <Header blackout={true}/>
+      <div className="fixed flex flex-col items-center w-screen top-0 z-50 pointer-events-none">
+        <Header blackout={true} />
       </div>
     </div>
   )

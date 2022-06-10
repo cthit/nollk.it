@@ -47,12 +47,12 @@ export default function Header(props: HeaderProps) {
   return (
     <>
       {/* Background gradient */}
-      <div className={`fixed -z-10 top-0 w-screen h-28 pointer-events-none bg-gradient-to-b to-black/0 ${props.blackout ? "from-black/80" : "from-black/25"}`}></div>
+      <div className={`fixed top-0 w-screen -z-10 h-28 bg-gradient-to-b to-black/0 ${props.blackout ? "from-black/80" : "from-black/25"}`}></div>
 
-      <div className="w-full lg:hidden">
+      <div className="w-full lg:hidden pointer-events-auto">
         <MobileHeader />
       </div>
-      <div className="hidden lg:block">
+      <div className="hidden lg:block pointer-events-auto">
         <DesktopHeader />
       </div>
     </>
