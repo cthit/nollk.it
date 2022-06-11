@@ -319,7 +319,7 @@ const Pateter: NextPage = () => {
   return (
     <div className="fullPage">
 
-      <div className="bg-cover bg-top h-full overflow-hidden w-screen" style={{ backgroundImage: "url('/bilder/bakgrund/2021.jpg')" }} >
+      <div className="bg-cover bg-top h-full overflow-hidden w-screen bg-portrait landscape:bg-landscape">
         <div id="first-page" className={`bg-black h-full transition duration-700 bg-opacity-80`}>
           <ReactPageScroller
             animationTimer={700}

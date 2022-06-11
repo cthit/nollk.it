@@ -14,10 +14,12 @@ const Index: NextPage = () => {
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <Page />
-
-      <Countdown />
-      <ToDo />
+      <Page>
+        <div className="mt-12 flex flex-col gap-6 items-center lg:flex-row lg:mt-24 lg:gap-[20vw]">
+          <Countdown />
+          <ToDo />
+        </div>
+      </Page>
     </>
   )
 }

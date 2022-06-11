@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Page from "./Page";
 
 type Member = {
     name: string,

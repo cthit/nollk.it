@@ -1,10 +1,13 @@
-const ToDo = () => {
+import Link from "next/link";
 
+const ToDo = () => {
     return (
-        <div className="font-po absolute left-[55%] top-1/4 drop-sh">
+        <div className="font-po drop-sh">
             <div className="text-3xl">Att göra:</div>
-            <div className="text-7xl">
-                <a href="/nolldeklaration">Nolldeklarera -&gt;</a>
+            <div className="text-5xl lg:text-7xl whitespace-nowrap">
+                <Link href="/nolldeklaration">
+                    <a>Nolldeklarera -&gt;</a>
+                </Link>
             </div>
         </div>
     )
