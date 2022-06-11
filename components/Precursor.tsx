@@ -16,7 +16,7 @@ type Committee = {
 const Precursor = ({ precursor }: { precursor: Committee }) => {
 
     return (
-        <div className="fixed w-screen h-screen scroll-button-target">
+        <div className="fixed w-screen h-screen">
             <div className="w-full h-full flex flex-col justify-center items-center pt-24 sm:pt-12">
 
                 <div className="flex items-center justify-evenly flex-col h-full sm:flex-row w-10/12 sm:gap-8 sm:w-[95%]">
