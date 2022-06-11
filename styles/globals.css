@@ -42,13 +42,6 @@
       inset 4px 4px 6px 0 rgba(40, 47, 55, .2);
       transition: all 1s ease;
   } 
-
-  .bg-full {
-    background-size: 100% 100%;
-  }
-  .max-h-75vh {
-    max-height: 75vh;
-  }
 }
 
 /* -------------------------------- */
