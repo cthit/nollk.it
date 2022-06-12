@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
+
 type Member = {
     name: string,
     role: string

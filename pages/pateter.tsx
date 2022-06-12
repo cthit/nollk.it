@@ -320,9 +320,11 @@ const Pateter: NextPage = () => {
     //It would be nice if this method executed a scroll 
   }
 
+
   return (
     <>
       <div className="bg-cover bg-top h-full w-screen" style={{ backgroundImage: "url('/bilder/bakgrund/2021.jpg')" }} >
+
         <div id="first-page" className={`bg-black h-full transition duration-700 bg-opacity-80`}>
           <ReactPageScroller
             animationTimer={700}
