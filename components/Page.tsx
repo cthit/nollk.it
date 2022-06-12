@@ -10,7 +10,7 @@ export default function Page(props: PageProps) {
     <>
       {/* Background */}
       <div className="fixed w-screen h-screen overflow-hidden flex flex-col items-center bg-black -z-50">
-        <div className={`bg-cover bg-top w-full h-full ${props.blackout ? "opacity-20" : ""}`} style={{ backgroundImage: "url('/bilder/bakgrund/2021.jpg')" }}></div>
+        <div className={`bg-cover bg-top w-full h-full bg-portrait landscape:bg-landscape ${props.blackout ? "opacity-20" : ""}`}></div>
       </div>
 
       {/* Content */}
