@@ -16,7 +16,7 @@ export default function Countdown() {
     seconds: 37,
   })
 
-  const criticalDate = new Date("2022-08-16T00:00:00")
+  const criticalDate = new Date("2022-08-16T08:00:00")
 
   function getTimeLeft(): TimeLeft {
     const todaysDate = new Date()
