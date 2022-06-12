@@ -323,7 +323,7 @@ const Pateter: NextPage = () => {
 
   return (
     <>
-      <div className="bg-cover bg-top h-full w-screen" style={{ backgroundImage: "url('/bilder/bakgrund/2021.jpg')" }} >
+      <div className="bg-cover bg-top h-full w-screen bg-portrait landscape:bg-landscape" >
 
         <div id="first-page" className={`bg-black h-full transition duration-700 bg-opacity-80`}>
           <ReactPageScroller
@@ -355,6 +355,10 @@ const Pateter: NextPage = () => {
             ))}
             
           </ReactPageScroller>
+        </div>
+
+        <div className="patetNav fixed flex flex-col items-center right-0 self-center top-1/4 mr-6">
+              <span> test </span>
         </div>
       </div>
       <div className="fixed flex flex-col items-center w-screen top-0 z-50 pointer-events-none">
