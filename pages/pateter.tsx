@@ -125,12 +125,12 @@ const Pateter: NextPage = () => {
       imageDesc: "Uppifrån vänster",
       members: [
         { name: 'Louise "Lollo" Lorentzon', role: 'Modulchef' },
-        { name: 'Anna “Chikki” Nylander', role: 'Uppdragschef' },
-        { name: 'Hampus “HåDD” Dahlin', role: 'Ordförande' },
-        { name: 'Daniel “Eineving” Eineving', role: 'Kassör' },
-        { name: 'Simon “siMsOn” Nielsen', role: 'PR-chef' },
-        { name: 'Oskar “RutAn” Rutqvist', role: 'Phadderchef' },
-        { name: 'Simon “Pendla” Petersson', role: 'Infochef' },
+        { name: 'Anna "Chikki" Nylander', role: 'Uppdragschef' },
+        { name: 'Hampus "HåDD" Dahlin', role: 'Ordförande' },
+        { name: 'Daniel "Eineving" Eineving', role: 'Kassör' },
+        { name: 'Simon "siMsOn" Nielsen', role: 'PR-chef' },
+        { name: 'Oskar "RutAn" Rutqvist', role: 'Phadderchef' },
+        { name: 'Simon "Pendla" Petersson', role: 'Infochef' },
       ],
     },
     {
@@ -138,13 +138,13 @@ const Pateter: NextPage = () => {
       year: "2013",
       imageDesc: "Från vänster",
       members: [
-        { name: 'William “golvmopp” Dahlberg', role: 'Infochef' },
-        { name: 'Sara “Soya” Nadi', role: 'PR-chef' },
-        { name: 'Danny “Lam(m)” Lam', role: 'Nolluppdragschef' },
-        { name: 'Oskar “Rascal” Nyberg', role: 'Ordförande' },
-        { name: 'Victor “Trivoc” Nilsson', role: 'Kassör' },
-        { name: 'Julia “Jules” Friberg', role: 'Modulchef' },
-        { name: 'Oskar “PJ” Dahlberg', role: 'Phadderchef' },
+        { name: 'William "golvmopp" Dahlberg', role: 'Infochef' },
+        { name: 'Sara "Soya" Nadi', role: 'PR-chef' },
+        { name: 'Danny "Lam(m)" Lam', role: 'Nolluppdragschef' },
+        { name: 'Oskar "Rascal" Nyberg', role: 'Ordförande' },
+        { name: 'Victor "Trivoc" Nilsson', role: 'Kassör' },
+        { name: 'Julia "Jules" Friberg', role: 'Modulchef' },
+        { name: 'Oskar "PJ" Dahlberg', role: 'Phadderchef' },
       ],
     },
     {
@@ -152,13 +152,13 @@ const Pateter: NextPage = () => {
       year: "2012",
       imageDesc: "Uppifrån vänster",
       members: [
-        { name: 'Jonathan “Kara” Kara', role: 'Nolluppdragschef' },
-        { name: 'Johan “Horv” Andersson', role: 'Phadderchef' },
-        { name: 'Paula “PoW” Eriksson', role: 'Ordförande' },
-        { name: 'Daniel “Roras” Augurell', role: 'Sponschef' },
-        { name: 'Daniel “DBBE” Bergqvist', role: 'Kassör' },
-        { name: 'Linus “Mushu” Karlsson', role: 'PR-chef' },
-        { name: 'Magnus “Bosch” Huttu', role: 'Modulchef' },
+        { name: 'Jonathan "Kara" Kara', role: 'Nolluppdragschef' },
+        { name: 'Johan "Horv" Andersson', role: 'Phadderchef' },
+        { name: 'Paula "PoW" Eriksson', role: 'Ordförande' },
+        { name: 'Daniel "Roras" Augurell', role: 'Sponschef' },
+        { name: 'Daniel "DBBE" Bergqvist', role: 'Kassör' },
+        { name: 'Linus "Mushu" Karlsson', role: 'PR-chef' },
+        { name: 'Magnus "Bosch" Huttu', role: 'Modulchef' },
       ],
     },
     {
@@ -166,13 +166,13 @@ const Pateter: NextPage = () => {
       year: "2011",
       imageDesc: "Uppifrån vänster",
       members: [
-        { name: 'Samuel “samwise” Tiensuu', role: 'Phadderchef' },
-        { name: 'Marika “Kohina” Hansson', role: 'Ordförande' },
-        { name: 'Jack “weeeeeew” Pettersson', role: 'Nolluppdragschef' },
-        { name: 'Cecilia “Vatten” Geijer', role: 'Kassör' },
-        { name: 'Magnus “µ” Larsson', role: 'PR-chef' },
-        { name: 'Josefina “Juice” Andreasson', role: 'Modulchef' },
-        { name: 'Mathias “møhl” Forsén', role: 'Sponschef' },
+        { name: 'Samuel "samwise" Tiensuu', role: 'Phadderchef' },
+        { name: 'Marika "Kohina" Hansson', role: 'Ordförande' },
+        { name: 'Jack "weeeeeew" Pettersson', role: 'Nolluppdragschef' },
+        { name: 'Cecilia "Vatten" Geijer', role: 'Kassör' },
+        { name: 'Magnus "µ" Larsson', role: 'PR-chef' },
+        { name: 'Josefina "Juice" Andreasson', role: 'Modulchef' },
+        { name: 'Mathias "møhl" Forsén', role: 'Sponschef' },
       ],
     },
     {
@@ -180,13 +180,13 @@ const Pateter: NextPage = () => {
       year: "2010",
       imageDesc: "Uppifrån vänster",
       members: [
-        { name: 'Ludvig “JC” Gjälby', role: 'Sponschef' },
-        { name: 'Anders “Lall” Larsson', role: 'PR-chef' },
-        { name: 'Julia “Jule” Adamsson', role: 'Phadderchef' },
-        { name: 'Tomas “Tompa” Urdell', role: 'Kassör' },
-        { name: 'Markus “_us” Pettersson', role: 'Nolluppdragschef' },
-        { name: 'Oscar “Poscar” Söderlund', role: 'Modulchef' },
-        { name: 'Daniel “Vind” Ström', role: 'Ordförande' },
+        { name: 'Ludvig "JC" Gjälby', role: 'Sponschef' },
+        { name: 'Anders "Lall" Larsson', role: 'PR-chef' },
+        { name: 'Julia "Jule" Adamsson', role: 'Phadderchef' },
+        { name: 'Tomas "Tompa" Urdell', role: 'Kassör' },
+        { name: 'Markus "_us" Pettersson', role: 'Nolluppdragschef' },
+        { name: 'Oscar "Poscar" Söderlund', role: 'Modulchef' },
+        { name: 'Daniel "Vind" Ström', role: 'Ordförande' },
       ],
     },
     {
@@ -194,13 +194,13 @@ const Pateter: NextPage = () => {
       year: "2009",
       imageDesc: "Uppifrån vänster",
       members: [
-        { name: 'David “Zorek” Sundelius', role: 'Phadderchef' },
-        { name: 'Gustav “Ægarn” Landén', role: 'Modulchef' },
-        { name: 'Björn “Björne” Lexell', role: 'Kassör' },
-        { name: 'David “Björk” Björkheim', role: 'PR-chef' },
-        { name: 'Jessica “Solitude” Andersson', role: 'Sponschef' },
-        { name: 'Fredrik “Freddie” Axelsson', role: 'Ordförande' },
-        { name: 'Fiona “Fiona” Rolander', role: 'Nolluppdragschef' },
+        { name: 'David "Zorek" Sundelius', role: 'Phadderchef' },
+        { name: 'Gustav "Ægarn" Landén', role: 'Modulchef' },
+        { name: 'Björn "Björne" Lexell', role: 'Kassör' },
+        { name: 'David "Björk" Björkheim', role: 'PR-chef' },
+        { name: 'Jessica "Solitude" Andersson', role: 'Sponschef' },
+        { name: 'Fredrik "Freddie" Axelsson', role: 'Ordförande' },
+        { name: 'Fiona "Fiona" Rolander', role: 'Nolluppdragschef' },
       ],
     },
     {
@@ -208,13 +208,13 @@ const Pateter: NextPage = () => {
       year: "2008",
       imageDesc: "Uppifrån",
       members: [
-        { name: 'Alexander “Widar den vidunderlige” Widar', role: 'Nolluppdragschef' },
-        { name: 'Birger “Jalle” Rydback', role: 'Phadderchef' },
-        { name: 'Erik “Thinner” Larkö', role: 'Ordförande' },
-        { name: 'John “JohnL” Lundberg', role: 'PR-chef' },
-        { name: 'Carl “Eng” Engstöm', role: 'Modulchef' },
-        { name: 'Erik “Bark” Axelsson', role: 'Kassör' },
-        { name: 'Lisa “Chihua” Ryrholm', role: 'Sponschef' },
+        { name: 'Alexander "Widar den vidunderlige" Widar', role: 'Nolluppdragschef' },
+        { name: 'Birger "Jalle" Rydback', role: 'Phadderchef' },
+        { name: 'Erik "Thinner" Larkö', role: 'Ordförande' },
+        { name: 'John "JohnL" Lundberg', role: 'PR-chef' },
+        { name: 'Carl "Eng" Engstöm', role: 'Modulchef' },
+        { name: 'Erik "Bark" Axelsson', role: 'Kassör' },
+        { name: 'Lisa "Chihua" Ryrholm', role: 'Sponschef' },
       ],
     },
     {
@@ -222,13 +222,13 @@ const Pateter: NextPage = () => {
       year: "2007",
       imageDesc: "Uppifrån vänster",
       members: [
-        { name: 'Marcus “MaKKan” Sundberg', role: 'Kassör' },
-        { name: 'Hans “Hasse” Andersson', role: 'PR-chef' },
-        { name: 'Erik “Igno” Jutemar', role: 'Phadderchef' },
-        { name: 'Olof “Grul” Kamp', role: 'Modulchef' },
-        { name: 'Josef “Findus” Eklann', role: 'Ordförande' },
+        { name: 'Marcus "MaKKan" Sundberg', role: 'Kassör' },
+        { name: 'Hans "Hasse" Andersson', role: 'PR-chef' },
+        { name: 'Erik "Igno" Jutemar', role: 'Phadderchef' },
+        { name: 'Olof "Grul" Kamp', role: 'Modulchef' },
+        { name: 'Josef "Findus" Eklann', role: 'Ordförande' },
         { name: 'Patric Westberg', role: 'PR-chef' },
-        { name: 'Nathalie “Natta” Nilsson', role: 'Nolluppdragschef' },
+        { name: 'Nathalie "Natta" Nilsson', role: 'Nolluppdragschef' },
       ],
     },
     {
@@ -236,13 +236,13 @@ const Pateter: NextPage = () => {
       year: "2006",
       imageDesc: "Uppifrån vänster",
       members: [
-        { name: 'Johan “Boberg” Boberg', role: 'Kassör' },
-        { name: 'Nicklas “Viddo” Gummesson', role: 'PR- och sponsorchef' },
-        { name: 'Gustav “Gussoh” Sohtell', role: 'Modulchef' },
-        { name: 'Sebastian “sebbz” Jansson', role: 'Ordförande' },
+        { name: 'Johan "Boberg" Boberg', role: 'Kassör' },
+        { name: 'Nicklas "Viddo" Gummesson', role: 'PR- och sponsorchef' },
+        { name: 'Gustav "Gussoh" Sohtell', role: 'Modulchef' },
+        { name: 'Sebastian "sebbz" Jansson', role: 'Ordförande' },
         { name: 'Frida Polheimer', role: 'Kassör' },
-        { name: 'Josefine “Jossan” Nimstedt', role: 'Ölchef' },
-        { name: 'Andreas “Dukken” Duchen', role: 'Phadderchef' },
+        { name: 'Josefine "Jossan" Nimstedt', role: 'Ölchef' },
+        { name: 'Andreas "Dukken" Duchen', role: 'Phadderchef' },
       ],
     },
     {
@@ -316,36 +316,51 @@ const Pateter: NextPage = () => {
     }
   }
 
-  return (
-    <div className="fullPage">
+  const scrollDown = () => {
+    //It would be nice if this method executed a scroll 
+  }
 
-      <div className="bg-cover bg-top h-full overflow-hidden w-screen bg-portrait landscape:bg-landscape">
+
+  return (
+    <>
+      <div className="bg-cover bg-top h-full w-screen" style={{ backgroundImage: "url('/bilder/bakgrund/2021.jpg')" }} >
+
         <div id="first-page" className={`bg-black h-full transition duration-700 bg-opacity-80`}>
           <ReactPageScroller
             animationTimer={700}
-            animationTimerBuffer={300}
+            animationTimerBuffer={0}
             renderAllPagesOnFirstRender={true}
             onBeforePageScroll={changeBgOpacity}
           >
-            <div className="absolute top-20 w-full flex flex-col items-center overflow-hidden">
-              <div className="flex flex-col items-center w-10/12 lg:w-3/4">
-                <PageInfo heading="Pateter">
-                  På Chalmers är patet ett allmänt namn för personer som tidigare suttit i en förening/kommitté. De som har suttit i just NollKIT tidigare år kallas för NollQIT. De kan vara bra att ha lite då och då, både för NollKIT och för Nollan, eftersom de alltid svarar glatt på frågor om NollKIT råkar vara borta för stunden.
-                </PageInfo>
+
+            <>
+              <div className="absolute top-20 w-full flex flex-col items-center">
+                <div className="flex flex-col items-center w-10/12 lg:w-3/4">
+                  <PageInfo heading="Pateter">
+                    På Chalmers är patet ett allmänt namn för personer som tidigare suttit i en förening/kommitté. De som har suttit i just NollKIT tidigare år kallas för NollQIT. De kan vara bra att ha lite då och då, både för NollKIT och för Nollan, eftersom de alltid svarar glatt på frågor om NollKIT råkar vara borta för stunden.
+                  </PageInfo>
+                </div>
               </div>
-            </div>
-            {allNollkit.map((committee, index) => (
-              <div key={index}>
+              <div className="h-screen flex justify-center items-end pb-24 lg:pb-12">
+                <div className="flex flex-col items-center cursor-pointer" onClick={scrollDown}>
+                  <p className="text-sm italic">Skrolla för pateter</p>
+                </div>
+              </div>
+            </>
+
+            {allNollkit.map( committee => (
+              <div key={committee.name}>
                 <Precursor precursor={committee} />
               </div>
             ))}
+            
           </ReactPageScroller>
         </div>
       </div>
       <div className="fixed flex flex-col items-center w-screen top-0 z-50 pointer-events-none">
         <Header blackout={true} />
       </div>
-    </div>
+    </>
   )
 }
 
