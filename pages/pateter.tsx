@@ -366,9 +366,9 @@ const Pateter: NextPage = () => {
           </ReactPageScroller>
         </div>
 
-        <div className="patetNav fixed flex flex-col items-center right-0 self-center top-1/4 mr-6">
+        <div className="fixed flex flex-col items-center right-0 self-center top-1/4 mr-6">
           {[...Array(allNollkit.length)].map((_, index) => (
-            <span>test</span>
+            <span key={index} onClick={() => {scrollTo(index)}} className="w-2 h-2 bg-slate-100 rounded-full m-2 hover:bg-slate-400 hover:w-3 hover:h-3 p-1"></span>
           ))}
         </div>
       </div>
