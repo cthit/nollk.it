@@ -319,6 +319,16 @@ const Pateter: NextPage = () => {
     }
   }
 
+  const toggleTopButton = (index: number) => {
+    const topButton = document.getElementById("top-button")
+    if (!topButton) return
+    if (index === 0) {
+      topButton.style.opacity = "0"
+    } else {
+      topButton.style.opacity = "0.7"
+    }
+  }
+
   const scrollTo = (index: number) => {
     //It would be nice if this method executed a scroll
     setCurrentPage(index)
@@ -327,6 +337,7 @@ const Pateter: NextPage = () => {
   const handlePageChange = (index: number) => {
     setCurrentPage(index)
     changeBgOpacity(index)
+    toggleTopButton(index)
   };
 
   return (
@@ -368,9 +379,13 @@ const Pateter: NextPage = () => {
 
         <div className="fixed flex flex-col items-center right-0 self-center top-1/4 mr-6">
           {[...Array(allNollkit.length)].map((_, index) => (
-            <span key={index} onClick={() => {scrollTo(index)}} className="w-2 h-2 bg-slate-100 rounded-full m-2 hover:bg-slate-400 hover:w-3 hover:h-3 p-1"></span>
+            <span key={index} onClick={() => { scrollTo(index) }} className="w-2 h-2 bg-slate-100 rounded-full m-2 hover:bg-slate-400 hover:w-3 hover:h-3 p-1"></span>
           ))}
         </div>
+        <div id="top-button" onClick={() => scrollTo(0)} className="fixed right-10 bottom-10 p-2 opacity-0 bg-black bg-opacity-70 hover:opacity-100 hover:bg-opacity-100 transition-opacity duration-700">
+          <span className="">Scroll to top</span>
+        </div>
+
       </div>
       <div className="fixed flex flex-col items-center w-screen top-0 z-50 pointer-events-none">
         <Header blackout={true} />
