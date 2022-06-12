@@ -319,7 +319,7 @@ const Pateter: NextPage = () => {
     }
   }
 
-  const scrollDown = (index: number) => {
+  const scrollTo = (index: number) => {
     //It would be nice if this method executed a scroll
     setCurrentPage(index)
   }
@@ -351,7 +351,7 @@ const Pateter: NextPage = () => {
                 </div>
               </div>
               <div className="h-screen flex justify-center items-end pb-24 lg:pb-12">
-                <div className="flex flex-col items-center cursor-pointer" onClick={() => scrollDown(1)}>
+                <div className="flex flex-col items-center cursor-pointer" onClick={() => scrollTo(1)}>
                   <p className="text-sm italic">Skrolla för pateter</p>
                 </div>
               </div>
