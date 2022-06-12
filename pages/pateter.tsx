@@ -351,8 +351,11 @@ const Pateter: NextPage = () => {
                 </div>
               </div>
               <div className="h-screen flex justify-center items-end pb-24 lg:pb-12">
-                <div className="flex flex-col items-center cursor-pointer" onClick={() => scrollDown(1)}>
+                <div className="flex flex-col gap-4 items-center cursor-pointer" onClick={() => scrollDown(1)}>
                   <p className="text-sm italic">Skrolla för pateter</p>
+                  <div className="w-16 h-16 rounded-full transition opacity-80 hover:opacity-100">
+                    <img src="down.svg" alt="Pil som pekar nedåt" />
+                  </div>
                 </div>
               </div>
             </>
