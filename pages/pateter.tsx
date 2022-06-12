@@ -348,17 +348,19 @@ const Pateter: NextPage = () => {
               </div>
             </>
 
-            {allNollkit.map( committee => (
+            {allNollkit.map(committee => (
               <div key={committee.name}>
                 <Precursor precursor={committee} />
               </div>
             ))}
-            
+
           </ReactPageScroller>
         </div>
 
         <div className="patetNav fixed flex flex-col items-center right-0 self-center top-1/4 mr-6">
-              <span> test </span>
+          {[...Array(allNollkit.length)].map((_, index) => (
+            <span>test</span>
+          ))}
         </div>
       </div>
       <div className="fixed flex flex-col items-center w-screen top-0 z-50 pointer-events-none">
