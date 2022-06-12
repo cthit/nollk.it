@@ -306,6 +306,9 @@ const Pateter: NextPage = () => {
 
   ]
 
+
+  const [currentPage, setCurrentPage] = useState<number>(0)
+
   const changeBgOpacity = (index: number) => {
     const fp = document.getElementById("first-page")
     if (!fp) return
@@ -316,10 +319,15 @@ const Pateter: NextPage = () => {
     }
   }
 
-  const scrollDown = () => {
-    //It would be nice if this method executed a scroll 
+  const scrollDown = (index: number) => {
+    //It would be nice if this method executed a scroll
+    setCurrentPage(index)
   }
 
+  const handlePageChange = (index: number) => {
+    setCurrentPage(index)
+    changeBgOpacity(index)
+  };
 
   return (
     <>
@@ -330,7 +338,8 @@ const Pateter: NextPage = () => {
             animationTimer={700}
             animationTimerBuffer={0}
             renderAllPagesOnFirstRender={true}
-            onBeforePageScroll={changeBgOpacity}
+            onBeforePageScroll={handlePageChange}
+            customPageNumber={currentPage}
           >
 
             <>
@@ -342,7 +351,7 @@ const Pateter: NextPage = () => {
                 </div>
               </div>
               <div className="h-screen flex justify-center items-end pb-24 lg:pb-12">
-                <div className="flex flex-col items-center cursor-pointer" onClick={scrollDown}>
+                <div className="flex flex-col items-center cursor-pointer" onClick={() => scrollDown(1)}>
                   <p className="text-sm italic">Skrolla för pateter</p>
                 </div>
               </div>
