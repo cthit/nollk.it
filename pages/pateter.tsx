@@ -5,7 +5,6 @@ import Header from "../components/Header"
 import ReactPageScroller from 'react-page-scroller';
 import { useState } from "react";
 import PageInfo from "../components/PageInfo";
-import { doesNotThrow } from "assert";
 
 const Pateter: NextPage = () => {
 
