@@ -331,7 +331,7 @@ const Pateter: NextPage = () => {
 
   return (
     <>
-      <div className="bg-cover bg-top h-full w-screen" style={{ backgroundImage: "url('/bilder/bakgrund/2021.jpg')" }} >
+      <div className="bg-cover bg-top h-full w-screen bg-portrait landscape:bg-landscape">
 
         <div id="first-page" className={`bg-black h-full transition duration-700 bg-opacity-80`}>
           <ReactPageScroller
@@ -350,9 +350,10 @@ const Pateter: NextPage = () => {
                   </PageInfo>
                 </div>
               </div>
-              <div className="h-screen flex justify-center items-end pb-24 lg:pb-12">
-                <div className="flex flex-col items-center cursor-pointer" onClick={() => scrollDown(1)}>
+              <div className="h-screen flex justify-center items-end pb-12">
+                <div className="flex flex-col gap-4 items-center cursor-pointer py-2" onClick={() => scrollDown(1)}>
                   <p className="text-sm italic">Skrolla för pateter</p>
+                  <img className="downarrow w-10 transition opacity-60" src={"/down.svg"} alt="arrow down" />
                 </div>
               </div>
             </>
