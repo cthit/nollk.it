@@ -331,6 +331,12 @@ const Pateter: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>Pateter</title>
+        <meta name="description" content="Pateter är de som har suttit NollKIT tidigare år" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <div className="bg-cover bg-top h-full w-screen bg-portrait landscape:bg-landscape">
 
         <div id="first-page" className={`bg-black h-full transition duration-700 bg-opacity-80`}>

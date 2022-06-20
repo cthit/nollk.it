@@ -8,8 +8,8 @@ const Modul: NextPage = () => {
     <>
       <Head>
         <title>Modul</title>
-        <meta name="description" content="Här kan du hitta alla gamla nollmoduler!" />
-        <link rel="icon" href="/favicon.png" />
+        <meta name="description" content="Modulen är din handbok för alla frågor kring mottagningen" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Page blackout>
