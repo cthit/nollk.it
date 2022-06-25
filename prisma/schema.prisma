@@ -11,20 +11,19 @@ datasource db {
 }
 
 model Committee {
-  name     String    @id @map("_id")
-  year     Int       @unique
+  year     Int       @id @map("_id")
   firstday DateTime?
   fonturl  String?
   members  Member[]
 }
 
 model Member {
-  name          String     @id @map("_id")
+  name          String    @id @map("_id")
   role          String
   greeting      String?
   text          String?
-  Committee     Committee? @relation(fields: [committeeName], references: [name])
-  committeeName String?
+  Committee     Committee @relation(fields: [year], references: [year])
+  year          Int
 }
 
 model Calendar {
