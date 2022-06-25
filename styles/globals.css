@@ -130,11 +130,12 @@ div:hover > .downarrow {
   padding: 2px 4px 0;
 }
 
+/* Remove outer border from calendar events */
 .fc-timegrid-event-harness-inset .fc-timegrid-event {
   box-shadow: none;
 }
 
-/* Remove event border */
+/* Remove inner event border */
 .fc-v-event {
   border: none;
 }
