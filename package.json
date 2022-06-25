@@ -15,6 +15,7 @@
     "next": "12.1.6",
     "next-transpile-modules": "^9.0.0",
     "node-ical": "^0.15.1",
+    "prisma": "^3.15.2",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-page-scroller": "^2.2.1"
