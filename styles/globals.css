@@ -148,6 +148,7 @@ div:hover > .downarrow {
 /* Event time */
 .fc-timegrid-event .fc-event-time {
   font-size: 8px;
+  white-space: break-spaces;
 }
 
 /* Event title */

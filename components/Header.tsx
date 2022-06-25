@@ -72,7 +72,7 @@ function DesktopHeader() {
       <div className="w-full flex flex-col items-end relative">
         <Link href="/">
           <a className="w-20 h-20 absolute -top-5">
-            <img src="/bilder/märke/2022.png" alt="NollKIT'22" />
+            <img src="/bilder/2022/märke.png" alt="NollKIT'22" />
           </a>
         </Link>
       </div>
@@ -94,14 +94,25 @@ function DesktopHeader() {
         </React.Fragment>
       ))}
 
-      {headerCategories.map(category => (
+      {headerCategories.map((category, index) => (
         <React.Fragment key={category.name}>
           <div className="flex items-center">
             <div className="border-t border-t-white grow"></div>
           </div>
           <div className="flex items-center">
             <div className="border-t border-t-white grow"></div>
-            <p className="px-3 text-xs font-light">{category.name}</p>
+            {
+              index === 0 ? 
+              <select className="px-3 text-xs font-light bg-transparent outline-none appearance-none cursor-pointer">
+                <option selected disabled hidden>{category.name}</option>
+                <option className="bg-black">2022</option>
+                <option className="bg-black">2021</option>
+                <option className="bg-black">2020</option>
+                <option className="bg-black">2019</option>
+              </select> 
+              : 
+              <p className="px-3 text-xs font-light">{category.name}</p>
+            }
             <div className="border-t border-t-white grow"></div>
           </div>
         </React.Fragment>
@@ -118,9 +129,20 @@ function MobileHeader() {
     <>
       <div className={`fixed top-0 left-0 w-full h-full pt-28 bg-black/90 transition duration-300 ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
         {
-          headerCategories.map(category => (
+          headerCategories.map((category, index) => (
             <div key={category.name} className="ml-20">
-              <p className="text-xl italic mt-8 mb-3">{category.name}</p>
+              {
+                index === 0 ? 
+                <select className="text-xl italic mt-8 mb-3 bg-transparent outline-none appearance-none cursor-pointer">
+                  <option selected disabled hidden>{category.name}</option>
+                  <option className="bg-black">2022</option>
+                  <option className="bg-black">2021</option>
+                  <option className="bg-black">2020</option>
+                  <option className="bg-black">2019</option>
+                </select> 
+                : 
+                <p className="text-xl italic mt-8 mb-3">{category.name}</p>
+              }
               {
                 category.items.map(item => (
                   <Link href={`/${item.href}`} key={item.text}>

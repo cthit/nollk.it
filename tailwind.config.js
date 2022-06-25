@@ -10,8 +10,8 @@ module.exports = {
         'sans': ['Lato'],
       },
       backgroundImage: {
-        'portrait': "url('/bilder/bakgrund/2022p.jpg')",
-        'landscape': "url('/bilder/bakgrund/2022.jpg')",
+        'portrait': "url('/bilder/2022/portrait.jpg')",
+        'landscape': "url('/bilder/2022/landscape.jpg')",
       }
     },
     fontFamily: {
