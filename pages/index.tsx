@@ -21,6 +21,7 @@ interface IndexProps {
 }
 
 const Index: NextPage<IndexProps> = ( { unparsedEvents } ) => {
+
   return (
     <>
       <Head>

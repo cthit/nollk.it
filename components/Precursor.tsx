@@ -24,7 +24,7 @@ const Precursor = ({ precursor }: { precursor: Committee }) => {
 
                     {/* Image */}
                     <div className="sm:max-w-[55%] sm:flex sm:items-center">
-                        <img src={`/bilder/kommitte/${precursor.year}.jpg`} alt={precursor.name} className="max-h-[30vh] sm:max-h-[75vh]" />
+                        <img src={`/bilder/${precursor.year}/kommitte.jpg`} alt={precursor.name} className="max-h-[30vh] sm:max-h-[75vh]" />
                     </div>
 
                     {/* Text */}
