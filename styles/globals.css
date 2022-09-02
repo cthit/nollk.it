@@ -125,6 +125,13 @@ div:hover > .downarrow {
   display: none;
 }
 
+/* Toolbar title styling */
+.fc .fc-toolbar-title {
+  font-size: 1.25rem;
+  font-style: italic;
+  text-transform: capitalize;
+}
+
 /* Calendar event blocks */
 .fc-timegrid-event .fc-event-main {
   padding: 2px 4px 0;

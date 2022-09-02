@@ -4,24 +4,34 @@ import ical from 'node-ical'
 import Page from '../components/Page'
 import Countdown from '../components/Countdown'
 import ToDo from '../components/ToDo'
+import { PrismaClient } from '@prisma/client'
 
 export const getServerSideProps = async () => {
+  const prisma = new PrismaClient()
+
+  const allStartDates = (await prisma.committee.findMany({
+    select: {
+      firstday: true,
+    },
+  })).map(c => c.firstday ?? "").filter(d => d)
+
+  console.log(allStartDates)
 
   const MOTTAGNING_EVENTS_URL = "https://calendar.google.com/calendar/ical/71hb815m1g75pje527e7stt240%40group.calendar.google.com/public/basic.ics"
 
   const mottagningEvents = await ical.async.fromURL(MOTTAGNING_EVENTS_URL)
 
   return {
-    props: { unparsedEvents: JSON.stringify(mottagningEvents) }
+    props: { unparsedEvents: JSON.stringify(mottagningEvents), criticalDates: allStartDates }
   }
 }
 
 interface IndexProps {
   unparsedEvents: string,
+  criticalDates: string[],
 }
 
-const Index: NextPage<IndexProps> = ( { unparsedEvents } ) => {
-
+const Index: NextPage<IndexProps> = (props) => {
   return (
     <>
       <Head>
@@ -32,8 +42,8 @@ const Index: NextPage<IndexProps> = ( { unparsedEvents } ) => {
 
       <Page>
         <div className="mt-12 flex flex-col gap-6 items-center lg:flex-row lg:mt-24 lg:gap-[20vw]">
-          <Countdown />
-          <ToDo unparsedEvents={ unparsedEvents } />
+          <Countdown criticalDates={props.criticalDates} />
+          <ToDo unparsedEvents={props.unparsedEvents} />
         </div>
       </Page>
     </>

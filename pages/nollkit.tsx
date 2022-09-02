@@ -4,6 +4,7 @@ import PageInfo from '../components/PageInfo'
 import Page from '../components/Page'
 import YearContext from '../util/YearContext'
 import { Member, PrismaClient } from '@prisma/client'
+import { useContext } from 'react'
 
 export const getServerSideProps = async () => {
   const prisma = new PrismaClient()
@@ -19,7 +20,9 @@ interface NollkitProps {
   allMembers: Member[]
 }
 
-const Nollkit: NextPage<NollkitProps> = ( { allMembers } ) => {
+const Nollkit: NextPage<NollkitProps> = ({ allMembers }) => {
+
+  const ctx = useContext(YearContext)
 
   return (
     <>
@@ -35,29 +38,26 @@ const Nollkit: NextPage<NollkitProps> = ( { allMembers } ) => {
           <br /><br />
           För att hela denna resan ska gå runt har vi lite olika ansvarsområden som kan läsa om nedan. Vi ser framåt att träffa er alla i augusti!
         </PageInfo>
-        <YearContext.Consumer>
-          { ctx => (
-            <div className="flex flex-col lg:w-3/5 items-center mt-32 lg:mt-48">
-              {
-                allMembers.filter( m => m.year.toString() === ctx.year ).map((n, i) => {
-                  return (
-                    <div key={n.role} className="grid grid-cols-5 gap-5 mb-8">
 
-                      {i % 2 === 0 ? <></> : <NollkitDesc {...n} />}
-                      <div className={`col-span-2 bg-cover bg-top aspect-[4/5]`} style={{ backgroundImage: `url('/bilder/${ctx.year}/poster/${n.role}.jpg` }}></div>
-                      {i % 2 === 0 ? <NollkitDesc {...n} /> : <></>}
+        <div className="flex flex-col lg:w-3/5 items-center mt-32 lg:mt-48">
+          {
+            allMembers.filter(m => m.year.toString() === ctx.year).map((n, i) => {
+              return (
+                <div key={n.role} className="grid grid-cols-5 gap-5 mb-8">
 
-                      {/* Renders text below if mobile */}
-                      <div className="col-span-5 md:hidden">
-                        <NollkitText {...n} />
-                      </div>
-                    </div>
-                  )
-                })
-              }
-            </div>
-          )}
-        </YearContext.Consumer>
+                  {i % 2 === 0 ? <></> : <NollkitDesc {...n} />}
+                  <div className={`col-span-2 bg-cover bg-top aspect-[4/5]`} style={{ backgroundImage: `url('/bilder/${ctx.year}/poster/${n.role}.jpg` }}></div>
+                  {i % 2 === 0 ? <NollkitDesc {...n} /> : <></>}
+
+                  {/* Renders text below if mobile */}
+                  <div className="col-span-5 md:hidden">
+                    <NollkitText {...n} />
+                  </div>
+                </div>
+              )
+            })
+          }
+        </div>
       </Page>
     </>
   )

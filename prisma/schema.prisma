@@ -12,7 +12,7 @@ datasource db {
 
 model Committee {
   year     Int      @id @map("_id")
-  firstday String?
+  firstday String? //Should be in format "YYYY-MM-DDTHH:MM:SS"
   fonturl  String?
   members  Member[]
 }
