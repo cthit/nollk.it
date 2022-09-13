@@ -6,10 +6,14 @@ const withTM = require("next-transpile-modules")([
   "@fullcalendar/react",
   "@fullcalendar/timegrid",
   "@fullcalendar/daygrid",
+  "next-fonts",
 ]);
 
 const nextConfig = {
   reactStrictMode: true,
+  webpack(config, options) {
+    return config;
+  },
   async redirects() {
     return [
       {
