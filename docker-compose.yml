@@ -8,7 +8,10 @@ services:
       context: ./
       dockerfile: Dockerfile
     volumes:
-      - /usr/src/app
-      - /usr/src/app/.next
+      - app:/usr/src/app
+      - next:/usr/src/app/.next
     env_file:
       - .env
+volumes:
+  app:
+  next:
