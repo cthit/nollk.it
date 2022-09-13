@@ -1,6 +1,6 @@
 FROM node:18-alpine
 
-ENV PORT 3002
+ENV PORT 3000
 
 # Create app directory
 RUN mkdir -p /usr/src/app
