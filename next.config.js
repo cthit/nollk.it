@@ -8,8 +8,19 @@ const withTM = require("next-transpile-modules")([
   "@fullcalendar/daygrid",
 ]);
 
+const withFonts = require('next-fonts');
+
+module.exports = withFonts({
+   webpack(config, options) {
+     return config;
+   }
+}); 
+
 const nextConfig = {
   reactStrictMode: true,
+  webpack(config, options) {
+    return config;
+  },
   async redirects() {
     return [
       {
