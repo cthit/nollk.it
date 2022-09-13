@@ -124,16 +124,24 @@ div:hover > .downarrow {
   display: none;
 }
 
+/* Toolbar title styling */
+.fc .fc-toolbar-title {
+  font-size: 1.25rem;
+  font-style: italic;
+  text-transform: capitalize;
+}
+
 /* Calendar event blocks */
 .fc-timegrid-event .fc-event-main {
   padding: 2px 4px 0;
 }
 
+/* Remove outer border from calendar events */
 .fc-timegrid-event-harness-inset .fc-timegrid-event {
   box-shadow: none;
 }
 
-/* Remove event border */
+/* Remove inner event border */
 .fc-v-event {
   border: none;
 }
@@ -146,6 +154,7 @@ div:hover > .downarrow {
 /* Event time */
 .fc-timegrid-event .fc-event-time {
   font-size: 8px;
+  white-space: break-spaces;
 }
 
 /* Event title */

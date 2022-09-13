@@ -9,25 +9,26 @@ import ical from 'node-ical'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import momentPlugin from '@fullcalendar/moment'
+import { PrismaClient } from '@prisma/client'
+import React, { useContext } from 'react'
+import YearContext from '../util/YearContext'
 
 export const getServerSideProps = async () => {
 
-  // Make sure calendar is public!! Otherwise you get a 404 error
-  const MOTTAGNING_EVENTS_URL = "https://calendar.google.com/calendar/ical/71hb815m1g75pje527e7stt240%40group.calendar.google.com/public/basic.ics"
-  const INTROCOURSE_EVENTS_URL = "https://calendar.google.com/calendar/ical/m60j18stkosv9g9o2jf2t7b080%40group.calendar.google.com/public/basic.ics"
+  const prisma = new PrismaClient()
 
-
-  const mottagningEvents = await ical.async.fromURL(MOTTAGNING_EVENTS_URL)
-  const introcourseEvents = await ical.async.fromURL(INTROCOURSE_EVENTS_URL)
+  const calendarURLs = (await prisma.links.findFirst())?.calendarURLs ?? []
+  const calendarEvents = await Promise.all(calendarURLs.map(async url => await ical.async.fromURL(url)))
+  const stringifiedCalendars = calendarEvents.map(events => JSON.stringify(events))
 
   return {
-    // stringify because Next complains about serialization otherwise
-    props: { unparsedCalendars: [JSON.stringify(mottagningEvents), JSON.stringify(introcourseEvents)] }
+    props: { stringifiedCalendars: stringifiedCalendars, firstdayDates: (await prisma.committee.findMany()).map(c => c.firstday ?? "").filter(d => d) }
   }
 }
 
 interface SchemaProps {
-  unparsedCalendars: string[],
+  stringifiedCalendars: string[],
+  firstdayDates: string[],
 }
 
 interface CalendarEvent {
@@ -37,7 +38,7 @@ interface CalendarEvent {
   backgroundColor: string,
 }
 
-const Schema: NextPage<SchemaProps> = ({ unparsedCalendars }) => {
+const Schema: NextPage<SchemaProps> = ({ stringifiedCalendars, firstdayDates }) => {
 
   const calendarColors = [
     "#0bb", // turquoise
@@ -50,7 +51,7 @@ const Schema: NextPage<SchemaProps> = ({ unparsedCalendars }) => {
 
   let allEvents: CalendarEvent[] = []
 
-  unparsedCalendars.forEach((calendar, index) => {
+  stringifiedCalendars.forEach((calendar, index) => {
 
     const events = JSON.parse(calendar)
 
@@ -69,6 +70,14 @@ const Schema: NextPage<SchemaProps> = ({ unparsedCalendars }) => {
     }
   })
 
+  const calendarRef = React.useRef<FullCalendar>(null)
+
+  const ctx = useContext(YearContext)
+
+  const getFirstDayDate = (year: string): string => {
+    return firstdayDates.find(d => d.includes(year)) ?? firstdayDates.find(d => d.includes(new Date().getFullYear().toString())) ?? ""
+  }
+
   return (
     <>
       <Head>
@@ -81,6 +90,8 @@ const Schema: NextPage<SchemaProps> = ({ unparsedCalendars }) => {
         <div className="my-4 h-1/5 w-full">
           <FullCalendar
             plugins={[timeGridPlugin, momentPlugin]}
+            ref={calendarRef}
+            locale={"sv"}
             events={allEvents}
             dayHeaderFormat={"D/M"}
             allDaySlot={false}
@@ -92,10 +103,22 @@ const Schema: NextPage<SchemaProps> = ({ unparsedCalendars }) => {
             firstDay={1}
             contentHeight={"auto"}
             nowIndicator={true}
-            headerToolbar={{ left: "", center: "", right: "prev,today,next" }}
+            headerToolbar={{ left: "title", center: "", right: `prev,today,${getFirstDayDate(ctx.year) ? "firstdayButton," : ""}next` }}
+            titleFormat={{ year: "numeric", month: 'long' }}
             buttonIcons={{ prev: "chevron-left", next: "chevron-right" }}
             buttonText={{ today: "Idag" }}
             buttonHints={{ prev: "Föregående vecka", today: "Hoppa till idag", next: "Nästa vecka" }}
+            customButtons={{
+              firstdayButton: {
+                text: "Första dagen",
+                hint: "Hoppa till mottagningens första dag",
+                click: () => {
+                  if (getFirstDayDate(ctx.year)) {
+                    calendarRef.current?.getApi().gotoDate(getFirstDayDate(ctx.year))
+                  }
+                }
+              }
+            }}
           />
         </div>
       </Page>
