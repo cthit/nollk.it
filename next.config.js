@@ -6,15 +6,8 @@ const withTM = require("next-transpile-modules")([
   "@fullcalendar/react",
   "@fullcalendar/timegrid",
   "@fullcalendar/daygrid",
+  "next-fonts",
 ]);
-
-const withFonts = require('next-fonts');
-
-module.exports = withFonts({
-   webpack(config, options) {
-     return config;
-   }
-}); 
 
 const nextConfig = {
   reactStrictMode: true,
