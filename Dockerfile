@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:18
 
 ENV PORT 3000
 
@@ -9,6 +9,7 @@ WORKDIR /usr/src/app
 # Installing dependencies
 COPY package*.json /usr/src/app/
 RUN npm install
+RUN npx prisma generate
 
 # Copying source files
 COPY . /usr/src/app
