@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:16
 
 ENV PORT 3000
 
@@ -6,17 +6,21 @@ ENV PORT 3000
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
+
 # Installing dependencies
 COPY package*.json /usr/src/app/
 RUN npm install
-RUN npx prisma generate
+
 
 # Copying source files
 COPY . /usr/src/app
 
+
+
 # Building app
 RUN npm run build
 EXPOSE 3000
+RUN npx prisma generate
 
 # Running the app
 CMD "npm" "run" "start"
