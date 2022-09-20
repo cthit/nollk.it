@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,19 +8,21 @@ datasource db {
 }
 
 model Committee {
-  year     Int      @id @map("_id")
-  firstday String? //Should be in format "YYYY-MM-DDTHH:MM:SS"
-  fonturl  String?
-  members  Member[]
+  year             Int      @id @map("_id")
+  firstDay         String //Should be in format "YYYY-MM-DDTHH:MM:SS"
+  fontURL          String?
+  orderInImageDesc String
+  members          Member[]
 }
 
 model Member {
-  name      String    @id @map("_id")
-  role      String
-  greeting  String?
-  text      String?
-  Committee Committee @relation(fields: [year], references: [year])
-  year      Int
+  name         String    @id @map("_id")
+  role         String
+  greeting     String?
+  text         String?
+  Committee    Committee @relation(fields: [year], references: [year])
+  year         Int
+  orderInImage Int
 }
 
 model Links {

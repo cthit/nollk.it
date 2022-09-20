@@ -1,10 +1,9 @@
+import { Committee, PrismaClient } from ".prisma/client";
+import { NextPage } from "next";
 import Link from "next/link";
-import React, { useState } from "react";
+import { async } from "node-ical";
+import React, { useEffect, useState } from "react";
 import YearContext from "../util/YearContext";
-
-interface HeaderProps {
-  blackout: boolean
-}
 
 const headerCategories = [
   {
@@ -43,12 +42,22 @@ const headerCategories = [
   },
 ]
 
+interface HeaderProps {
+  blackout: boolean
+}
 
-export default function Header(props: HeaderProps) {
+interface DeviceHeaderProps {
+  committees: Committee[]
+}
+
+const Header: NextPage<HeaderProps> = ({blackout}) => {
+
+
+
   return (
     <>
       {/* Background gradient */}
-      <div className={`fixed top-0 w-screen -z-10 h-28 bg-gradient-to-b to-black/0 ${props.blackout ? "from-black/80" : "from-black/25"}`}></div>
+      <div className={`fixed top-0 w-screen -z-10 h-28 bg-gradient-to-b to-black/0 ${blackout ? "from-black/80" : "from-black/25"}`}></div>
 
       <div className="w-full lg:hidden pointer-events-auto">
         <MobileHeader />
@@ -59,6 +68,8 @@ export default function Header(props: HeaderProps) {
     </>
   )
 }
+
+export default Header
 
 function DesktopHeader() {
 
@@ -106,12 +117,7 @@ function DesktopHeader() {
                 <div className="border-t border-t-white w-full"></div>
                 {
                   index === 0 ?
-                    <select className="px-3 text-xs font-light bg-transparent outline-none appearance-none cursor-pointer" defaultValue={category.name} onChange={e => { changeYear(e.target.value); e.target.selectedIndex = 0}}>
-                      <option disabled hidden>{category.name}</option>
-                      <option className="bg-black" value="2022">2022</option>
-                      <option className="bg-black" value="2021">2021</option>
-                      <option className="bg-black" value="2020">2020</option>
-                    </select>
+                    <YearSelector defaultText={category.name} changeYear={changeYear} />
                     :
                     <p className="px-3 text-xs font-light">{category.name}</p>
                 }
@@ -139,12 +145,7 @@ function MobileHeader() {
                 <div key={category.name} className="ml-20">
                   {
                     index === 0 ?
-                      <select className="text-xl italic mt-8 mb-3 bg-transparent outline-none appearance-none cursor-pointer" defaultValue={category.name} onChange={e => { changeYear(e.target.value); e.target.selectedIndex = 0}}>
-                        <option disabled hidden value={category.name}>{category.name}</option>
-                        <option className="bg-black" value="2022">2022</option>
-                        <option className="bg-black" value="2021">2021</option>
-                        <option className="bg-black" value="2020">2020</option>
-                      </select>
+                      <YearSelector defaultText={category.name} changeYear={changeYear} />
                       :
                       <p className="text-xl italic mt-8 mb-3">{category.name}</p>
                   }
@@ -198,6 +199,30 @@ function Hamburger({ isOpen: isOpen, setOpen: setOpen }: { isOpen: boolean, setO
       </div>
 
     </div>
+  )
+}
+
+function YearSelector({defaultText, changeYear}: {defaultText: string, changeYear: (year: string) => void}) {
+  
+  const [committees, setCommittees] = useState<Committee[]>([])
+
+  useEffect(() => {
+    console.log("useEffect");
+    (async () => {
+      const fetchedCommittees = await fetch("./api/getCommittees").then(res => res.json())
+      setCommittees(fetchedCommittees)
+    })()
+  }, [])
+  
+  return (
+    <select className="px-0 lg:px-3 lg:font-light lg:text-xs lg:not-italic lg:my-0 text-xl italic mt-8 mb-3 bg-transparent outline-none appearance-none cursor-pointer" defaultValue={defaultText} onChange={e => { changeYear(e.target.value); e.target.selectedIndex = 0}}>
+      <option disabled hidden value={defaultText}>{defaultText}</option>
+      {
+        committees.map(committee => (
+          <option className="bg-black" key={committee.year} value={committee.year}>{committee.year}</option>
+        ))
+      }
+    </select>
   )
 }
 

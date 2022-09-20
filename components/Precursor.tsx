@@ -1,20 +1,10 @@
 import Link from "next/link";
 import React from "react";
+import { CommitteeWithMembers } from "../pages/pateter";
 
 
-type Member = {
-    name: string,
-    role: string
-}
 
-type Committee = {
-    name: string,
-    imageDesc: string,
-    year: string,
-    members: Member[]
-}
-
-const Precursor = ({ precursor }: { precursor: Committee }) => {
+const Precursor = ({ committee }: { committee: CommitteeWithMembers }) => {
 
     return (
         <div className="fixed w-screen h-screen">
@@ -24,16 +14,16 @@ const Precursor = ({ precursor }: { precursor: Committee }) => {
 
                     {/* Image */}
                     <div className="sm:max-w-[55%] sm:flex sm:items-center">
-                        <img src={`/bilder/${precursor.year}/kommitte.jpg`} alt={precursor.name} className="max-h-[30vh] sm:max-h-[75vh]" />
+                        <img src={`/bilder/${committee.year}/kommitte.jpg`} alt={committee.year.toString()} className="max-h-[30vh] sm:max-h-[75vh]" />
                     </div>
 
                     {/* Text */}
                     <div>
-                        <h1 className="text-5xl sm:text-6xl font-po mb-4 sm:mb-8">{precursor.name}</h1>
-                        <p className="italic text-lg sm:text-2xl mb-2">{precursor.imageDesc}:</p>
+                        <h1 className="text-5xl sm:text-6xl font-po mb-4 sm:mb-8">{"NollKIT'" + committee.year.toString().slice(2)}</h1>
+                        <p className="italic text-lg sm:text-2xl mb-2">{committee.orderInImageDesc}:</p>
 
                         <div className="grid gap-x-10 gap-y-2 items-center text-sm" style={ {gridTemplateColumns: "auto auto"} }>
-                            {precursor.members.map((member, index) => (
+                            {committee.members.sort((a, b) => a.orderInImage - b.orderInImage).map( member => (
                                 <React.Fragment key={member.name}>
                                     <span>{member.name}</span>
                                     <i>{member.role}</i>
@@ -42,7 +32,7 @@ const Precursor = ({ precursor }: { precursor: Committee }) => {
                         </div>
 
                         <div className="mt-6">
-                            <Link href={`/modul/${precursor.year}.pdf`}>
+                            <Link href={`/modul/${committee.year}.pdf`}>
                                 <a className="text-lg sm:text-2xl italic font-bold hover:underline">Modul</a>
                             </Link>
                         </div>

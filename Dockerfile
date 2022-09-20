@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:16
 
 ENV PORT 3000
 
@@ -12,6 +12,7 @@ RUN npm install
 
 # Copying source files
 COPY . /usr/src/app
+RUN npx prisma generate
 
 # Building app
 RUN npm run build
