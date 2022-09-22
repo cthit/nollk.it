@@ -6,13 +6,14 @@ import ReactPageScroller from 'react-page-scroller';
 import { useState } from "react";
 import PageInfo from "../components/PageInfo";
 import { Committee, Prisma, PrismaClient } from "@prisma/client";
+import Page from "../components/Page";
 
-const NavBall = (props: {index: number; committeeyear: string; currentPage: number; scrollTo: (to: number) => void }) => {
+const NavBall = (props: { index: number; committeeyear: string; currentPage: number; scrollTo: (to: number) => void }) => {
   return (
-      <div key={props.index} onClick={() => { props.scrollTo(props.index) }} className="h-0 w-0 p-2.5 flex justify-end relative items-center m-px navBallBox cursor-pointer">
-          <span className="transition-all opacity-0 navBallLabel" key={props.index}>{props.committeeyear}</span>
-          <span key={props.index} className={`navBall ${props.index === props.currentPage ? 'bg-slate-100' : ''} border visible p-1.5 border-slate-100 opacity-50 rounded-full m-2 transition-all duration-200`}></span>
-      </div>
+    <div key={props.index} onClick={() => { props.scrollTo(props.index) }} className="h-0 w-0 p-2.5 flex justify-end relative items-center m-px navBallBox cursor-pointer">
+      <span className="transition-all opacity-0 navBallLabel" key={props.index}>{props.committeeyear}</span>
+      <span key={props.index} className={`navBall ${props.index === props.currentPage ? 'bg-slate-100' : ''} border visible p-1.5 border-slate-100 opacity-50 rounded-full m-2 transition-all duration-200`}></span>
+    </div>
   )
 };
 
@@ -85,7 +86,7 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="bg-cover bg-top h-full w-screen bg-portrait landscape:bg-landscape">
+      {/* <div className="bg-cover bg-top h-full w-screen bg-portrait landscape:bg-landscape">
 
         <div id="first-page" className={`bg-black h-full transition duration-700 bg-opacity-80`}>
           <ReactPageScroller
@@ -133,7 +134,51 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
 
       <div className="fixed flex flex-col items-center w-screen top-0 z-50 pointer-events-none">
         <Header blackout={true} />
-      </div>
+      </div> */}
+
+      <Page blackout unrestrictChildren>
+        <ReactPageScroller
+          animationTimer={700}
+          animationTimerBuffer={0}
+          renderAllPagesOnFirstRender={true}
+          onBeforePageScroll={handlePageChange}
+          customPageNumber={currentPage}
+        >
+          <div className="relative">
+            <PageInfo unrestrictChildren heading="Pateter">
+              <div className="w-full flex flex-col items-center mb-12 mt-24 lg:mt-40">
+                <div className="font-po text-6xl mb-6">Pateter</div>
+                <div className="lg:w-1/3 font-light text-justify">
+                  På Chalmers är patet ett allmänt namn för personer som tidigare suttit i en förening/kommitté. De som har suttit i just NollKIT tidigare år kallas för NollQIT. De kan vara bra att ha lite då och då, både för NollKIT och för Nollan, eftersom de alltid svarar glatt på frågor om NollKIT råkar vara borta för stunden.
+                </div>
+              </div>
+              <div className="absolute left-[47%] flex justify-center items-end pb-12">
+                <div className="flex flex-col gap-4 items-center cursor-pointer py-2" onClick={() => scrollDown(1)}>
+                  <p className="text-sm italic">Skrolla för pateter</p>
+                  <img className="downarrow w-10 transition opacity-60" src={"/down.svg"} alt="arrow down" />
+                </div>
+              </div>
+            </PageInfo>
+          </div>
+
+          {allCommittees.map(committee => (
+            <div key={committee.year}>
+              <Precursor committee={committee} />
+            </div>
+          ))}
+
+        </ReactPageScroller>
+
+        <div className="fixed flex flex-col items-center right-4 self-center top-1/4">
+          <NavBall index={0} scrollTo={() => scrollTo(0)} currentPage={currentPage} committeeyear={"Top"} ></NavBall>
+          {allCommittees.map((committee: Committee, index) => (
+            <NavBall index={index + 1} scrollTo={() => scrollTo(index + 1)} currentPage={currentPage} committeeyear={committee.year.toString().slice(-2)}></NavBall>
+          ))}
+        </div>
+        <div id="top-button" onClick={() => scrollTo(0)} className={`fixed select-none cursor-pointer right-10 bottom-10 p-2 opacity-0 bg-black hover:opacity-100 transition-opacity duration-300 ${topButtonShown ? 'opacity-70' : 'opacity-0 pointer-events-none'}`}>
+          <span className="">Scroll to top</span>
+        </div>
+      </Page>
     </>
   )
 }
