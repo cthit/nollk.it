@@ -393,16 +393,9 @@ const Pateter: NextPage = () => {
       </div>
       
       <div className="fixed flex flex-col items-center right-4 self-center top-1/4">
-          <NavBall index={0} scrollTo={() => scrollTo(0)} currentPage={currentPage} committee={allNollkit[0]} ></NavBall>
-          <div key={0} className="h-0 w-0 p-2.5 flex justify-end relative items-center m-px opacitykid">
-              <span className="transition-all numberop opacity-0">Top</span> 
-              <span key={0} onClick={() => { scrollTo(0) }} className={`floorButton ${0 === currentPage ? 'bg-slate-100' : ''} border visible p-1.5 border-slate-100 rounded-full m-2 transition-all`}></span>
-            </div>
+          <NavBall index={0} scrollTo={() => scrollTo(0)} currentPage={currentPage} committeeyr={"Top"} ></NavBall>
           {allNollkit.map((committee: Committee, index) => (
-            <div key={index+1} className="h-0 w-0 p-2.5 flex justify-end relative items-center m-px opacitykid">
-              <span className="transition-all opacity-0 numberop" key={index+1}>{committee.year.slice(-2)}</span>
-              <span key={index+1} onClick={() => { scrollTo(index+1) }} className={`floorButton ${index+1 === currentPage ? 'bg-slate-100' : ''} border visible p-1.5 border-slate-100 rounded-full m-2 transition-all`}></span>
-            </div>
+            <NavBall index={index+1} scrollTo={() => scrollTo(index+1)} currentPage={currentPage} committeeyr={committee.year.toString().slice(-2)}></NavBall>
           ))}
         </div>
         <div id="top-button" onClick={() => scrollTo(0)} className="fixed right-10 bottom-10 p-2 opacity-0 bg-black bg-opacity-70 hover:opacity-100 hover:bg-opacity-100 transition-opacity duration-700">
