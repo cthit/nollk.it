@@ -58,14 +58,10 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
     setCurrentPage(index)
   }
 
+  const [topButtonShown, setTopButtonShown] = useState<boolean>(false)
+
   const toggleTopButton = (index: number) => {
-    const topButton = document.getElementById("top-button")
-    if (!topButton) return
-    if (index === 0) {
-      topButton.style.opacity = "0"
-    } else {
-      topButton.style.opacity = "0.7"
-    }
+    index === 0 ? setTopButtonShown(false) : setTopButtonShown(true)
   }
 
   const scrollDown = (index: number) => {
@@ -131,7 +127,7 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
           <NavBall index={index + 1} scrollTo={() => scrollTo(index + 1)} currentPage={currentPage} committeeyear={committee.year.toString().slice(-2)}></NavBall>
         ))}
       </div>
-      <div id="top-button" onClick={() => scrollTo(0)} className="fixed right-10 bottom-10 p-2 opacity-0 bg-black bg-opacity-70 hover:opacity-100 hover:bg-opacity-100 transition-opacity duration-700">
+      <div id="top-button" onClick={() => scrollTo(0)} className={`fixed select-none cursor-pointer right-10 bottom-10 p-2 opacity-0 bg-black hover:opacity-100 transition-opacity duration-300 ${topButtonShown ? 'opacity-70' : 'opacity-0 pointer-events-none'}`}>
         <span className="">Scroll to top</span>
       </div>
 
