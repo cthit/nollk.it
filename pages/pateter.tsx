@@ -6,7 +6,7 @@ import ReactPageScroller from 'react-page-scroller';
 import { useState } from "react";
 import PageInfo from "../components/PageInfo";  
 import NavBall from "../components/NavBall";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Committee, Prisma, PrismaClient } from "@prisma/client";
 
 
 export const getServerSideProps = async () => {
@@ -119,7 +119,7 @@ const Pateter: NextPage<PateterProps> = ({allCommittees}) => {
       
       <div className="fixed flex flex-col items-center right-4 self-center top-1/4">
           <NavBall index={0} scrollTo={() => scrollTo(0)} currentPage={currentPage} committeeyr={"Top"} ></NavBall>
-          {allNollkit.map((committee: Committee, index) => (
+          {allCommittees.map((committee: Committee, index) => (
             <NavBall index={index+1} scrollTo={() => scrollTo(index+1)} currentPage={currentPage} committeeyr={committee.year.toString().slice(-2)}></NavBall>
           ))}
         </div>
