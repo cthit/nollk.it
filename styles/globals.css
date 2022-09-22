@@ -47,6 +47,15 @@ div:hover > .downarrow {
   opacity: 90%;
 }
 
+.navBallBox:hover > .navBallLabel {
+  opacity: 100%;
+}
+
+.navBallBox:hover > .navBall {
+  padding: 0.75rem;
+  opacity: 100%;
+}
+
 /* -------------------------------- */
 /* --- Styling for FullCalendar --- */
 /* -------------------------------- */

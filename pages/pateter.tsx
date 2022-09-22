@@ -5,7 +5,17 @@ import Header from "../components/Header"
 import ReactPageScroller from 'react-page-scroller';
 import { useState } from "react";
 import PageInfo from "../components/PageInfo";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Committee, Prisma, PrismaClient } from "@prisma/client";
+
+const NavBall = (props: {index: number; committeeyear: string; currentPage: number; scrollTo: (to: number) => void }) => {
+  return (
+      <div key={props.index} onClick={() => { props.scrollTo(props.index) }} className="h-0 w-0 p-2.5 flex justify-end relative items-center m-px navBallBox cursor-pointer">
+          <span className="transition-all opacity-0 navBallLabel" key={props.index}>{props.committeeyear}</span>
+          <span key={props.index} className={`navBall ${props.index === props.currentPage ? 'bg-slate-100' : ''} border visible p-1.5 border-slate-100 opacity-50 rounded-full m-2 transition-all duration-200`}></span>
+      </div>
+  )
+};
+
 
 export const getServerSideProps = async () => {
   const prisma = new PrismaClient()
@@ -15,6 +25,8 @@ export const getServerSideProps = async () => {
       members: true
     }
   })
+
+  allCommittees.shift()
 
   return {
     props: { allCommittees: allCommittees }
@@ -29,7 +41,7 @@ interface PateterProps {
   allCommittees: CommitteeWithMembers[]
 }
 
-const Pateter: NextPage<PateterProps> = ({allCommittees}) => {
+const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
 
   const [currentPage, setCurrentPage] = useState<number>(0)
 
@@ -42,15 +54,27 @@ const Pateter: NextPage<PateterProps> = ({allCommittees}) => {
       fp.style.background = "rgba(0,0,0,0.9)"
     }
   }
+  const scrollTo = (index: number) => {
+    setCurrentPage(index)
+  }
+
+  const [topButtonShown, setTopButtonShown] = useState<boolean>(false)
+
+  const toggleTopButton = (index: number) => {
+    index === 0 ? setTopButtonShown(false) : setTopButtonShown(true)
+  }
 
   const scrollDown = (index: number) => {
     //It would be nice if this method executed a scroll
     setCurrentPage(index)
   }
 
+
+
   const handlePageChange = (index: number) => {
     setCurrentPage(index)
     changeBgOpacity(index)
+    toggleTopButton(index)
   };
 
   return (
@@ -71,7 +95,6 @@ const Pateter: NextPage<PateterProps> = ({allCommittees}) => {
             onBeforePageScroll={handlePageChange}
             customPageNumber={currentPage}
           >
-
             <>
               <div className="absolute top-20 w-full flex flex-col items-center">
                 <div className="flex flex-col items-center w-10/12 lg:w-3/4">
@@ -88,15 +111,26 @@ const Pateter: NextPage<PateterProps> = ({allCommittees}) => {
               </div>
             </>
 
-            {allCommittees.slice(1).map( committee => (
+            {allCommittees.map(committee => (
               <div key={committee.year}>
                 <Precursor committee={committee} />
               </div>
             ))}
-            
+
           </ReactPageScroller>
         </div>
       </div>
+
+      <div className="fixed flex flex-col items-center right-4 self-center top-1/4">
+        <NavBall index={0} scrollTo={() => scrollTo(0)} currentPage={currentPage} committeeyear={"Top"} ></NavBall>
+        {allCommittees.map((committee: Committee, index) => (
+          <NavBall index={index + 1} scrollTo={() => scrollTo(index + 1)} currentPage={currentPage} committeeyear={committee.year.toString().slice(-2)}></NavBall>
+        ))}
+      </div>
+      <div id="top-button" onClick={() => scrollTo(0)} className={`fixed select-none cursor-pointer right-10 bottom-10 p-2 opacity-0 bg-black hover:opacity-100 transition-opacity duration-300 ${topButtonShown ? 'opacity-70' : 'opacity-0 pointer-events-none'}`}>
+        <span className="">Scroll to top</span>
+      </div>
+
       <div className="fixed flex flex-col items-center w-screen top-0 z-50 pointer-events-none">
         <Header blackout={true} />
       </div>
