@@ -41,9 +41,10 @@ const Nollkit: NextPage<NollkitProps> = ({ allMembers }) => {
 
         <div className="flex flex-col lg:w-3/5 items-center mt-32 lg:mt-48">
           {
-            allMembers.filter(m => m.year.toString() === ctx.year).map((n, i) => {
+            allMembers.filter(m => m.year.toString() === ctx.year).sort( (a, b) => a.orderInImage - b.orderInImage).map((n, i) => {
               return (
                 <div key={n.role} className="grid grid-cols-5 gap-5 mb-8">
+
 
                   {i % 2 === 0 ? <></> : <NollkitDesc {...n} />}
                   <div className={`col-span-2 bg-cover bg-top aspect-[4/5]`} style={{ backgroundImage: `url('/bilder/${ctx.year}/poster/${n.role}.jpg` }}></div>

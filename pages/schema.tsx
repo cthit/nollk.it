@@ -22,7 +22,7 @@ export const getServerSideProps = async () => {
   const stringifiedCalendars = calendarEvents.map(events => JSON.stringify(events))
 
   return {
-    props: { stringifiedCalendars: stringifiedCalendars, firstdayDates: (await prisma.committee.findMany()).map(c => c.firstday ?? "").filter(d => d) }
+    props: { stringifiedCalendars: stringifiedCalendars, firstdayDates: (await prisma.committee.findMany()).map(c => c.firstDay ?? "").filter(d => d) }
   }
 }
 

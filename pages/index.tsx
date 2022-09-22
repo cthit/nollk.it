@@ -11,11 +11,9 @@ export const getServerSideProps = async () => {
 
   const allStartDates = (await prisma.committee.findMany({
     select: {
-      firstday: true,
+      firstDay: true,
     },
-  })).map(c => c.firstday ?? "").filter(d => d)
-
-  console.log(allStartDates)
+  })).map(c => c.firstDay ?? "").filter(d => d)
 
   const MOTTAGNING_EVENTS_URL = "https://calendar.google.com/calendar/ical/71hb815m1g75pje527e7stt240%40group.calendar.google.com/public/basic.ics"
 

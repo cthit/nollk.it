@@ -14,6 +14,7 @@ RUN npm install
 
 # Copying source files
 COPY . /usr/src/app
+RUN npx prisma generate
 
 
 
