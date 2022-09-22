@@ -4,7 +4,7 @@ import Precursor from "../components/Precursor"
 import Header from "../components/Header"
 import ReactPageScroller from 'react-page-scroller';
 import { useState } from "react";
-import PageInfo from "../components/PageInfo";  
+import PageInfo from "../components/PageInfo";
 import NavBall from "../components/NavBall";
 import { Committee, Prisma, PrismaClient } from "@prisma/client";
 
@@ -17,6 +17,8 @@ export const getServerSideProps = async () => {
       members: true
     }
   })
+
+  allCommittees.shift()
 
   return {
     props: { allCommittees: allCommittees }
@@ -31,7 +33,7 @@ interface PateterProps {
   allCommittees: CommitteeWithMembers[]
 }
 
-const Pateter: NextPage<PateterProps> = ({allCommittees}) => {
+const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
 
   const [currentPage, setCurrentPage] = useState<number>(0)
 
@@ -64,7 +66,7 @@ const Pateter: NextPage<PateterProps> = ({allCommittees}) => {
     setCurrentPage(index)
   }
 
-  
+
 
   const handlePageChange = (index: number) => {
     setCurrentPage(index)
@@ -90,7 +92,6 @@ const Pateter: NextPage<PateterProps> = ({allCommittees}) => {
             onBeforePageScroll={handlePageChange}
             customPageNumber={currentPage}
           >
-
             <>
               <div className="absolute top-20 w-full flex flex-col items-center">
                 <div className="flex flex-col items-center w-10/12 lg:w-3/4">
@@ -107,25 +108,25 @@ const Pateter: NextPage<PateterProps> = ({allCommittees}) => {
               </div>
             </>
 
-            {allCommittees.slice(1).map( committee => (
+            {allCommittees.map(committee => (
               <div key={committee.year}>
                 <Precursor committee={committee} />
               </div>
             ))}
-            
+
           </ReactPageScroller>
         </div>
       </div>
-      
+
       <div className="fixed flex flex-col items-center right-4 self-center top-1/4">
-          <NavBall index={0} scrollTo={() => scrollTo(0)} currentPage={currentPage} committeeyr={"Top"} ></NavBall>
-          {allCommittees.map((committee: Committee, index) => (
-            <NavBall index={index+1} scrollTo={() => scrollTo(index+1)} currentPage={currentPage} committeeyr={committee.year.toString().slice(-2)}></NavBall>
-          ))}
-        </div>
-        <div id="top-button" onClick={() => scrollTo(0)} className="fixed right-10 bottom-10 p-2 opacity-0 bg-black bg-opacity-70 hover:opacity-100 hover:bg-opacity-100 transition-opacity duration-700">
-          <span className="">Scroll to top</span>
-        </div>
+        <NavBall index={0} scrollTo={() => scrollTo(0)} currentPage={currentPage} committeeyr={"Top"} ></NavBall>
+        {allCommittees.map((committee: Committee, index) => (
+          <NavBall index={index + 1} scrollTo={() => scrollTo(index + 1)} currentPage={currentPage} committeeyr={committee.year.toString().slice(-2)}></NavBall>
+        ))}
+      </div>
+      <div id="top-button" onClick={() => scrollTo(0)} className="fixed right-10 bottom-10 p-2 opacity-0 bg-black bg-opacity-70 hover:opacity-100 hover:bg-opacity-100 transition-opacity duration-700">
+        <span className="">Scroll to top</span>
+      </div>
 
       <div className="fixed flex flex-col items-center w-screen top-0 z-50 pointer-events-none">
         <Header blackout={true} />
