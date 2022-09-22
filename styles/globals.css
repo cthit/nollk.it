@@ -47,11 +47,11 @@ div:hover > .downarrow {
   opacity: 90%;
 }
 
-.opacitykid:hover > .numberop {
+.navBallBox:hover > .navBallLabel {
   opacity: 100%;
 }
 
-.opacitykid:hover > .floorButton {
+.navBallBox:hover > .navBall {
   padding: 0.75rem;
 }
 
