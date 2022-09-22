@@ -47,7 +47,6 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
     }
   }
   const scrollTo = (index: number) => {
-    //It would be nice if this method executed a scroll
     setCurrentPage(index)
   }
 
@@ -119,9 +118,9 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
       </div>
 
       <div className="fixed flex flex-col items-center right-4 self-center top-1/4">
-        <NavBall index={0} scrollTo={() => scrollTo(0)} currentPage={currentPage} committeeyr={"Top"} ></NavBall>
+        <NavBall index={0} scrollTo={() => scrollTo(0)} currentPage={currentPage} committeeyear={"Top"} ></NavBall>
         {allCommittees.map((committee: Committee, index) => (
-          <NavBall index={index + 1} scrollTo={() => scrollTo(index + 1)} currentPage={currentPage} committeeyr={committee.year.toString().slice(-2)}></NavBall>
+          <NavBall index={index + 1} scrollTo={() => scrollTo(index + 1)} currentPage={currentPage} committeeyear={committee.year.toString().slice(-2)}></NavBall>
         ))}
       </div>
       <div id="top-button" onClick={() => scrollTo(0)} className="fixed right-10 bottom-10 p-2 opacity-0 bg-black bg-opacity-70 hover:opacity-100 hover:bg-opacity-100 transition-opacity duration-700">
