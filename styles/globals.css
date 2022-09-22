@@ -53,6 +53,7 @@ div:hover > .downarrow {
 
 .navBallBox:hover > .navBall {
   padding: 0.75rem;
+  opacity: 100%;
 }
 
 /* -------------------------------- */

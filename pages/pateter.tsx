@@ -5,8 +5,16 @@ import Header from "../components/Header"
 import ReactPageScroller from 'react-page-scroller';
 import { useState } from "react";
 import PageInfo from "../components/PageInfo";
-import NavBall from "../components/NavBall";
 import { Committee, Prisma, PrismaClient } from "@prisma/client";
+
+const NavBall = (props: {index: number; committeeyear: string; currentPage: number; scrollTo: (to: number) => void }) => {
+  return (
+      <div key={props.index} onClick={() => { props.scrollTo(props.index) }} className="h-0 w-0 p-2.5 flex justify-end relative items-center m-px navBallBox cursor-pointer">
+          <span className="transition-all opacity-0 navBallLabel" key={props.index}>{props.committeeyear}</span>
+          <span key={props.index} className={`navBall ${props.index === props.currentPage ? 'bg-slate-100' : ''} border visible p-1.5 border-slate-100 opacity-50 rounded-full m-2 transition-all duration-200`}></span>
+      </div>
+  )
+};
 
 
 export const getServerSideProps = async () => {
