@@ -338,6 +338,8 @@ const Pateter: NextPage = () => {
     setCurrentPage(index)
   }
 
+  
+
   const handlePageChange = (index: number) => {
     setCurrentPage(index)
     changeBgOpacity(index)
@@ -390,10 +392,14 @@ const Pateter: NextPage = () => {
       </div>
       
       <div className="fixed flex flex-col items-center right-4 self-center top-1/4">
-          {[...Array(allNollkit.length)].map((_, index) => (
-            <div key={index} className="h-0 w-0 p-2.5 flex justify-end relative items-center m-px">
-              <span key={index}>{index}</span>
-              <span key={index} onClick={() => { scrollTo(index) }} className={`p-1.5 bg-slate-100 rounded-full m-2 before:right-8 before:duration-300 before:-top-0.5 before:opacity-0 before:transition-all hover:before:opacity-100 before:absolute transition-all hover:p-3`}></span>
+          <div key={0} className="h-0 w-0 p-2.5 flex justify-end relative items-center m-px opacitykid">
+              <span className="transition-all numberop opacity-0">Top</span> 
+              <span key={0} onClick={() => { scrollTo(0) }} className={`floorButton ${0 === currentPage ? 'bg-slate-100' : ''} border visible p-1.5 border-slate-100 rounded-full m-2 transition-all`}></span>
+            </div>
+          {allNollkit.map((committee: Committee, index) => (
+            <div key={index+1} className="h-0 w-0 p-2.5 flex justify-end relative items-center m-px opacitykid">
+              <span className="transition-all opacity-0 numberop" key={index+1}>{committee.year.slice(-2)}</span>
+              <span key={index+1} onClick={() => { scrollTo(index+1) }} className={`floorButton ${index+1 === currentPage ? 'bg-slate-100' : ''} border visible p-1.5 border-slate-100 rounded-full m-2 transition-all`}></span>
             </div>
           ))}
         </div>

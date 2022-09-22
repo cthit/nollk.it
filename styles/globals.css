@@ -47,6 +47,14 @@ div:hover > .downarrow {
   opacity: 90%;
 }
 
+.opacitykid:hover > .numberop {
+  opacity: 100%;
+}
+
+.opacitykid:hover > .floorButton {
+  padding: 0.75rem;
+}
+
 /* -------------------------------- */
 /* --- Styling for FullCalendar --- */
 /* -------------------------------- */
