@@ -1,12 +1,12 @@
 import { NextPage } from "next"
 import Head from "next/head"
 import Precursor from "../components/Precursor"
-import Header from "../components/Header"
 import ReactPageScroller from 'react-page-scroller';
 import { useState } from "react";
 import PageInfo from "../components/PageInfo";
 import { Committee, Prisma, PrismaClient } from "@prisma/client";
 import Page from "../components/Page";
+import PageMargins from "../components/PageMargins";
 
 const NavBall = (props: { index: number; committeeyear: string; currentPage: number; scrollTo: (to: number) => void }) => {
   return (
@@ -65,13 +65,6 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
     index === 0 ? setTopButtonShown(false) : setTopButtonShown(true)
   }
 
-  const scrollDown = (index: number) => {
-    //It would be nice if this method executed a scroll
-    setCurrentPage(index)
-  }
-
-
-
   const handlePageChange = (index: number) => {
     setCurrentPage(index)
     changeBgOpacity(index)
@@ -86,56 +79,6 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* <div className="bg-cover bg-top h-full w-screen bg-portrait landscape:bg-landscape">
-
-        <div id="first-page" className={`bg-black h-full transition duration-700 bg-opacity-80`}>
-          <ReactPageScroller
-            animationTimer={700}
-            animationTimerBuffer={0}
-            renderAllPagesOnFirstRender={true}
-            onBeforePageScroll={handlePageChange}
-            customPageNumber={currentPage}
-          >
-            <>
-              <div className="absolute top-20 w-full flex flex-col items-center">
-                <div className="flex flex-col items-center w-10/12 lg:w-3/4">
-                  <PageInfo heading="Pateter">
-                    På Chalmers är patet ett allmänt namn för personer som tidigare suttit i en förening/kommitté. De som har suttit i just NollKIT tidigare år kallas för NollQIT. De kan vara bra att ha lite då och då, både för NollKIT och för Nollan, eftersom de alltid svarar glatt på frågor om NollKIT råkar vara borta för stunden.
-                  </PageInfo>
-                </div>
-              </div>
-              <div className="h-screen flex justify-center items-end pb-12">
-                <div className="flex flex-col gap-4 items-center cursor-pointer py-2" onClick={() => scrollDown(1)}>
-                  <p className="text-sm italic">Skrolla för pateter</p>
-                  <img className="downarrow w-10 transition opacity-60" src={"/down.svg"} alt="arrow down" />
-                </div>
-              </div>
-            </>
-
-            {allCommittees.map(committee => (
-              <div key={committee.year}>
-                <Precursor committee={committee} />
-              </div>
-            ))}
-
-          </ReactPageScroller>
-        </div>
-      </div>
-
-      <div className="fixed flex flex-col items-center right-4 self-center top-1/4">
-        <NavBall index={0} scrollTo={() => scrollTo(0)} currentPage={currentPage} committeeyear={"Top"} ></NavBall>
-        {allCommittees.map((committee: Committee, index) => (
-          <NavBall index={index + 1} scrollTo={() => scrollTo(index + 1)} currentPage={currentPage} committeeyear={committee.year.toString().slice(-2)}></NavBall>
-        ))}
-      </div>
-      <div id="top-button" onClick={() => scrollTo(0)} className={`fixed select-none cursor-pointer right-10 bottom-10 p-2 opacity-0 bg-black hover:opacity-100 transition-opacity duration-300 ${topButtonShown ? 'opacity-70' : 'opacity-0 pointer-events-none'}`}>
-        <span className="">Scroll to top</span>
-      </div>
-
-      <div className="fixed flex flex-col items-center w-screen top-0 z-50 pointer-events-none">
-        <Header blackout={true} />
-      </div> */}
-
       <Page blackout unrestrictChildren>
         <ReactPageScroller
           animationTimer={700}
@@ -144,22 +87,16 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
           onBeforePageScroll={handlePageChange}
           customPageNumber={currentPage}
         >
-          <div className="relative">
-            <PageInfo unrestrictChildren heading="Pateter">
-              <div className="w-full flex flex-col items-center mb-12 mt-24 lg:mt-40">
-                <div className="font-po text-6xl mb-6">Pateter</div>
-                <div className="lg:w-1/3 font-light text-justify">
-                  På Chalmers är patet ett allmänt namn för personer som tidigare suttit i en förening/kommitté. De som har suttit i just NollKIT tidigare år kallas för NollQIT. De kan vara bra att ha lite då och då, både för NollKIT och för Nollan, eftersom de alltid svarar glatt på frågor om NollKIT råkar vara borta för stunden.
-                </div>
-              </div>
-              <div className="absolute left-[47%] flex justify-center items-end pb-12">
-                <div className="flex flex-col gap-4 items-center cursor-pointer py-2" onClick={() => scrollDown(1)}>
-                  <p className="text-sm italic">Skrolla för pateter</p>
-                  <img className="downarrow w-10 transition opacity-60" src={"/down.svg"} alt="arrow down" />
-                </div>
-              </div>
+          <PageMargins>
+            <PageInfo heading="Pateter">
+              På Chalmers är patet ett allmänt namn för personer som tidigare suttit i en förening/kommitté. De som har suttit i just NollKIT tidigare år kallas för NollQIT. De kan vara bra att ha lite då och då, både för NollKIT och för Nollan, eftersom de alltid svarar glatt på frågor om NollKIT råkar vara borta för stunden.
             </PageInfo>
-          </div>
+
+            <div className="absolute bottom-10 flex flex-col gap-4 items-center cursor-pointer py-2" onClick={() => scrollTo(1)}>
+              <p className="text-sm italic">Skrolla för pateter</p>
+              <img className="downarrow w-10 transition opacity-60" src={"/down.svg"} alt="arrow down" />
+            </div>
+          </PageMargins>
 
           {allCommittees.map(committee => (
             <div key={committee.year}>

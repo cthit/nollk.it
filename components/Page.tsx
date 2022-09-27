@@ -1,4 +1,5 @@
 import Header from "./Header";
+import PageMargins from "./PageMargins";
 
 interface PageProps {
   blackout?: boolean
@@ -18,11 +19,9 @@ export default function Page(props: PageProps) {
       {(props.unrestrictChildren ?? false) ? (
         props.children
       ) : (
-        <div className="absolute top-20 w-full flex flex-col items-center">
-          <div className="flex flex-col items-center w-10/12 lg:w-3/4">
-            {props.children}
-          </div>
-        </div>
+        <PageMargins>
+          {props.children}
+        </PageMargins>
       )}
 
 
