@@ -1,8 +1,10 @@
 import Header from "./Header";
+import PageMargins from "./PageMargins";
 
 interface PageProps {
   blackout?: boolean
   children?: React.ReactNode
+  unrestrictChildren?: boolean
 }
 
 export default function Page(props: PageProps) {
@@ -14,11 +16,14 @@ export default function Page(props: PageProps) {
       </div>
 
       {/* Content */}
-      <div className="absolute top-20 w-full flex flex-col items-center">
-        <div className="flex flex-col items-center w-10/12 lg:w-3/4">
+      {(props.unrestrictChildren ?? false) ? (
+        props.children
+      ) : (
+        <PageMargins>
           {props.children}
-        </div>
-      </div>
+        </PageMargins>
+      )}
+
 
       {/* Header */}
       <div className="fixed flex flex-col items-center w-screen top-0 z-50 pointer-events-none">
