@@ -65,10 +65,13 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
     index === 0 ? setTopButtonShown(false) : setTopButtonShown(true)
   }
 
+  const [currentYear, setCurrentYear] = useState<number>(0)
+
   const handlePageChange = (index: number) => {
     setCurrentPage(index)
     changeBgOpacity(index)
     toggleTopButton(index)
+    setCurrentYear(allCommittees[index].year)
   };
 
   return (
@@ -79,7 +82,7 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Page blackout unrestrictChildren>
+      <Page blackout unrestrictChildren currentYear={currentYear+1}>
         <ReactPageScroller
           animationTimer={700}
           animationTimerBuffer={0}
