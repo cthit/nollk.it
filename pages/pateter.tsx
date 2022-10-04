@@ -71,12 +71,12 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
     setCurrentPage(index)
     changeBgOpacity(index)
     toggleTopButton(index)
-    index === 0 ? setCurrentYear(new Date().getFullYear()-1) : setCurrentYear(allCommittees[index].year) // kind of ugly but there's no better way?
+    index === 0 ? setCurrentYear(new Date().getFullYear()) : setCurrentYear(allCommittees[index-1].year) // kind of ugly but there's no better way?
   };
 
   // set currentyear to current year with useEffect
   useEffect(() => {
-    setCurrentYear(new Date().getFullYear()-1)
+    setCurrentYear(new Date().getFullYear())
   }, [])
 
   return (
@@ -87,7 +87,7 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Page blackout unrestrictChildren currentYear={currentYear+1}>
+      <Page blackout unrestrictChildren currentYear={currentYear}>
         <ReactPageScroller
           animationTimer={700}
           animationTimerBuffer={0}
