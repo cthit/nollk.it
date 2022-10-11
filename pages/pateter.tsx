@@ -2,7 +2,7 @@ import { NextPage } from "next"
 import Head from "next/head"
 import Precursor from "../components/Precursor"
 import ReactPageScroller from 'react-page-scroller';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PageInfo from "../components/PageInfo";
 import { Committee, Prisma, PrismaClient } from "@prisma/client";
 import Page from "../components/Page";
@@ -65,11 +65,19 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
     index === 0 ? setTopButtonShown(false) : setTopButtonShown(true)
   }
 
+  const [currentYear, setCurrentYear] = useState<number>(0)
+
   const handlePageChange = (index: number) => {
     setCurrentPage(index)
     changeBgOpacity(index)
     toggleTopButton(index)
+    index === 0 ? setCurrentYear(new Date().getFullYear()) : setCurrentYear(allCommittees[index-1].year) // kind of ugly but there's no better way?
   };
+
+  // set currentyear to current year with useEffect
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear())
+  }, [])
 
   return (
     <>
@@ -79,7 +87,7 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Page blackout unrestrictChildren>
+      <Page blackout unrestrictChildren currentYear={currentYear}>
         <ReactPageScroller
           animationTimer={700}
           animationTimerBuffer={0}

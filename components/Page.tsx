@@ -5,6 +5,7 @@ interface PageProps {
   blackout?: boolean
   children?: React.ReactNode
   unrestrictChildren?: boolean
+  currentYear?: number
 }
 
 export default function Page(props: PageProps) {
@@ -27,7 +28,7 @@ export default function Page(props: PageProps) {
 
       {/* Header */}
       <div className="fixed flex flex-col items-center w-screen top-0 z-50 pointer-events-none">
-        <Header blackout={props.blackout ?? false} />
+        <Header year={props.currentYear} blackout={props.blackout ?? false} />
       </div>
     </>
   )

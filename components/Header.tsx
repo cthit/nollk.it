@@ -1,7 +1,6 @@
 import { Committee, PrismaClient } from ".prisma/client";
 import { NextPage } from "next";
 import Link from "next/link";
-import { async } from "node-ical";
 import React, { useEffect, useState } from "react";
 import YearContext from "../util/YearContext";
 
@@ -44,14 +43,14 @@ const headerCategories = [
 
 interface HeaderProps {
   blackout: boolean
+  year?: number
 }
 
 interface DeviceHeaderProps {
   committees: Committee[]
 }
 
-const Header: NextPage<HeaderProps> = ({blackout}) => {
-
+const Header: NextPage<HeaderProps> = ({blackout, year}) => {
 
 
   return (
@@ -60,10 +59,10 @@ const Header: NextPage<HeaderProps> = ({blackout}) => {
       <div className={`fixed top-0 w-screen -z-10 h-28 bg-gradient-to-b to-black/0 ${blackout ? "from-black/80" : "from-black/25"}`}></div>
 
       <div className="w-full lg:hidden pointer-events-auto">
-        <MobileHeader />
+        <MobileHeader selectedYear={year} />
       </div>
       <div className="hidden lg:block pointer-events-auto">
-        <DesktopHeader />
+        <DesktopHeader selectedYear={year} />
       </div>
     </>
   )
@@ -71,7 +70,7 @@ const Header: NextPage<HeaderProps> = ({blackout}) => {
 
 export default Header
 
-function DesktopHeader() {
+function DesktopHeader({selectedYear}: {selectedYear?: number}) {
 
   function getGridColsString(): string {
     // Sets the correct column sizes depending on how many items there are in each category
@@ -80,9 +79,13 @@ function DesktopHeader() {
 
   return (
     <YearContext.Consumer>
-      {({ year, changeYear }) => (
+      {({ year, changeYear }) => {
+        if (selectedYear) {
+          year = selectedYear.toString()
+        }
+        return ( 
+        <>
         <div className="mt-6 font-light grid grid-rows-2" style={{ gridTemplateColumns: getGridColsString() }}>
-
           <div className="w-full flex flex-col items-end relative">
             <Link href="/">
               <a className="w-20 h-20 absolute -top-5">
@@ -126,18 +129,24 @@ function DesktopHeader() {
             </React.Fragment>
           ))}
         </div>
-      )}
+      </>
+        )}}
     </YearContext.Consumer>
   )
 }
 
-function MobileHeader() {
+function MobileHeader({selectedYear}: {selectedYear?: number}) {
 
   const [isOpen, setOpen] = useState(false)
 
   return (
     <YearContext.Consumer>
-      {({ year, changeYear }) => (
+
+      {({ year, changeYear }) => {
+         if (selectedYear) {
+          year = selectedYear.toString()
+        }
+        return (
         <>
           <div className={`fixed top-0 left-0 w-full h-full pt-28 bg-black/90 transition duration-300 ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
             {
@@ -179,7 +188,7 @@ function MobileHeader() {
 
           </div>
         </>
-      )}
+        )}}
     </YearContext.Consumer>
   )
 }
