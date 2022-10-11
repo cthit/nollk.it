@@ -172,7 +172,7 @@ function MobileHeader() {
             </div>
 
             <Link href="/">
-              <a className="w-24 h-24 absolute top-2 left-12">
+              <a className="w-20 h-20 absolute top-2 left-12">
                 <img src={`/bilder/${year}/märke.png`} alt="NollKIT'22" />
               </a>
             </Link>
