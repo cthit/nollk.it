@@ -165,8 +165,8 @@ function MobileHeader() {
 
           <div className="w-full h-full px-5 relative">
 
-            <div className="border-b border-b-white w-full pr-5 h-20 flex items-center justify-end">
-              <div className="h-12">
+            <div className="border-b border-b-white w-full pr-5 h-[4.5rem] flex items-center justify-end">
+              <div className="h-10">
                 <Hamburger isOpen={isOpen} setOpen={setOpen} />
               </div>
             </div>
