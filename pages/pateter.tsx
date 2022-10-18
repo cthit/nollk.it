@@ -7,6 +7,7 @@ import PageInfo from "../components/PageInfo";
 import { Committee, Prisma, PrismaClient } from "@prisma/client";
 import Page from "../components/Page";
 import PageMargins from "../components/PageMargins";
+import Button from "../components/Button";
 
 const NavBall = (props: { index: number; committeeyear: string; currentPage: number; scrollTo: (to: number) => void }) => {
   return (
@@ -120,9 +121,14 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
             <NavBall index={index + 1} scrollTo={() => scrollTo(index + 1)} currentPage={currentPage} committeeyear={committee.year.toString().slice(-2)}></NavBall>
           ))}
         </div>
-        <div id="top-button" onClick={() => scrollTo(0)} className={`fixed select-none cursor-pointer right-10 bottom-10 p-2 opacity-0 bg-black hover:opacity-100 transition-opacity duration-300 ${topButtonShown ? 'opacity-70' : 'opacity-0 pointer-events-none'}`}>
-          <span className="">Scroll to top</span>
+        <div className={`fixed right-10 bottom-10 transition-opacity duration-300 ${topButtonShown ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+          <Button action={() => scrollTo(0)}> 
+            Scroll to top
+          </Button>
         </div>
+        {/* <div id="top-button" onClick={() => scrollTo(0)} className={`fixed select-none cursor-pointer right-10 bottom-10 p-2 opacity-0 bg-black hover:opacity-100 transition-opacity duration-300 ${topButtonShown ? 'opacity-70' : 'opacity-0 pointer-events-none'}`}>
+          <span className="">Scroll to top</span>
+        </div> */}
       </Page>
     </>
   )
