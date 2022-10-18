@@ -46,10 +46,6 @@ interface HeaderProps {
   year?: number
 }
 
-interface DeviceHeaderProps {
-  committees: Committee[]
-}
-
 const Header: NextPage<HeaderProps> = ({blackout, year}) => {
 
 
@@ -102,7 +98,7 @@ function DesktopHeader({selectedYear}: {selectedYear?: number}) {
               <div className="col-span-1 flex justify-center">
                 {category.items.map(item => (
                   <Link href={`/${item.href}`} key={item.text}>
-                    <a className="text-lg text-center px-5 whitespace-nowrap neo">
+                    <a className="text-lg text-center px-5 whitespace-nowrap transition-opacity duration-300 opacity-80 hover:opacity-100">
                       {item.text}
                     </a>
                   </Link>
