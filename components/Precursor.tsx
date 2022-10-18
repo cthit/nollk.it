@@ -31,11 +31,10 @@ const Precursor = ({ committee }: { committee: CommitteeWithMembers }) => {
                                 </React.Fragment>
                             ))}
                         </div>
-                        
-                        <div className="absolute mt-6">
-                            <Button action={() => {location.href="/modul/" + committee.year + ".pdf"}}>
-                                Modul
-                            </Button>
+                        <div className="pt-6">
+                        <Button action={() => {location.href="/modul/" + committee.year + ".pdf"}}>
+                            Modul
+                        </Button>
                         </div>
                     </div>
                 </div>
