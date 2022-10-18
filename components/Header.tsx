@@ -174,14 +174,14 @@ function MobileHeader({selectedYear}: {selectedYear?: number}) {
 
           <div className="w-full h-full px-5 relative">
 
-            <div className="border-b border-b-white w-full pr-5 h-20 flex items-center justify-end">
-              <div className="h-12">
+            <div className="border-b border-b-white w-full pr-5 h-[4.5rem] flex items-center justify-end">
+              <div className="h-10">
                 <Hamburger isOpen={isOpen} setOpen={setOpen} />
               </div>
             </div>
 
             <Link href="/">
-              <a className="w-24 h-24 absolute top-2 left-12">
+              <a className="w-20 h-20 absolute top-2 left-12">
                 <img src={`/bilder/${year}/märke.png`} alt="NollKIT'22" />
               </a>
             </Link>
@@ -224,7 +224,7 @@ function YearSelector({defaultText, changeYear}: {defaultText: string, changeYea
   }, [])
   
   return (
-    <select className="px-0 lg:px-3 lg:font-light lg:text-xs lg:not-italic lg:my-0 text-xl italic mt-8 mb-3 bg-transparent outline-none appearance-none cursor-pointer" defaultValue={defaultText} onChange={e => { changeYear(e.target.value); e.target.selectedIndex = 0}}>
+    <select className="px-0 lg:px-3 lg:font-light lg:text-xs lg:not-italic lg:my-0 text-xl w-20 italic mt-8 mb-3 bg-transparent outline-none appearance-none cursor-pointer" defaultValue={defaultText} onChange={e => { changeYear(e.target.value); e.target.selectedIndex = 0}}>
       <option disabled hidden value={defaultText}>{defaultText}</option>
       {
         committees.map(committee => (

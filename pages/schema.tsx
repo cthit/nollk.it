@@ -87,7 +87,7 @@ const Schema: NextPage<SchemaProps> = ({ stringifiedCalendars, firstdayDates }) 
       </Head>
 
       <Page blackout>
-        <div className="my-4 h-1/5 w-full">
+        <div className="my-32 w-full">
           <FullCalendar
             plugins={[timeGridPlugin, momentPlugin]}
             ref={calendarRef}
