@@ -157,7 +157,7 @@ function MobileHeader({selectedYear}: {selectedYear?: number}) {
                   {
                     category.items.map(item => (
                       <Link href={`/${item.href}`} key={item.text}>
-                        <a className="px-3 pb-1 text-lg font-light block neo w-fit">
+                        <a className="px-3 pb-1 text-lg font-light block w-fit transition-opacity duration-300 opacity-80 hover:opacity-100">
                           {item.text}
                         </a>
                       </Link>
