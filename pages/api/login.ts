@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import jwt from "jsonwebtoken"
+import * as jose from "jose"
 import cookie from "cookie"
 
 export default async function login(req: NextApiRequest, res: NextApiResponse) {
@@ -21,7 +21,10 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
     return
   }
 
-  const token = jwt.sign({}, process.env.PASSWORD, { expiresIn: TOKEN_EXPIRATION + "s" })
+  const token = await new jose.SignJWT({})
+    .setProtectedHeader({ alg: "HS256" })
+    .setExpirationTime(TOKEN_EXPIRATION+"s")
+    .sign(new TextEncoder().encode(process.env.PASSWORD))
 
   const serialized = cookie.serialize("token", token, {
     httpOnly: true,
@@ -31,5 +34,5 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
   })
 
   res.setHeader("Set-Cookie", serialized)
-  res.status(200).send( { message: "Logged in. Token set." } )
+  res.status(200).send({ message: "Logged in. Token set." })
 }
