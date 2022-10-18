@@ -11,9 +11,9 @@ import Button from "../components/Button";
 
 const NavBall = (props: { index: number; committeeyear: string; currentPage: number; scrollTo: (to: number) => void }) => {
   return (
-    <div key={props.index} onClick={() => { props.scrollTo(props.index) }} className="h-0 w-0 p-2.5 flex justify-end relative items-center m-px navBallBox cursor-pointer">
-      <span className="transition-all opacity-0 navBallLabel" key={props.index}>{props.committeeyear}</span>
-      <span key={props.index} className={`navBall ${props.index === props.currentPage ? 'bg-slate-100' : ''} border visible p-1.5 border-slate-100 opacity-50 rounded-full m-2 transition-all duration-200`}></span>
+    <div onClick={() => { props.scrollTo(props.index) }} className="h-0 w-0 p-2.5 flex justify-end relative items-center m-px navBallBox cursor-pointer">
+      <span className="transition-all opacity-0 navBallLabel">{props.committeeyear}</span>
+      <span className={`navBall ${props.index === props.currentPage ? 'bg-slate-100' : ''} border visible p-1.5 border-slate-100 opacity-50 rounded-full m-2 transition-all duration-200`}></span>
     </div>
   )
 };
@@ -118,7 +118,7 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
         <div className="fixed flex flex-col items-center right-4 self-center top-1/4">
           <NavBall index={0} scrollTo={() => scrollTo(0)} currentPage={currentPage} committeeyear={"Top"} ></NavBall>
           {allCommittees.map((committee: Committee, index) => (
-            <NavBall index={index + 1} scrollTo={() => scrollTo(index + 1)} currentPage={currentPage} committeeyear={committee.year.toString().slice(-2)}></NavBall>
+            <NavBall key={index} index={index + 1} scrollTo={() => scrollTo(index + 1)} currentPage={currentPage} committeeyear={committee.year.toString().slice(-2)}></NavBall>
           ))}
         </div>
         <div className={`fixed right-10 bottom-10 transition-opacity duration-300 ${topButtonShown ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
