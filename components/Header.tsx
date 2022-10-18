@@ -1,4 +1,4 @@
-import { Committee, PrismaClient } from ".prisma/client";
+import { Committee } from ".prisma/client";
 import { NextPage } from "next";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -44,10 +44,6 @@ const headerCategories = [
 interface HeaderProps {
   blackout: boolean
   year?: number
-}
-
-interface DeviceHeaderProps {
-  committees: Committee[]
 }
 
 const Header: NextPage<HeaderProps> = ({blackout, year}) => {
@@ -102,7 +98,7 @@ function DesktopHeader({selectedYear}: {selectedYear?: number}) {
               <div className="col-span-1 flex justify-center">
                 {category.items.map(item => (
                   <Link href={`/${item.href}`} key={item.text}>
-                    <a className="text-lg text-center px-5 whitespace-nowrap neo">
+                    <a className="text-lg text-center px-5 whitespace-nowrap transition-opacity duration-300 opacity-80 hover:opacity-100">
                       {item.text}
                     </a>
                   </Link>
@@ -161,7 +157,7 @@ function MobileHeader({selectedYear}: {selectedYear?: number}) {
                   {
                     category.items.map(item => (
                       <Link href={`/${item.href}`} key={item.text}>
-                        <a className="px-3 pb-1 text-lg font-light block neo w-fit">
+                        <a className="px-3 pb-1 text-lg font-light block w-fit transition-opacity duration-300 opacity-80 hover:opacity-100">
                           {item.text}
                         </a>
                       </Link>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { CommitteeWithMembers } from "../pages/pateter";
+import Button from "./Button";
 
 
 
@@ -30,14 +31,13 @@ const Precursor = ({ committee }: { committee: CommitteeWithMembers }) => {
                                 </React.Fragment>
                             ))}
                         </div>
-
-                        <div className="mt-6">
-                            <Link href={`/modul/${committee.year}.pdf`}>
-                                <a className="text-lg sm:text-2xl italic font-bold hover:underline">Modul</a>
-                            </Link>
+                        
+                        <div className="absolute mt-6">
+                            <Button action={() => {location.href="/modul/" + committee.year + ".pdf"}}>
+                                Modul
+                            </Button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
