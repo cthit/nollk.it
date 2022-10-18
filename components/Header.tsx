@@ -1,4 +1,4 @@
-import { Committee, PrismaClient } from ".prisma/client";
+import { Committee } from ".prisma/client";
 import { NextPage } from "next";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";

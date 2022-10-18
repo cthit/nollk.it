@@ -126,9 +126,6 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
             Scroll to top
           </Button>
         </div>
-        {/* <div id="top-button" onClick={() => scrollTo(0)} className={`fixed select-none cursor-pointer right-10 bottom-10 p-2 opacity-0 bg-black hover:opacity-100 transition-opacity duration-300 ${topButtonShown ? 'opacity-70' : 'opacity-0 pointer-events-none'}`}>
-          <span className="">Scroll to top</span>
-        </div> */}
       </Page>
     </>
   )
