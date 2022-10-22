@@ -4,10 +4,11 @@ import Precursor from "../components/Precursor"
 import ReactPageScroller from 'react-page-scroller';
 import { useEffect, useState } from "react";
 import PageInfo from "../components/PageInfo";
-import { Committee, Prisma, PrismaClient } from "@prisma/client";
+import { Committee, PrismaClient } from "@prisma/client";
 import Page from "../components/Page";
 import PageMargins from "../components/PageMargins";
 import Button from "../components/Button";
+import { CommitteeWithMembers } from "../types";
 
 const NavBall = (props: { index: number; committeeyear: string; currentPage: number; scrollTo: (to: number) => void }) => {
   return (
@@ -34,10 +35,6 @@ export const getServerSideProps = async () => {
     props: { allCommittees: allCommittees }
   }
 }
-
-export type CommitteeWithMembers = Prisma.CommitteeGetPayload<{
-  include: { members: true };
-}>;
 
 interface PateterProps {
   allCommittees: CommitteeWithMembers[]
