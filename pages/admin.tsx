@@ -91,7 +91,7 @@ interface AccordionItemProps {
 
 const AccordionItem = (props: AccordionItemProps) => {
   return (
-    <div className="opacity-80 hover:opacity-100 select-none cursor-pointer" onClick={}>
+    <div className="opacity-80 hover:opacity-100 select-none cursor-pointer">
       {props.children}
     </div>
   )  
