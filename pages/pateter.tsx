@@ -123,7 +123,7 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
         </div>
         <div className={`fixed right-10 bottom-10 transition-opacity duration-300 ${topButtonShown ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
           <Button action={() => scrollTo(0)}> 
-            Scroll to top
+            Till toppen
           </Button>
         </div>
       </Page>
