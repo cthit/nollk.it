@@ -1,6 +1,5 @@
-import Link from "next/link";
 import React from "react";
-import { CommitteeWithMembers } from "../pages/pateter";
+import { CommitteeWithMembers } from "../types";
 import Button from "./Button";
 
 
