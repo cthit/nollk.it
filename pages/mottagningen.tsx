@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client"
 import { NextPage } from "next"
 import ReactMarkdown from "react-markdown"
+import Divider from "../components/Divider"
 import Page from "../components/Page"
 import PageInfo from "../components/PageInfo"
 import PageText from "../components/PageText"
@@ -156,11 +157,14 @@ const Mottagningen: NextPage<MottagningenProps> = ({ mottagningenText, timelineD
                 <PageInfo heading="Hej Nollan!">
                     {mottagningenText}
                 </PageInfo>
+                <Divider />
                 <div className="timeline-box mt-[20vh] flex flex-col items-center">
                     <div className="font-bold text-6xl font-po text-center mb-12">Timeline</div>
+
                     <div className="mb-12">
                         <PageText>Nedan finns en timeline över allting man kan behöva göra innan mottagningen samt deadlines till dessa. Timelinen kan även innehålla lite roliga grejer som även sker efter mottagningen såsom aspning!</PageText>
                     </div>
+                    <Divider/>
                     <Timeline data={timelineData} />
                 </div>
 
