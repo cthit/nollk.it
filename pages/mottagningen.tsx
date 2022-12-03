@@ -164,7 +164,6 @@ const Mottagningen: NextPage<MottagningenProps> = ({ mottagningenText, timelineD
                     <div className="mb-12">
                         <PageText>Nedan finns en timeline över allting man kan behöva göra innan mottagningen samt deadlines till dessa. Timelinen kan även innehålla lite roliga grejer som även sker efter mottagningen såsom aspning!</PageText>
                     </div>
-                    <Divider/>
                     <Timeline data={timelineData} />
                 </div>
 
