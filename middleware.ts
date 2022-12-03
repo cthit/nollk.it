@@ -3,7 +3,9 @@ import * as jose from "jose"
 
 export async function middleware(req: NextRequest) {
 
-  if (req.nextUrl.pathname.startsWith("/admin")) {
+  const urlIs = (url: string) => req.nextUrl.pathname.startsWith(url)
+
+  if (urlIs("/admin") /*|| urlIs("/api/admin")*/) {
     const token = req.cookies.get("token") 
 
     if (!token) {

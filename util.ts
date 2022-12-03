@@ -3,6 +3,5 @@
 export async function hasImage(url: string) {
   const res = await fetch(url)
   const contentType = res.headers.get("content-type")
-  console.log(res)
   return contentType?.startsWith("image/") ?? false
 }

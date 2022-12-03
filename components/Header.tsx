@@ -212,7 +212,6 @@ function YearSelector({defaultText, changeYear}: {defaultText: string, changeYea
   const [committees, setCommittees] = useState<Committee[]>([])
 
   useEffect(() => {
-    console.log("useEffect");
     (async () => {
       const fetchedCommittees = await fetch("./api/getCommittees").then(res => res.json())
       setCommittees(fetchedCommittees)

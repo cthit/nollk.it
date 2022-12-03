@@ -23,7 +23,7 @@ model Member {
   text         String?
   Committee    Committee @relation(fields: [year], references: [year])
   year         Int
-  orderInImage Int
+  orderInImage Int // 1-indexed
 }
 
 model Links {
