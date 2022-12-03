@@ -80,7 +80,7 @@ div:hover > .downarrow {
   align-items: flex-end;
   padding: 15px;
   position: relative;
-  width: 400px;
+  width: max(400px, 50vw);
   max-width: 70%;
   text-align: left; 
 }
@@ -132,7 +132,7 @@ div:hover > .downarrow {
   font-size: 16px;
   line-height: 24px;
   margin: 15px 0;
-  max-width: 250px;
+  align-self: center;
 }
 .timeline-item-content a {
   font-size: 16px;

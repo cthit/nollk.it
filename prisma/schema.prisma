@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl", "linux-arm64-openssl-1.1.x"]
 }
 
@@ -39,4 +39,28 @@ model PageText {
   pateterText      String
   mottagningenText String
   modulText        String
+}
+
+model Link {
+  id          String          @id @map("_id") @default(cuid())
+  name          String
+  url           String
+  TimeLineEvent TimeLineEvent[]
+}
+
+model Category {    
+  title         String        @id @map("_id")
+  color         String
+  TimeLineEvent TimeLineEvent[]
+}
+
+model TimeLineEvent {
+  id         String      @id @map("_id") @default(cuid())
+  year       String
+  text       String
+  date       String //Should be in format "YYYY-MM-DD"
+  category   Category @relation(fields: [categoryId], references: [title])
+  link       Link?     @relation(fields: [linkId], references: [id])
+  linkId     String?
+  categoryId String
 }

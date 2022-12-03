@@ -1,23 +1,34 @@
 import { PrismaClient } from "@prisma/client"
 import { NextPage } from "next"
+import { useContext } from "react"
 import ReactMarkdown from "react-markdown"
 import Divider from "../components/Divider"
 import Page from "../components/Page"
 import PageInfo from "../components/PageInfo"
 import PageText from "../components/PageText"
+import YearContext from "../util/YearContext"
 
 export const getServerSideProps = async () => {
     const prisma = new PrismaClient()
 
     const mottagningenText = (await prisma.pageText.findMany())[0].mottagningenText
 
+    const timeline = (await prisma.timeLineEvent.findMany(
+        {
+            include: {
+                category: true,
+                link: true
+            }
+        }
+    ))
+    console.log(timeline)
     // dont know how this works but it works, sorts ascending (timeline order)
-    const sortedTimeline = timelineData.sort(
+    const sortedTimeline = timeline.sort(
         (objA, objB) => new Date(objA.date).getTime() - new Date(objB.date).getTime(),
-      );
+    );
 
     return {
-        props: { 
+        props: {
             mottagningenText: mottagningenText,
             timelineData: sortedTimeline
         }
@@ -41,6 +52,7 @@ interface MottagningenProps {
 
 interface timelineData {
     text: string,
+    year: string,
     date: string,
     category: {
         title: string,
@@ -48,49 +60,12 @@ interface timelineData {
     },
     link?: {
         url: string,
-        text: string,
+        name: string,
     }
 }
 
 
-const timelineData: timelineData[] = [
-    {
-      text: "# Hi there 👋 \n - 🔭 I'm currently working on [nollk.it](https://github.com/cthit/nollk.it)  \n   Currently a part of [digIT](https://github.com/cthit) \n ### Previous Committees \n - Eventchef - NollKIT'21",
-      date: "2022-08-14",
-      category: {
-          title: 'Innan mottagningen',
-          color: '#018f69'
-      },
-      link: {
-          url:
-              'kotharidigital.com',
-          text: 'Read more'
-      }
-    },
-    {
-        text: 'This is the third timeline item',
-        date: "2023-08-12",
-        category: {
-            title: 'Innan mottagningen',
-            color: '#018f69'
-        },
-    },
-    {
-      text: 'This is the second timeline item',
-      date: new Date().toISOString(),
-      category: {
-          title: 'Innan mottagningen',
-          color: '#018f69'
-      },
-      link: {
-          url:
-              'https://medium.com/@popflorin1705/javascript-coding-challenge-1-6d9c712963d2',
-          text: 'Read more'
-      }
-    }
-  ]
-
-const TimelineItem = ({data}: {data: timelineData}) => (
+const TimelineItem = ({ data }: { data: timelineData }) => (
     <div className="timeline-item">
         <div className="timeline-item-content">
             <span className="tag" style={{ background: data.category.color }}>
@@ -105,7 +80,7 @@ const TimelineItem = ({data}: {data: timelineData}) => (
                     href={data.link.url}
                     target="_blank"
                 >
-                    {data.link.text}
+                    {data.link.name}
                 </a>
             )}
             <span className="circle" />
@@ -113,7 +88,7 @@ const TimelineItem = ({data}: {data: timelineData}) => (
     </div>
 );
 
-const Timeline = ({data}: {data: timelineData[]}) => { 
+const Timeline = ({ data }: { data: timelineData[] }) => {
     if (data.length > 0) {
         return (
             <div className="timeline-container">
@@ -122,7 +97,7 @@ const Timeline = ({data}: {data: timelineData[]}) => {
                 ))}
             </div>
         )
-    } else { 
+    } else {
         return (
             <>
             </>
@@ -131,25 +106,12 @@ const Timeline = ({data}: {data: timelineData[]}) => {
 }
 
 
-// const Timeline = () => {
-
-//     const test: string = "## Hi there 👋 \n - 🔭 I'm currently working on [nollk.it](https://github.com/cthit/nollk.it)  \n   Currently a part of [digIT](https://github.com/cthit) \n ### Previous Committees \n - Eventchef - NollKIT'21"
-
-//     return (
-//         <div className="flex flex-col justify-start h-full w-full max-w-2xl border border-red-500">
-//             <div className="flex items-center">
-//                 <div className="border p-3 border-slate-100 rounded-full"></div>
-//                 <span className="m-1">Juni &#8254;&#8254;&#8254;|</span>
-//             </div>
-//             <div className="w-full h-auto pl-[10%] markdownBox">
-//                 <ReactMarkdown children={test}></ReactMarkdown>
-//             </div>
-//         </div>
-
-//     )
-// };
-
 const Mottagningen: NextPage<MottagningenProps> = ({ mottagningenText, timelineData }) => {
+
+    const year = useContext(YearContext).year
+    console.log(timelineData)
+    const filteredTimelineData = timelineData.filter((data) => data.year === year)
+
     return (
         <>
             <Page blackout>
@@ -164,7 +126,7 @@ const Mottagningen: NextPage<MottagningenProps> = ({ mottagningenText, timelineD
                     <div className="mb-12">
                         <PageText>Nedan finns en timeline över allting man kan behöva göra innan mottagningen samt deadlines till dessa. Timelinen kan även innehålla lite roliga grejer som även sker efter mottagningen såsom aspning!</PageText>
                     </div>
-                    <Timeline data={timelineData} />
+                    <Timeline data={filteredTimelineData} />
                 </div>
 
             </Page>
