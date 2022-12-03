@@ -10,8 +10,16 @@ export const getServerSideProps = async () => {
 
     const mottagningenText = (await prisma.pageText.findMany())[0].mottagningenText
 
+    // dont know how this works but it works, sorts ascending (timeline order)
+    const sortedTimeline = timelineData.sort(
+        (objA, objB) => new Date(objA.date).getTime() - new Date(objB.date).getTime(),
+      );
+
     return {
-        props: { mottagningenText: mottagningenText }
+        props: { 
+            mottagningenText: mottagningenText,
+            timelineData: sortedTimeline
+        }
     }
 }
 
@@ -27,9 +35,10 @@ const parseDateTime = (dateString: string) => {
 
 interface MottagningenProps {
     mottagningenText: string
+    timelineData: timelineData[]
 }
 
-interface timeLineData {
+interface timelineData {
     text: string,
     date: string,
     category: {
@@ -43,7 +52,7 @@ interface timeLineData {
 }
 
 
-const timelineData: timeLineData[] = [
+const timelineData: timelineData[] = [
     {
       text: "# Hi there 👋 \n - 🔭 I'm currently working on [nollk.it](https://github.com/cthit/nollk.it)  \n   Currently a part of [digIT](https://github.com/cthit) \n ### Previous Committees \n - Eventchef - NollKIT'21",
       date: "2022-08-14",
@@ -56,6 +65,14 @@ const timelineData: timeLineData[] = [
               'kotharidigital.com',
           text: 'Read more'
       }
+    },
+    {
+        text: 'This is the third timeline item',
+        date: "2023-08-12",
+        category: {
+            title: 'Innan mottagningen',
+            color: '#018f69'
+        },
     },
     {
       text: 'This is the second timeline item',
@@ -72,7 +89,7 @@ const timelineData: timeLineData[] = [
     }
   ]
 
-const TimelineItem = ({data}: {data: timeLineData}) => (
+const TimelineItem = ({data}: {data: timelineData}) => (
     <div className="timeline-item">
         <div className="timeline-item-content">
             <span className="tag" style={{ background: data.category.color }}>
@@ -95,11 +112,11 @@ const TimelineItem = ({data}: {data: timeLineData}) => (
     </div>
 );
 
-const Timeline = () => {
-    if (timelineData.length > 0) {
+const Timeline = ({data}: {data: timelineData[]}) => { 
+    if (data.length > 0) {
         return (
             <div className="timeline-container">
-                {timelineData.map((data, idx) => (
+                {data.map((data, idx) => (
                     <TimelineItem data={data} key={idx} />
                 ))}
             </div>
@@ -131,10 +148,7 @@ const Timeline = () => {
 //     )
 // };
 
-const Mottagningen: NextPage<MottagningenProps> = ({ mottagningenText }) => {
-
-
-
+const Mottagningen: NextPage<MottagningenProps> = ({ mottagningenText, timelineData }) => {
     return (
         <>
             <Page blackout>
@@ -147,7 +161,7 @@ const Mottagningen: NextPage<MottagningenProps> = ({ mottagningenText }) => {
                     <div className="mb-12">
                         <PageText>Nedan finns en timeline över allting man kan behöva göra innan mottagningen samt deadlines till dessa. Timelinen kan även innehålla lite roliga grejer som även sker efter mottagningen såsom aspning!</PageText>
                     </div>
-                    <Timeline />
+                    <Timeline data={timelineData} />
                 </div>
 
             </Page>
