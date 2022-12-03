@@ -3,6 +3,7 @@ import { NextPage } from "next"
 import ReactMarkdown from "react-markdown"
 import Page from "../components/Page"
 import PageInfo from "../components/PageInfo"
+import PageText from "../components/PageText"
 
 export const getServerSideProps = async () => {
     const prisma = new PrismaClient()
@@ -14,7 +15,15 @@ export const getServerSideProps = async () => {
     }
 }
 
-
+const parseDateTime = (dateString: string) => {
+    const date = new Date(dateString)
+    console.log(date.toString())
+    const day = date.getDate()
+    const month = date.toLocaleString('default', { month: 'long' })
+    const year = date.getFullYear()
+    const parsedDate = `${day} ${month} ${year}`
+    return parsedDate
+}
 
 interface MottagningenProps {
     mottagningenText: string
@@ -37,7 +46,7 @@ interface timeLineData {
 const timelineData: timeLineData[] = [
     {
       text: "# Hi there 👋 \n - 🔭 I'm currently working on [nollk.it](https://github.com/cthit/nollk.it)  \n   Currently a part of [digIT](https://github.com/cthit) \n ### Previous Committees \n - Eventchef - NollKIT'21",
-      date: 'March 03 2017',
+      date: "2022-08-14",
       category: {
           title: 'Innan mottagningen',
           color: '#018f69'
@@ -50,7 +59,7 @@ const timelineData: timeLineData[] = [
     },
     {
       text: 'This is the second timeline item',
-      date: 'September 22 2017',
+      date: new Date().toISOString(),
       category: {
           title: 'Innan mottagningen',
           color: '#018f69'
@@ -69,7 +78,7 @@ const TimelineItem = ({data}: {data: timeLineData}) => (
             <span className="tag" style={{ background: data.category.color }}>
                 {data.category.title}
             </span>
-            <time>{data.date}</time>
+            <time>{parseDateTime(data.date)}</time>
             <div className="my-4 text-left self-start">
                 <ReactMarkdown children={data.text}></ReactMarkdown>
             </div>
@@ -77,7 +86,6 @@ const TimelineItem = ({data}: {data: timeLineData}) => (
                 <a
                     href={data.link.url}
                     target="_blank"
-                    rel="noopener noreferrer"
                 >
                     {data.link.text}
                 </a>
@@ -134,8 +142,11 @@ const Mottagningen: NextPage<MottagningenProps> = ({ mottagningenText }) => {
                 <PageInfo heading="Hej Nollan!">
                     {mottagningenText}
                 </PageInfo>
-                <div className="timeline-box mt-[20vh]">
+                <div className="timeline-box mt-[20vh] flex flex-col items-center">
                     <div className="font-bold text-6xl font-po text-center mb-12">Timeline</div>
+                    <div className="mb-12">
+                        <PageText>Nedan finns en timeline över allting man kan behöva göra innan mottagningen samt deadlines till dessa. Timelinen kan även innehålla lite roliga grejer som även sker efter mottagningen såsom aspning!</PageText>
+                    </div>
                     <Timeline />
                 </div>
 
