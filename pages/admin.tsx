@@ -160,7 +160,6 @@ const CommitteeManagementDisplay = ({ committee, removeCommittee }: CommitteeMan
   const [fontURL, setFontURL] = useState(committee.fontURL)
 
   useEffect(() => {
-    alert("Hej!")
     setMembers(committee.members)
   }, [committee])
 
