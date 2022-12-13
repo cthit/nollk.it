@@ -7,6 +7,7 @@ import Button from "../components/Button"
 import Page from "../components/Page"
 import { CommitteeWithMembers } from "../types"
 import { hasImage } from "../util"
+import axios from "axios"
 
 export const getServerSideProps = async () => {
   const prisma = new PrismaClient()
@@ -33,8 +34,9 @@ enum ManagementDisplay {
 
 const Admin: NextPage<AdminProps> = (props: AdminProps) => {
 
-  const [committees, setCommittees] = useState<CommitteeWithMembers[]>(props.committees)
   const [displayed, setDisplayed] = useState(ManagementDisplay.Committee)
+
+  const [committees, setCommittees] = useState<CommitteeWithMembers[]>(props.committees)
   const [selectedCommittee, setSelectedCommittee] = useState(props.committees.sort((a, b) => b.year - a.year)[0])
 
   return (
@@ -85,7 +87,10 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
             {(() => {
               switch (displayed) {
                 default:
-                  return <CommitteeManagementDisplay committee={selectedCommittee} />
+                  return <CommitteeManagementDisplay committee={selectedCommittee} removeCommittee={() => {
+                    setCommittees(committees.filter((committee) => committee.year !== selectedCommittee.year))
+                    setSelectedCommittee(committees[1])
+                  }} />
               }
             })()}
           </div>
@@ -141,44 +146,21 @@ const AccordionItem = (props: AccordionItemProps) => {
 
 interface CommitteeManagementDisplayProps {
   committee: CommitteeWithMembers
+  removeCommittee: () => void
 }
 
-const CommitteeManagementDisplay = ({ committee }: CommitteeManagementDisplayProps) => {
+const CommitteeManagementDisplay = ({ committee, removeCommittee }: CommitteeManagementDisplayProps) => {
 
   const [members, setMembers] = useState(committee.members)
 
   let newMembers = [...members]
 
-  const setMemberName = (name: string, index: number) => {
-    newMembers[index].name = name
-  }
-
-  const setMemberRole = (member: Member, index: number) => {
-    const newMembers = [...members]
-    newMembers[index].role = member.role
-    setMembers(newMembers)
-  }
-
-  const setMemberGreeting = (member: Member, index: number) => {
-    const newMembers = [...members]
-    newMembers[index].greeting = member.greeting
-    setMembers(newMembers)
-  }
-
-  const setMemberText = (member: Member, index: number) => {
-    const newMembers = [...members]
-    newMembers[index].text = member.text
-    setMembers(newMembers)
-  }
-
   const [firstDay, setFirstDay] = useState(committee.firstDay)
   const [orderInImageDesc, setOrderInImageDesc] = useState(committee.orderInImageDesc)
   const [fontURL, setFontURL] = useState(committee.fontURL)
 
-
-
-
   useEffect(() => {
+    alert("Hej!")
     setMembers(committee.members)
   }, [committee])
 
@@ -198,7 +180,7 @@ const CommitteeManagementDisplay = ({ committee }: CommitteeManagementDisplayPro
         <div className="text-2xl">Medlemmar</div>
         <div>
           {members.map((member, index) => (
-            <div className="flex flex-row gap-2 items-center py-1">
+            <div className="flex flex-row gap-2 items-center py-1 w-full" key={member.name}>
 
               <div className="flex flex-col gap-2">
                 {
@@ -232,15 +214,15 @@ const CommitteeManagementDisplay = ({ committee }: CommitteeManagementDisplayPro
                 )}
               </div>
 
-              <Accordion title={member.name} fontSize={1} key={member.name}>
+              <Accordion title={member.name} fontSize={1}>
                 <div className="flex flex-row gap-4 pt-2">
-                  <TextInput placeholder='Namn "Namn" Efternamn' setValue={(name) => {newMembers[index].name = name}}>{member.name}</TextInput>
-                  <TextInput placeholder="Post" setValue={(role) => {newMembers[index].role = role}}>{member.role}</TextInput>
-                  <TextInput placeholder="Hälsningsfras" setValue={(greeting) => {newMembers[index].greeting = greeting}}>{member.greeting || ""}</TextInput>
+                  <TextInput placeholder='Namn "Namn" Efternamn' setValue={(name) => { newMembers[index].name = name }}>{member.name}</TextInput>
+                  <TextInput placeholder="Post" setValue={(role) => { newMembers[index].role = role }}>{member.role}</TextInput>
+                  <TextInput placeholder="Hälsningsfras" setValue={(greeting) => { newMembers[index].greeting = greeting }}>{member.greeting || ""}</TextInput>
                 </div>
                 <div className="flex flex-row justify-between pt-2 pb-2">
                   <div className="flex-[2]">
-                    <TextInput placeholder="Text" setValue={(text) => {newMembers[index].text = text}}>{member.text || ""}</TextInput>
+                    <TextInput placeholder="Text" setValue={(text) => { newMembers[index].text = text }}>{member.text || ""}</TextInput>
                   </div>
                   <div className="flex-[1] flex flex-row justify-center">
                     <div className="w-36">
@@ -311,13 +293,40 @@ const CommitteeManagementDisplay = ({ committee }: CommitteeManagementDisplayPro
             fontURL: fontURL ?? null,
             members: newMembers,
           }
-          alert(JSON.stringify(committeeWithMembers))
+
+          fetch("/api/admin/committee/delete", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ year: committee.year }),
+          }).then(() => {
+            fetch("/api/admin/committee/add", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(committeeWithMembers),
+            })
+          })
         }}>
           Spara
         </Button>
       </div>
       <div className="pb-6">
-        <Button action={() => { }}>
+        <Button action={async () => {
+          if (confirm("Vill du ta bort " + committee.year + "?")) {
+            fetch("/api/admin/committee/delete", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ year: committee.year }),
+            }).then(() => {
+              removeCommittee()
+            })
+          }
+        }}>
           Ta bort kommitté
         </Button>
       </div>
@@ -327,30 +336,31 @@ const CommitteeManagementDisplay = ({ committee }: CommitteeManagementDisplayPro
 
 const uploadImage = async (url: string, file: File) => {
 
-  // const buffer = await file.arrayBuffer()
-  // const base64file = Buffer.from(buffer).toString('base64')
-  //const base64file = "liten råtta äter daggmask" 
+  //const buffer = await file.arrayBuffer()
+  //const base64file = Buffer.from(buffer).toString('base64')
   //console.log(base64file)
 
   const formData = new FormData()
   formData.append('file', file)
   formData.append('url', url)
 
-
-
-
   const res = await fetch("/api/admin/uploadImage", {
     method: "POST",
     body: formData,
-    // body: JSON.stringify({
-    //   url: url,
-    //   file: base64file,
-    // }),
     headers: {
       "Content-Type": "multipart/form-data",
     }
   })
-  console.log(res)
+
+  //console.log(formData)
+
+  /*const res = axios.post("/api/admin/uploadImage", formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })*/
+
+  console.log({ bajskorv: 1, response: res.json() })
   return res
 }
 
@@ -380,11 +390,9 @@ const ImageUpload = ({ title, url, type }: ImageUploadProps) => {
         <input type="file" accept={type} className="hidden" onChange={async (e) => {
           const maybeFile = e.target.files?.item(0)
 
-          console.log(maybeFile)
-
           if (isFile(maybeFile)) {
             const res = await uploadImage(url, maybeFile)
-            console.log(res)
+            console.log("Response from API: " + res)
           } else {
             console.error("No file")
           }
