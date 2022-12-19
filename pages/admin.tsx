@@ -7,7 +7,6 @@ import Button from "../components/Button"
 import Page from "../components/Page"
 import { CommitteeWithMembers } from "../types"
 import { hasImage } from "../util"
-import axios from "axios"
 
 export const getServerSideProps = async () => {
   const prisma = new PrismaClient()
@@ -335,9 +334,7 @@ const CommitteeManagementDisplay = ({ committee, removeCommittee }: CommitteeMan
 
 const uploadImage = async (url: string, file: File) => {
 
-  //const buffer = await file.arrayBuffer()
-  //const base64file = Buffer.from(buffer).toString('base64')
-  //console.log(base64file)
+  if (file.size > 4_000_000) return alert("Bilden är för stor, max 4MB") 
 
   const formData = new FormData()
   formData.append('file', file)
@@ -346,21 +343,7 @@ const uploadImage = async (url: string, file: File) => {
   const res = await fetch("/api/admin/uploadImage", {
     method: "POST",
     body: formData,
-    headers: {
-      "Content-Type": "multipart/form-data",
-    }
   })
-
-  //console.log(formData)
-
-  /*const res = axios.post("/api/admin/uploadImage", formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  })*/
-
-  console.log({ bajskorv: 1, response: res.json() })
-  return res
 }
 
 interface ImageUploadProps {
