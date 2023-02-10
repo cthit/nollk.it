@@ -113,7 +113,7 @@ div:hover > .downarrow {
 
 .timeline-item-content .tag {
   color: #fff;
-  font-size: 12px;
+  font-size: 0.8rem;
   font-weight: bold;
   top: 5px;
   left: 5px;
@@ -125,7 +125,7 @@ div:hover > .downarrow {
 
 .timeline-item-content time {
   color: #777;
-  font-size: 12px;
+  font-size: 0.8rem;
   font-weight: bold;
 }
 .timeline-item-content p {

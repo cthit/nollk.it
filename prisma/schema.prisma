@@ -64,3 +64,10 @@ model TimeLineEvent {
   linkId     String?
   categoryId String
 }
+
+model Faq {
+  id          String @id @map("_id") @default(cuid())
+  question    String
+  answer      String
+  orderInList Int
+}

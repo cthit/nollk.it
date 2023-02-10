@@ -1,7 +1,8 @@
-import { PrismaClient } from "@prisma/client"
+import { Faq, PrismaClient } from "@prisma/client"
 import { NextPage } from "next"
 import { useContext } from "react"
 import ReactMarkdown from "react-markdown"
+import Accordion from "../components/Accordion"
 import Divider from "../components/Divider"
 import Page from "../components/Page"
 import PageInfo from "../components/PageInfo"
@@ -21,7 +22,10 @@ export const getServerSideProps = async () => {
             }
         }
     ))
-    console.log(timeline)
+    const faqItems = (await prisma.faq.findMany());
+
+    const sortedFaqs = faqItems.sort((a, b) => a.orderInList - b.orderInList)
+
     // dont know how this works but it works, sorts ascending (timeline order)
     const sortedTimeline = timeline.sort(
         (objA, objB) => new Date(objA.date).getTime() - new Date(objB.date).getTime(),
@@ -30,14 +34,14 @@ export const getServerSideProps = async () => {
     return {
         props: {
             mottagningenText: mottagningenText,
-            timelineData: sortedTimeline
+            timelineData: sortedTimeline,
+            faqItems: sortedFaqs
         }
     }
 }
 
 const parseDateTime = (dateString: string) => {
     const date = new Date(dateString)
-    console.log(date.toString())
     const day = date.getDate()
     const month = date.toLocaleString('default', { month: 'long' })
     const year = date.getFullYear()
@@ -48,7 +52,9 @@ const parseDateTime = (dateString: string) => {
 interface MottagningenProps {
     mottagningenText: string
     timelineData: timelineData[]
+    faqItems: Faq[]
 }
+
 
 interface timelineData {
     text: string,
@@ -106,10 +112,9 @@ const Timeline = ({ data }: { data: timelineData[] }) => {
 }
 
 
-const Mottagningen: NextPage<MottagningenProps> = ({ mottagningenText, timelineData }) => {
+const Mottagningen: NextPage<MottagningenProps> = ({ mottagningenText, timelineData, faqItems }) => {
 
     const year = useContext(YearContext).year
-    console.log(timelineData)
     const filteredTimelineData = timelineData.filter((data) => data.year === year)
 
     return (
@@ -127,6 +132,19 @@ const Mottagningen: NextPage<MottagningenProps> = ({ mottagningenText, timelineD
                         <PageText>Nedan finns en timeline över allting man kan behöva göra innan mottagningen samt deadlines till dessa. Timelinen kan även innehålla lite roliga grejer som även sker efter mottagningen såsom aspning!</PageText>
                     </div>
                     <Timeline data={filteredTimelineData} />
+                </div>
+
+                <Divider />
+
+                <div className="font-po font-bold w-[60vw] mt-8 ml-4">
+                    <span className="text-4xl">Frequently Asked Questions</span>
+                </div>
+                <div>
+                    {faqItems.map((faqItem, index) => (
+                        <div>
+                            <Accordion title={faqItem.question} key={index} content={faqItem.answer} />
+                        </div>
+                    ))}
                 </div>
 
             </Page>

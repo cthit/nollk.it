@@ -1,0 +1,81 @@
+import { PrismaClient, Prisma } from '@prisma/client'
+import { Fragment } from 'react'
+
+const prisma = new PrismaClient()
+
+async function main() {
+
+
+    // Check if posts should be included in the query
+
+    const faq = [
+        {
+            question: 'Varför finns mottagningen?',
+            answer: 'Som ny student, och i en fär många helt främmande stad, känner många oro infär högskolestudierna. Det är mycket att tänka på, många frågor och funderingar och kanske känner man sig ensam. Och det är just därför som mottagningen finns till! Syftet med mottagningen är att ge de nya studenterna\n\:\nEn rolig start på utbildningen\nTillfällen att lära känna alla nya människor\nTid till att lära känna Chalmers, hitta på campus och lära känna staden\nAtt komma in i livet som student med allt vad det innebär \nFör att nå upp till dessa mål kommer vi att erbjuda diverse arrangemang. Se mer under nästa punkt.\n\nTidigare erfarenheter har visat att många av hela umgängeskretsar, laborationsgrupper och vänner för livet är densamma som bildades under mottagningen, så se till att inte missa chansen!',
+            orderInList: 1,
+        },
+        {
+            question: 'Vem anordnar mottagningen?',
+            answer: 'Vi som planerar, arrangerar och ansvarar för mottagningen på IT-sektionen heter NollKIT, vilket står för NollKommittén IT. Vi är en grupp på åtta personer som ideellt har valt att arbeta med detta under ett år, av den enkla anledningen att vi tycker vår egna mottagning var så sinnesjukt rolig att vi vill se till att ni får lika kul, men kanske framförallt för att vi ville uppleva det en gång till!\n\nAlla sektioner har varsitt NollK som ansvarar för mottagningen på den egna sektionen. Till vår hjälp har vi phaddrar och kårens mottagningskommitté, MK, som ansvarar för samordningen av sektionernas mottagningar.',
+            orderInList: 2,
+        },
+        {
+            question: 'Är mottagningen obligatorisk?',
+            answer: 'Nej, absolut inte! Hela mottagningen är helt frivillig. Du deltar precis så mycket/lite du vill. Vi råder dig dock starkt till att delta så mycket du bara kan! Mottagningen är till för just Dig, kom ihåg det! Deltar du inte i mottagningen missar du ypperliga tillfällen till att lära känna dina klasskamrater, få tips och råd om studierna och fritid och en massa roliga och givande aktiviteter.',
+            orderInList: 3,
+        },
+        {
+            question: 'Kommer jag förnedras under mottagningen?',
+            answer: 'NEJ, det är helt förbjudet. Mottagningen ska inte förväxlas med nollningen som förekommer på vissa gymnasieskolor där de äldre eleverna förnedrar och “ger igen” på de nya studenterna. Målet med mottagningen är att den ska ses tillbaka på som en underbar tid i början av ert nya liv, något att se tillbaka på med glädje. Tvång, obehag och hets är nånting som inte ska förekomma. Känner du dig illa till mods över nånting vill vi veta det så fort som möjligt!',
+            orderInList: 4,
+        },
+        {
+            question: 'Vad är en nollbricka?',
+            answer: 'Nollbrickan är en gammal tradition som finns till för att de nya studenterna snabbt och lätt ska lära sig varandras namn. Att försöka hålla reda på 100-talet namn utan denna bricka är ingen lätt uppgift. Den underlättar dessutom för de nya studenterna att se vilka som pluggar på vilket program, och vilka som varit mest aktiva under mottagningen. För varje aktivitet man deltar i under mottagningen får man en stämpel på sin bricka som bevis för engagemang.\n\nNollbrickan bär man ända fram till Nollfinalen då man blir omvandlad till Nymble.',
+            orderInList: 5,
+        },
+        {
+            question: 'Är mottagningen obligatorisk?',
+            answer: 'Nej, absolut inte! Hela mottagningen är helt frivillig. Du deltar precis så mycket/lite du vill. Vi råder dig dock starkt till att delta så mycket du bara kan! Mottagningen är till för just Dig, kom ihåg det! Deltar du inte i mottagningen missar du ypperliga tillfällen till att lära känna dina klasskamrater, få tips och råd om studierna och fritid och en massa roliga och givande aktiviteter.',
+            orderInList: 6,
+        },
+        {
+            question: 'Kommer jag tvingas dricka alkohol?',
+            answer: 'Nej, det kommer du inte. Däremot kommer det att vara en hel del aktiviteter i form av sittningar, fester, pubrundor etc. där det förekommer alkohol men självklart finns det alltid alkoholfria alternativ.\n\nVi vill också poängetera att mottagningen inte är tänkt som någon fylleskandal. Drick med måtta och ha skoj istället! Droger är självklart helt förbjudet och kommer att hanteras därefter.',
+            orderInList: 7,
+        },
+        {
+            question: 'Vad är en "Nollan"?',
+            answer: '“Nollan” är benämningen på de som börjar en högskole-/universitetsutbildning med noll högskolepoäng. Nollan är du fram tills nollfinalen då du år kasta din nollbricka och stolt kan kalla dig nymble! (Förklaring)',
+            orderInList: 8,
+        },
+        {
+            question: 'Vad är en phadder?',
+            answer: 'En phadder är en bra person. Phaddern är en person som ideellt vill hjälpa till med mottagningen och lotsa er nya studenter in i studentlivet. En phadder kan hjälpa dig med allt. Vare sig det gäller var en föreläsningssal ligger, vad alla konstiga ord innebär, vilka spårvagnar som går vart, eller bara vilken pizzeria som är bäst. De flesta phaddrarna har dessutom gått en utbildning i ledarskap får att de ska veta hur de ska ta hand om er på bästa vis!\n\nPhaddern finns till för Dig!',
+            orderInList: 9,
+        },
+        {
+            question: 'Vad kostar mottagningen?',
+            answer: 'Under mottagningen kommer det arrangeras ett antal arrangemang som kostar pengar. För att du ska spara så mycket pengar som möjligt finns det något som kallas “mottagningsavgift” som är en summa man kan betala under mottagningens början för att få reducerade priser på dessa arrangemang.\n\nMottagningsavgiften ligger på 350 kronor och är givetvis helt frivillig. I denna kostnaden ingår en gratis finmiddag och en massa fördelaktigt rabatterade priser!',
+            orderInList: 10,
+        }
+    ]
+
+    await prisma.faq.createMany({
+        data: faq
+    })
+    // faq.forEach(async (faq1) => {
+    //     const createUser = await prisma.faq.create({ data: faq1 })
+    // })
+    // Pass 'user' object into query
+}
+
+main()
+    .then(async () => {
+        await prisma.$disconnect()
+    })
+    .catch(async (e) => {
+        console.error(e)
+        await prisma.$disconnect()
+        process.exit(1)
+    })
