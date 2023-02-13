@@ -115,10 +115,7 @@ div:hover > .downarrow {
   color: #fff;
   font-size: 0.8rem;
   font-weight: bold;
-  top: 5px;
-  left: 5px;
   letter-spacing: 1px;
-  padding: 5px;
   position: absolute;
   text-transform: uppercase;
 }

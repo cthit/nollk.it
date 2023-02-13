@@ -74,7 +74,7 @@ interface timelineData {
 const TimelineItem = ({ data }: { data: timelineData }) => (
     <div className="timeline-item">
         <div className="timeline-item-content">
-            <span className="tag" style={{ background: data.category.color }}>
+            <span className="tag px-3 py-1 top-3 left-3" style={{ background: data.category.color }}>
                 {data.category.title}
             </span>
             <time>{parseDateTime(data.date)}</time>

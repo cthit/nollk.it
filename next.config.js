@@ -29,7 +29,12 @@ const nextConfig = {
       {
         source: '/1337',
         destination: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-        permanent: true,
+        permanent: false,
+      },
+      {
+        source: '/rick',
+        destination: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        permanent: false,
       },
     ]
   },
