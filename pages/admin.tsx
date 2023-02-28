@@ -224,7 +224,7 @@ const CommitteeManagementDisplay = ({ committee, removeCommittee }: CommitteeMan
                   </div>
                   <div className="flex-[1] flex flex-row justify-center">
                     <div className="w-36">
-                      <ImageUpload title="Bild" type=".jpg,.jpeg" url={`/bilder/${committee.year}/poster/${member.role}.jpg`} />
+                      <ImageUpload title="Bild" type=".jpg,.jpeg" url={`${committee.year}/poster/${member.role}.jpg`} />
                     </div>
                   </div>
                 </div>
@@ -254,10 +254,10 @@ const CommitteeManagementDisplay = ({ committee, removeCommittee }: CommitteeMan
       <div>
         <div className="text-2xl pb-2">Bilder</div>
         <div className="flex flex-row gap-4 h-28">
-          <ImageUpload title="Märke" type=".png" url={`/bilder/${committee.year}/märke.png`} />
-          <ImageUpload title="Dator" type=".jpg,.jpeg" url={`/bilder/${committee.year}/landskap.jpg`} />
-          <ImageUpload title="Mobil" type=".jpg,.jpeg" url={`/bilder/${committee.year}/porträtt.jpg`} />
-          <ImageUpload title="Patetbild" type=".jpg,.jpeg" url={`/bilder/${committee.year}/kommitte.jpg`} />
+          <ImageUpload title="Märke" type=".png" url={`${committee.year}/märke.png`} />
+          <ImageUpload title="Dator" type=".jpg,.jpeg" url={`${committee.year}/landskap.jpg`} />
+          <ImageUpload title="Mobil" type=".jpg,.jpeg" url={`${committee.year}/porträtt.jpg`} />
+          <ImageUpload title="Patetbild" type=".jpg,.jpeg" url={`${committee.year}/kommitte.jpg`} />
         </div>
       </div>
 
@@ -354,13 +354,15 @@ interface ImageUploadProps {
 
 const ImageUpload = ({ title, url, type }: ImageUploadProps) => {
 
+  const [fullURL, setFullURL] = useState("/bilder/" + url)
+
   const [isImage, setIsImage] = useState(false)
 
   useEffect(() => {
     (async () => {
-      setIsImage(await hasImage(url))
+      setIsImage(await hasImage(fullURL))
     })()
-  }, [url])
+  }, [fullURL])
 
   const isFile = (maybeFile: File | undefined | null): maybeFile is File => {
     return maybeFile !== null && maybeFile !== undefined
@@ -373,15 +375,16 @@ const ImageUpload = ({ title, url, type }: ImageUploadProps) => {
           const maybeFile = e.target.files?.item(0)
 
           if (isFile(maybeFile)) {
-            const res = await uploadImage(url, maybeFile)
-            console.log("Response from API: " + res)
+            await uploadImage(url, maybeFile)
+            const rand = Math.random()
+            setFullURL("/bilder/" + url + "?" + rand) //rand is needed for the image to update, otherwise the browser keeps the url cached
           } else {
             console.error("No file")
           }
         }} />
       </label>
       {isImage ? (
-        <Image src={url} alt={title} layout="fill" className="-z-10 absolute object-cover h-full" />
+        <Image src={fullURL} alt={title} layout={"fill"} className="-z-10 absolute object-cover h-full" />
       ) : (
         <div className="absolute top-1 left-2 text-xs italic">Bild saknas</div>
       )}
