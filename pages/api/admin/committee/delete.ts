@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export default async function add(req: NextApiRequest, res: NextApiResponse) {
 
-  const year = req.body.year;
+  const year = req.body.year
 
   const deleteMembers = prisma.member.deleteMany({
     where: {

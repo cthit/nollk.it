@@ -85,7 +85,7 @@ function DesktopHeader({selectedYear}: {selectedYear?: number}) {
           <div className="w-full flex flex-col items-end relative">
             <Link href="/">
               <a className="w-20 h-20 absolute -top-5">
-                <img src={`/bilder/${year}/märke.png`} alt="NollKIT'22" />
+                <img src={`/bilder/${year}/märke.png`} alt={"NollKIT" + year} />
               </a>
             </Link>
           </div>
@@ -137,7 +137,6 @@ function MobileHeader({selectedYear}: {selectedYear?: number}) {
 
   return (
     <YearContext.Consumer>
-
       {({ year, changeYear }) => {
          if (selectedYear) {
           year = selectedYear.toString()
@@ -178,7 +177,7 @@ function MobileHeader({selectedYear}: {selectedYear?: number}) {
 
             <Link href="/">
               <a className="w-20 h-20 absolute top-2 left-12">
-                <img src={`/bilder/${year}/märke.png`} alt="NollKIT'22" />
+                <img src={`/bilder/${year}/märke.png`} alt={"NollKIT" + year} />
               </a>
             </Link>
 
@@ -213,8 +212,8 @@ function YearSelector({defaultText, changeYear}: {defaultText: string, changeYea
 
   useEffect(() => {
     (async () => {
-      const fetchedCommittees = await fetch("./api/getCommittees").then(res => res.json())
-      setCommittees(fetchedCommittees)
+      const fetchedCommittees = await fetch("./api/getCommittees").then(res => res.json()) as Committee[]
+      setCommittees(fetchedCommittees.sort((a,b) => b.year - a.year))
     })()
   }, [])
   

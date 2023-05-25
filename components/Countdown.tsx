@@ -20,8 +20,7 @@ export default function Countdown({ criticalDates }: { criticalDates: string[] }
   const ctx = useContext(YearContext)
 
   const findCriticalDate = (criticalDates: string[], year: string): string => {
-    const criticalDate = criticalDates.find(d => d.includes(year)) ?? ""
-    return criticalDate
+    return criticalDates.find(d => d.includes(year)) ?? ""
   }
 
   function getTimeLeft(year: string): TimeLeft {
@@ -53,11 +52,14 @@ export default function Countdown({ criticalDates }: { criticalDates: string[] }
   }
 
   useEffect(() => {
-    setTimeLeft(getTimeLeft(ctx.year))
     const downtick = setInterval(() => {
-      if (criticalDatePassed(getTimeLeft(ctx.year))) clearInterval(downtick)
       setTimeLeft(getTimeLeft(ctx.year))
     }, 1000)
+
+    return () => {
+      clearInterval(downtick)
+      setTimeLeft(getTimeLeft(ctx.year))
+    }
   }, [ctx.year])
 
   return (

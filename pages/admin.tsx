@@ -50,6 +50,7 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
         <div className="border border-red-600 h-screen w-full flex flex-row gap-8 pt-28">
           <div className="flex-1 flex flex-col">
             <Accordion title="Kommittéer" fontSize={1.3}>
+
               {committees.map((committee) => committee.year.toString().slice(2, 3)) //get 10s digit
                 .filter((digit, index, self) => self.indexOf(digit) === index) //get unique digits
                 .map((digit) => (
@@ -62,20 +63,41 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
                   </Accordion>
                 ))
               }
-              <AccordionItem>
-                <div className="my-3">
-                  <Button action={() => {
-                    const year = committees[0].year + 1
-                    setCommittees([{
-                      year: year,
-                      firstDay: year + "-01-01T00:00:00",
-                      orderInImageDesc: "Från vänster",
-                      fontURL: null,
-                      members: []
-                    }, ...committees])
-                  }}>Ny kommitté</Button>
-                </div>
-              </AccordionItem>
+
+              <div className="flex flex-col gap-4 my-4">
+                <Button action={() => {
+                  const year = committees[0].year + 1
+                  setCommittees([{
+                    year: year,
+                    firstDay: year + "-01-01T00:00:00",
+                    orderInImageDesc: "Från vänster",
+                    fontURL: null,
+                    members: []
+                  }, ...committees])
+                }}>Ny kommitté</Button>
+
+                { committees.length > 0 ?
+                  <Button color={"bg-red-600"} action={async () => {
+                    if (confirm("Vill du ta bort " + committees[0].year + "?")) {
+                      fetch("/api/admin/committee/delete", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ year: committees[0].year }),
+                      }).then(() => {
+                        setCommittees(committees.slice(-1))
+                        setSelectedCommittee(committees[1])
+                      })
+                    }
+                  }}>
+                    Ta bort översta
+                  </Button>
+                  :
+                  <></>
+                }
+              </div>
+
             </Accordion>
             <Accordion title="Text" fontSize={1.3}>
 
@@ -84,12 +106,9 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
           </div>
           <div className="flex-[4]">
             {(() => {
-              switch (displayed) {
+              switch (displayed) { //Switch between displaying committee, text, or calendar
                 default:
-                  return <CommitteeManagementDisplay committee={selectedCommittee} removeCommittee={() => {
-                    setCommittees(committees.filter((committee) => committee.year !== selectedCommittee.year))
-                    setSelectedCommittee(committees[1])
-                  }} />
+                  return <CommitteeManagementDisplay committee={selectedCommittee} />
               }
             })()}
           </div>
@@ -145,14 +164,14 @@ const AccordionItem = (props: AccordionItemProps) => {
 
 interface CommitteeManagementDisplayProps {
   committee: CommitteeWithMembers
-  removeCommittee: () => void
 }
 
-const CommitteeManagementDisplay = ({ committee, removeCommittee }: CommitteeManagementDisplayProps) => {
+const CommitteeManagementDisplay = ({ committee }: CommitteeManagementDisplayProps) => {
 
   const [members, setMembers] = useState(committee.members)
-
   let newMembers = [...members]
+
+  const [year, setYear] = useState(committee.year)
 
   const [firstDay, setFirstDay] = useState(committee.firstDay)
   const [orderInImageDesc, setOrderInImageDesc] = useState(committee.orderInImageDesc)
@@ -160,6 +179,10 @@ const CommitteeManagementDisplay = ({ committee, removeCommittee }: CommitteeMan
 
   useEffect(() => {
     setMembers(committee.members)
+    setFirstDay(committee.firstDay)
+    setOrderInImageDesc(committee.orderInImageDesc)
+    setFontURL(committee.fontURL)
+    setYear(committee.year)
   }, [committee])
 
   useEffect(() => {
@@ -170,9 +193,9 @@ const CommitteeManagementDisplay = ({ committee, removeCommittee }: CommitteeMan
   }, [members])
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-8 pb-12">
 
-      <div className="text-3xl font-bold">{"NollKIT'" + committee.year.toString().slice(2)}</div>
+      <div className="text-3xl font-bold">{"NollKIT'" + year.toString().slice(2)}</div>
 
       <div>
         <div className="text-2xl">Medlemmar</div>
@@ -254,36 +277,36 @@ const CommitteeManagementDisplay = ({ committee, removeCommittee }: CommitteeMan
       <div>
         <div className="text-2xl pb-2">Bilder</div>
         <div className="flex flex-row gap-4 h-28">
-          <ImageUpload title="Märke" type=".png" url={`${committee.year}/märke.png`} />
-          <ImageUpload title="Dator" type=".jpg,.jpeg" url={`${committee.year}/landskap.jpg`} />
-          <ImageUpload title="Mobil" type=".jpg,.jpeg" url={`${committee.year}/porträtt.jpg`} />
-          <ImageUpload title="Patetbild" type=".jpg,.jpeg" url={`${committee.year}/kommitte.jpg`} />
+          <ImageUpload title="Märke" type=".png" url={`${year}/märke.png`} />
+          <ImageUpload title="Dator" type=".jpg,.jpeg" url={`${year}/landskap.jpg`} />
+          <ImageUpload title="Mobil" type=".jpg,.jpeg" url={`${year}/porträtt.jpg`} />
+          <ImageUpload title="Patetbild" type=".jpg,.jpeg" url={`${year}/kommitte.jpg`} />
         </div>
       </div>
 
       <div className="w-1/3">
         <div className="text-2xl">Ordning i patetbilden</div>
         <TextInput placeholder={"Från vänster"} setValue={setOrderInImageDesc}>
-          {committee.orderInImageDesc}
+          {orderInImageDesc}
         </TextInput>
       </div>
 
       <div className="w-1/3">
-        <div className="text-2xl">Första dagen</div>
+        <div className="text-2xl">Datum för första dagen</div>
         <TextInput placeholder={"YYYY-MM-DDTHH:MM:SS"} setValue={setFirstDay}>
-          {committee.firstDay}
+          {firstDay}
         </TextInput>
       </div>
 
       <div className="w-2/3">
-        <div className="text-2xl">Font</div>
+        <div className="text-2xl">Länk till font</div>
         <TextInput placeholder="URL till fonten" setValue={setFontURL}>
-          {committee.fontURL ?? ""}
+          {fontURL ?? ""}
         </TextInput>
       </div>
 
-      <div className="pt-8 pb-4">
-        <Button action={() => {
+      <div>
+        <Button color={"bg-green-500"} action={() => {
           const committeeWithMembers: CommitteeWithMembers = {
             year: committee.year,
             firstDay: firstDay,
@@ -306,35 +329,19 @@ const CommitteeManagementDisplay = ({ committee, removeCommittee }: CommitteeMan
               },
               body: JSON.stringify(committeeWithMembers),
             })
-          })
+          }).then(() => alert("Sparat " + committee.year + " till databasen!"))
         }}>
-          Spara
+          Spara till databasen
         </Button>
       </div>
-      <div className="pb-6">
-        <Button action={async () => {
-          if (confirm("Vill du ta bort " + committee.year + "?")) {
-            fetch("/api/admin/committee/delete", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ year: committee.year }),
-            }).then(() => {
-              removeCommittee()
-            })
-          }
-        }}>
-          Ta bort kommitté
-        </Button>
-      </div>
+
     </div>
   )
 }
 
 const uploadImage = async (url: string, file: File) => {
 
-  if (file.size > 4_000_000) return alert("Bilden är för stor, max 4MB") 
+  if (file.size > 4_000_000) return alert("Bilden är för stor, max 4MB")
 
   const formData = new FormData()
   formData.append('file', file)
@@ -363,6 +370,10 @@ const ImageUpload = ({ title, url, type }: ImageUploadProps) => {
       setIsImage(await hasImage(fullURL))
     })()
   }, [fullURL])
+
+  useEffect(() => {
+    setFullURL("/bilder/" + url)
+  }, [url])
 
   const isFile = (maybeFile: File | undefined | null): maybeFile is File => {
     return maybeFile !== null && maybeFile !== undefined
@@ -411,8 +422,12 @@ const TextInput = ({ placeholder, children, setValue }: TextInputProps) => {
 
   const [text, setText] = useState(children)
 
+  useEffect(() => {
+    setText(children)
+  }, [children])
+
   return (
-    <textarea rows={1} className={`resize-none border-b px-2 py-1 w-full h-full bg-transparent outline-none appearance-none overflow-x-hidden textInputScroll`} placeholder={placeholder} value={text} onChange={
+    <textarea rows={1} className={`resize-none border-b px-2 py-1 w-full bg-transparent outline-none appearance-none overflow-x-hidden textInputScroll`} placeholder={placeholder} value={text} onChange={
       e => {
         setText(e.target.value)
         setValue(e.target.value)

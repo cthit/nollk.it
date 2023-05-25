@@ -23,13 +23,14 @@ const NavBall = (props: { index: number; committeeyear: string; currentPage: num
 export const getServerSideProps = async () => {
   const prisma = new PrismaClient()
 
-  const allCommittees = await prisma.committee.findMany({
+  let allCommittees = await prisma.committee.findMany({
     include: {
       members: true
     }
   })
 
   allCommittees.shift()
+  allCommittees.sort((a,b) => b.year - a.year)
 
   return {
     props: { allCommittees: allCommittees }
@@ -113,14 +114,14 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
         </ReactPageScroller>
 
         <div className="fixed flex flex-col items-center right-4 self-center top-1/4">
-          <NavBall index={0} scrollTo={() => scrollTo(0)} currentPage={currentPage} committeeyear={"Top"} ></NavBall>
+          <NavBall index={0} scrollTo={() => scrollTo(0)} currentPage={currentPage} committeeyear={"Till toppen"} ></NavBall>
           {allCommittees.map((committee: Committee, index) => (
             <NavBall key={index} index={index + 1} scrollTo={() => scrollTo(index + 1)} currentPage={currentPage} committeeyear={committee.year.toString().slice(-2)}></NavBall>
           ))}
         </div>
         <div className={`fixed right-10 bottom-10 transition-opacity duration-300 ${topButtonShown ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
           <Button action={() => scrollTo(0)}> 
-            Scroll to top
+            Tillbaka till toppen
           </Button>
         </div>
       </Page>

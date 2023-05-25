@@ -22,6 +22,12 @@ export default async function upload(req: NextApiRequest, res: NextApiResponse) 
 
     const file = files.file as formidable.File
 
+    const directoryPath = ("public/bilder/" + imgPath).split('/').slice(0, -1).join('/')
+    console.log(directoryPath)
+    if (!fs.existsSync(directoryPath)) {
+      fs.mkdirSync(directoryPath, { recursive: true })
+    }
+
     const readStream = fs.createReadStream(file.filepath)
     const writeStream = fs.createWriteStream("public/bilder/" + imgPath)
 
