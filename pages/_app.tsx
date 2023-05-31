@@ -35,7 +35,7 @@ function App({ Component, pageProps }: AppProps) {
     <YearContext.Provider value={{ year, changeYear }}>
       <Head>
         <title>NollKIT - Mottagningskommittén inom Teknologsektionen Informationsteknik</title>
-        <meta name="description" content="Varje år planerar och arrangerar vi mottagningen för de nyantagna studenterna på programmet informationsteknik på Chalmers." />
+        <meta name="description" content="Varje år planerar och arrangerar vi mottagningen för de nyantagna studenterna på programmet Informationsteknik på Chalmers." />
         <link rel="icon" href="/nollbricka.png" />
         <style>
           {`
