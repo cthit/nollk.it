@@ -1,9 +1,4 @@
 module.exports = {
-  mode: 'jit',
-  content: [
-    './public/**/*.html',
-    './src/**/*.{js,jsx,ts,tsx,vue}',
-  ],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
@@ -20,7 +15,8 @@ module.exports = {
       }
     },
     fontFamily: {
-      'po': ['Passion One'],
+      'theme': ['Lato'],
+      //'theme': ['Passion One'],
       'lato': ['Lato']
     },
   },

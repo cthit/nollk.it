@@ -12,12 +12,6 @@ const Modul: NextPage = () => {
 
   return (
     <>
-      <Head>
-        <title>Modul</title>
-        <meta name="description" content="Modulen är din handbok för alla frågor kring mottagningen" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Page blackout>
         <PageInfo heading="Nollmodulen">
           Innan du börjar på Chalmers finns det en hel del att lära sig. Därför har vi skapat Nollmodulen, en liten handbok med massor av nyttig information som kommer vara dig behjälplig, både innan, under och efter mottagningen.

@@ -32,12 +32,6 @@ interface IndexProps {
 const Index: NextPage<IndexProps> = (props) => {
   return (
     <>
-      <Head>
-        <title>NollKIT - Mottagningskommittén inom Teknologsektionen Informationsteknik</title>
-        <meta name="description" content="Varje år planerar och arrangerar vi mottagning för IT-sektionens 140 nya studenter på Chalmers" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Page>
         <div className="mt-28 flex flex-col gap-6 items-center lg:flex-row lg:mt-32 lg:gap-[20vw]">
           <Countdown criticalDates={props.criticalDates} />

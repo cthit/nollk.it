@@ -6,6 +6,7 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import YearContext from "../util/YearContext";
 import { useEffect, useState } from "react";
+import Head from "next/head";
 
 
 function App({ Component, pageProps }: AppProps) {
@@ -32,6 +33,16 @@ function App({ Component, pageProps }: AppProps) {
 
   return (
     <YearContext.Provider value={{ year, changeYear }}>
+      <Head>
+        <title>NollKIT - Mottagningskommittén inom Teknologsektionen Informationsteknik</title>
+        <meta name="description" content="Varje år planerar och arrangerar vi mottagningen för de nyantagna studenterna på programmet informationsteknik på Chalmers." />
+        <link rel="icon" href="/favicon.ico" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Lato&family=Passion+One&display=swap"
+          rel="stylesheet"
+        />
+      </Head>
+
       <Component {...pageProps} />
     </YearContext.Provider>
   )

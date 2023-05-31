@@ -26,7 +26,7 @@ const ToDo = ({ unparsedEvents }: { unparsedEvents: string }) => {
   }, [])
 
   return (
-    <div className="font-po drop-sh">
+    <div className="font-theme drop-sh">
       <div className="text-3xl">Att göra:</div>
       <div className="text-5xl lg:text-7xl whitespace-nowrap">
         {todo.url !== "" ?

@@ -69,7 +69,7 @@ export default Nollkit
 function NollkitDesc(props: Member) {
   return (
     <div className="flex flex-col col-span-3">
-      <div className="font-po text-4xl">{props.name}</div>
+      <div className="font-theme text-4xl">{props.name}</div>
       <div className="text-2xl font-medium italic mb-3">{props.role}</div>
 
       <div className="hidden md:block">

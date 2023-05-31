@@ -80,12 +80,6 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
 
   return (
     <>
-      <Head>
-        <title>Pateter</title>
-        <meta name="description" content="Pateter är de som har suttit NollKIT tidigare år" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Page blackout unrestrictChildren currentYear={currentYear}>
         <ReactPageScroller
           animationTimer={700}

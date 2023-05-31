@@ -80,12 +80,6 @@ const Schema: NextPage<SchemaProps> = ({ stringifiedCalendars, firstdayDates }) 
 
   return (
     <>
-      <Head>
-        <title>Schema</title>
-        <meta name="description" content="Här finns schemat, både för mottagningen och introkurserna" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Page blackout>
         <div className="my-32 w-full">
           <FullCalendar

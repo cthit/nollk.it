@@ -40,12 +40,6 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
 
   return (
     <>
-      <Head>
-        <title>NollKIT - Mottagningskommittén inom Teknologsektionen Informationsteknik</title>
-        <meta name="description" content="Varje år planerar och arrangerar vi mottagning för IT-sektionens 140 nya studenter på Chalmers" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Page blackout>
         <div className="border border-red-600 h-screen w-full flex flex-row gap-8 pt-28">
           <div className="flex-1 flex flex-col">

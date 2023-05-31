@@ -19,7 +19,7 @@ const Precursor = ({ committee }: { committee: CommitteeWithMembers }) => {
 
                     {/* Text */}
                     <div>
-                        <h1 className="text-5xl sm:text-6xl font-po mb-4 sm:mb-8">{"NollKIT'" + committee.year.toString().slice(2)}</h1>
+                        <h1 className="text-5xl sm:text-6xl font-theme mb-4 sm:mb-8">{"NollKIT'" + committee.year.toString().slice(2)}</h1>
                         <p className="italic text-lg sm:text-2xl mb-2">{committee.orderInImageDesc}:</p>
 
                         <div className="grid gap-x-10 gap-y-2 items-center text-sm" style={ {gridTemplateColumns: "auto auto"} }>

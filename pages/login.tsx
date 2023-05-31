@@ -37,12 +37,6 @@ const Login: NextPage = () => {
 
   return (
     <>
-      <Head>
-        <title>NollKIT - Mottagningskommittén inom Teknologsektionen Informationsteknik</title>
-        <meta name="description" content="Varje år planerar och arrangerar vi mottagning för IT-sektionens 140 nya studenter på Chalmers" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Page blackout>
         <div className="flex flex-col justify-center h-screen gap-6">
           <div ref={pwBorderRef} className="border rounded-lg transition-colors">
