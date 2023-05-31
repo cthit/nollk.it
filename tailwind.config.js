@@ -15,8 +15,7 @@ module.exports = {
       }
     },
     fontFamily: {
-      'theme': ['Lato'],
-      //'theme': ['Passion One'],
+      'theme': ['YearTheme', 'Lato'],
       'lato': ['Lato']
     },
   },

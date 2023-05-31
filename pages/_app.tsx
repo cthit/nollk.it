@@ -36,11 +36,15 @@ function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>NollKIT - Mottagningskommittén inom Teknologsektionen Informationsteknik</title>
         <meta name="description" content="Varje år planerar och arrangerar vi mottagningen för de nyantagna studenterna på programmet informationsteknik på Chalmers." />
-        <link rel="icon" href="/favicon.ico" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Lato&family=Passion+One&display=swap"
-          rel="stylesheet"
-        />
+        <link rel="icon" href="/nollbricka.png" />
+        <style>
+          {`
+            @font-face {
+              font-family: 'YearTheme';
+              src: url('/fonts/${year}.ttf');
+            }
+          `}
+        </style>
       </Head>
 
       <Component {...pageProps} />
