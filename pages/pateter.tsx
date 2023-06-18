@@ -29,8 +29,10 @@ export const getServerSideProps = async () => {
     }
   })
 
-  allCommittees.shift()
+  // Database entries are not necessarily in order, and needs to be sorted
   allCommittees.sort((a,b) => b.year - a.year)
+  // Remove the current year from the list
+  allCommittees.shift()
 
   return {
     props: { allCommittees: allCommittees }

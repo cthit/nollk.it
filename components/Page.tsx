@@ -2,6 +2,7 @@ import { useContext } from "react";
 import YearContext from "../util/YearContext";
 import Header from "./Header";
 import PageMargins from "./PageMargins";
+import ImageWithFallback from "./ImageWithFallback";
 
 interface PageProps {
   blackout?: boolean
@@ -17,20 +18,15 @@ export default function Page(props: PageProps) {
   return (
     <>
       {/* Background */}
-      <div className="fixed w-screen h-screen overflow-hidden flex flex-col items-center bg-black -z-50">
-        <style>
-          {`
-            .bgImage {
-                background-image: url('/bilder/${ctx.year}/landskap.jpg'); 
-            }
-            @media (max-width: 1024px) {
-                .bgImage {
-                    background-image: url('/bilder/${ctx.year}/porträtt.jpg');
-                }
-            }
-          `}
-        </style>
-        <div className={`bgImage bg-cover bg-center w-full h-full bg-portrait landscape:bg-landscape ${props.blackout ? "opacity-20" : ""}`}></div>
+      <div className="fixed w-screen h-screen overflow-hidden bg-black -z-50">
+        <div className={`w-full h-full ${props.blackout ? "opacity-20" : ""}`}>
+          <div>
+            <ImageWithFallback src={`/bilder/${ctx.year}/landskap.jpg`} fallbacksrc={`/bilder/reserv/landskap.jpg`} layout="fill" objectFit="cover" />
+          </div>
+          <div className="lg:hidden">
+            <ImageWithFallback src={`/bilder/${ctx.year}/porträtt.jpg`} fallbacksrc={`/bilder/reserv/porträtt.jpg`} layout="fill" objectFit="cover" />
+          </div>
+        </div>
       </div>
 
       {/* Content */}

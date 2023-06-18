@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import YearContext from "../util/YearContext";
+import ImageWithFallback from "./ImageWithFallback";
 
 const headerCategories = [
   {
@@ -85,7 +86,7 @@ function DesktopHeader({selectedYear}: {selectedYear?: number}) {
           <div className="w-full flex flex-col items-end relative">
             <Link href="/">
               <a className="w-20 h-20 absolute -top-5">
-                <img src={`/bilder/${year}/märke.png`} alt={"NollKIT" + year} />
+                <ImageWithFallback src={`/bilder/${year}/märke.png`} fallbacksrc={`/bilder/reserv/märke.png`} alt={"NollKIT" + year} layout={"fill"} objectFit={"cover"}/>
               </a>
             </Link>
           </div>
@@ -177,7 +178,7 @@ function MobileHeader({selectedYear}: {selectedYear?: number}) {
 
             <Link href="/">
               <a className="w-20 h-20 absolute top-2 left-12">
-                <img src={`/bilder/${year}/märke.png`} alt={"NollKIT" + year} />
+                <ImageWithFallback src={`/bilder/${year}/märke.png`} fallbacksrc={`/bilder/reserv/märke.png`} alt={"NollKIT" + year} layout={"fill"} objectFit={"cover"}/>
               </a>
             </Link>
 

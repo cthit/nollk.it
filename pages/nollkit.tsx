@@ -4,7 +4,8 @@ import PageInfo from '../components/PageInfo'
 import Page from '../components/Page'
 import YearContext from '../util/YearContext'
 import { Member, PrismaClient } from '@prisma/client'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
+import ImageWithFallback from '../components/ImageWithFallback'
 
 export const getServerSideProps = async () => {
   const prisma = new PrismaClient()
@@ -39,15 +40,19 @@ const Nollkit: NextPage<NollkitProps> = ({ allMembers }) => {
           För att hela denna resan ska gå runt har vi lite olika ansvarsområden som kan läsa om nedan. Vi ser framåt att träffa er alla i augusti!
         </PageInfo>
 
-        <div className="flex flex-col lg:w-3/5 items-center mt-32 lg:mt-48">
+        <div className="flex flex-col lg:w-3/5 items-center">
+          <div className="w-full h-36 relative mb-8">
+            <ImageWithFallback src={`/bilder/${ctx.year}/logotyp.png`} layout="fill" objectFit="contain" />
+          </div>
           {
             allMembers.filter(m => m.year.toString() === ctx.year).sort( (a, b) => a.orderInImage - b.orderInImage).map((n, i) => {
               return (
                 <div key={n.role} className="grid grid-cols-5 gap-5 mb-8">
 
-
                   {i % 2 === 0 ? <></> : <NollkitDesc {...n} />}
-                  <div className={`col-span-2 bg-cover bg-top aspect-[4/5]`} style={{ backgroundImage: `url('/bilder/${ctx.year}/poster/${n.role}.jpg` }}></div>
+                  <div className="col-span-2 aspect-[4/5] relative">
+                    <ImageWithFallback src={`/bilder/${ctx.year}/poster/${n.role}.jpg`} layout="fill" objectFit="cover"/>
+                  </div>
                   {i % 2 === 0 ? <NollkitDesc {...n} /> : <></>}
 
                   {/* Renders text below if mobile */}
