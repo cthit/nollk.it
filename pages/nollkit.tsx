@@ -3,8 +3,8 @@ import Head from 'next/head'
 import PageInfo from '../components/PageInfo'
 import Page from '../components/Page'
 import YearContext from '../util/YearContext'
-import { Member, PrismaClient } from '@prisma/client'
-import { useContext, useEffect } from 'react'
+import { Member, PageText, PrismaClient } from '@prisma/client'
+import { useContext } from 'react'
 import ImageWithFallback from '../components/ImageWithFallback'
 
 export const getServerSideProps = async () => {
@@ -12,16 +12,23 @@ export const getServerSideProps = async () => {
 
   const allMembers = await prisma.member.findMany()
 
+  const text = await prisma.pageText.findFirst({
+    where: {
+      page: "nollkit"
+    }
+  })
+
   return {
-    props: { allMembers: allMembers }
+    props: { allMembers: allMembers, text: text }
   }
 }
 
 interface NollkitProps {
   allMembers: Member[]
+  text: PageText
 }
 
-const Nollkit: NextPage<NollkitProps> = ({ allMembers }) => {
+const Nollkit: NextPage<NollkitProps> = ({ allMembers, text }) => {
 
   const ctx = useContext(YearContext)
 
@@ -35,9 +42,7 @@ const Nollkit: NextPage<NollkitProps> = ({ allMembers }) => {
 
       <Page blackout>
         <PageInfo heading="Vi är NollKIT">
-          Hej du Nollan! När du tar dina första steg in på Chalmers är det vi åtta som har planerat fyra veckor med aktiviteter och arrangemang allt för att du ska lära känna din klass bättre och kunna få reda på vad Chalmers som skola har att erbjuda.
-          <br /><br />
-          För att hela denna resan ska gå runt har vi lite olika ansvarsområden som kan läsa om nedan. Vi ser framåt att träffa er alla i augusti!
+          {text.content}  
         </PageInfo>
 
         <div className="flex flex-col lg:w-3/5 items-center">

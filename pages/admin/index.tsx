@@ -6,6 +6,7 @@ import Page from "../../components/Page"
 import { CommitteeWithMembers } from "../../types"
 import { Accordion, AccordionItem } from "./components/Accordion"
 import CommitteeManagementDisplay from "./components/CommitteeManagementDisplay"
+import TextManagementDisplay from "./components/TextManagementDisplay"
 
 export const getServerSideProps = async () => {
   const prisma = new PrismaClient()
@@ -15,13 +16,16 @@ export const getServerSideProps = async () => {
     }
   })
 
+  const pageTexts = await prisma.pageText.findMany()
+
   return {
-    props: { committees }
+    props: { committees, pageTexts }
   }
 }
 
 interface AdminProps {
-  committees: CommitteeWithMembers[]
+  committees: CommitteeWithMembers[],
+  texts: string[]
 }
 
 enum ManagementDisplay {
@@ -40,7 +44,7 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
   return (
     <>
       <Page blackout>
-        <div className="border border-red-600 h-screen w-full flex flex-row gap-8 pt-28">
+        <div className="w-full flex flex-row gap-8 pt-28">
           <div className="flex-1 flex flex-col">
             <Accordion title="Kommittéer" fontSize={1.3}>
 
@@ -49,7 +53,7 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
                 .map((digit) => (
                   <Accordion title={`NollKIT'${digit}X`} fontSize={1.1} key={digit}>
                     {committees.filter((committee) => committee.year.toString().slice(2, 3) === digit).map((committee) => (
-                      <AccordionItem key={committee.year} onClick={() => { setSelectedCommittee(committee) }}>
+                      <AccordionItem key={committee.year} onClick={() => { setSelectedCommittee(committee); setDisplayed(ManagementDisplay.Committee) }}>
                         NollKIT'{committee.year.toString().slice(2)}
                       </AccordionItem>
                     ))}
@@ -90,16 +94,23 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
                   <></>
                 }
               </div>
-
             </Accordion>
-            <Accordion title="Text" fontSize={1.3}>
+            
+            <div className="text-[1.3em] opacity-80 hover:opacity-100 cursor-pointer" onClick={() => setDisplayed(ManagementDisplay.Text)}>
+              Text
+            </div>
 
-            </Accordion>
-            <Accordion title="Kalendrar" fontSize={1.3} />
+            <div className="text-[1.3em] opacity-80 hover:opacity-100 cursor-pointer" onClick={() => setDisplayed(ManagementDisplay.Calendar)}>
+              Kalender
+            </div>
           </div>
           <div className="flex-[4]">
             {(() => {
               switch (displayed) { //Switch between displaying committee, text, or calendar
+                case ManagementDisplay.Text:
+                  return <TextManagementDisplay />
+                case ManagementDisplay.Calendar:
+                  return <div>Calendar!</div>
                 default:
                   return <CommitteeManagementDisplay committee={selectedCommittee} />
               }
@@ -112,12 +123,3 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
 }
 
 export default Admin
-
-
-
-
-const TextManagementDisplay = () => {
-  return (
-    <div>Hej!</div>
-  )
-}

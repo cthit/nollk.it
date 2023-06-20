@@ -1,10 +1,9 @@
 import { NextPage } from "next"
-import Head from "next/head"
 import Precursor from "../components/Precursor"
 import ReactPageScroller from 'react-page-scroller';
 import { useEffect, useState } from "react";
 import PageInfo from "../components/PageInfo";
-import { Committee, PrismaClient } from "@prisma/client";
+import { Committee, PageText, PrismaClient } from "@prisma/client";
 import Page from "../components/Page";
 import PageMargins from "../components/PageMargins";
 import Button from "../components/Button";
@@ -23,6 +22,12 @@ const NavBall = (props: { index: number; committeeyear: string; currentPage: num
 export const getServerSideProps = async () => {
   const prisma = new PrismaClient()
 
+  const text = await prisma.pageText.findFirst({
+    where: {
+      page: "pateter"
+    }
+  })
+
   let allCommittees = await prisma.committee.findMany({
     include: {
       members: true
@@ -35,15 +40,16 @@ export const getServerSideProps = async () => {
   allCommittees.shift()
 
   return {
-    props: { allCommittees: allCommittees }
+    props: { text: text, allCommittees: allCommittees }
   }
 }
 
 interface PateterProps {
+  text: PageText
   allCommittees: CommitteeWithMembers[]
 }
 
-const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
+const Pateter: NextPage<PateterProps> = ({ text, allCommittees }) => {
 
   const [currentPage, setCurrentPage] = useState<number>(0)
 
@@ -92,7 +98,7 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
         >
           <PageMargins>
             <PageInfo heading="Pateter">
-              På Chalmers är patet ett allmänt namn för personer som tidigare suttit i en förening/kommitté. De som har suttit i just NollKIT tidigare år kallas för NollQIT. De kan vara bra att ha lite då och då, både för NollKIT och för Nollan, eftersom de alltid svarar glatt på frågor om NollKIT råkar vara borta för stunden.
+              {text.content}
             </PageInfo>
 
             <div className="absolute bottom-10 flex flex-col gap-4 items-center cursor-pointer py-2" onClick={() => scrollTo(1)}>

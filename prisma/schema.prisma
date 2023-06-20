@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl", "linux-arm64-openssl-1.1.x"]
 }
 
@@ -34,9 +34,6 @@ model Links {
 }
 
 model PageText {
-  version          Int    @id @map("_id")
-  nollkitText      String
-  pateterText      String
-  mottagningenText String
-  modulText        String
+  page    String @id @map("_id")
+  content String
 }
