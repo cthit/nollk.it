@@ -32,24 +32,6 @@ div:hover > .downarrow {
   opacity: 100%;
 }
 
-/* --- textinput ------------------------------------- */
-.textInputScroll::-webkit-scrollbar-thumb {
-  background-color: white;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.textInputScroll::-webkit-scrollbar-button {
-  width: 0px;
-  height: 10px;
-}
-
-.textInputScroll::-webkit-scrollbar {
-  width: 0.1em;
-  cursor: pointer;
-}
-/* --- textinput ------------------------------------- */
-
 /* -------------------------------- */
 /* --- Styling for FullCalendar --- */
 /* -------------------------------- */

@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client"
+import { PageText, PrismaClient } from "@prisma/client"
 import { NextPage } from "next"
 import React, { useState } from "react"
 import Button from "../../components/Button"
@@ -25,7 +25,7 @@ export const getServerSideProps = async () => {
 
 interface AdminProps {
   committees: CommitteeWithMembers[],
-  texts: string[]
+  pageTexts: PageText[]
 }
 
 enum ManagementDisplay {
@@ -103,14 +103,18 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
             <div className="text-[1.3em] opacity-80 hover:opacity-100 cursor-pointer" onClick={() => setDisplayed(ManagementDisplay.Calendar)}>
               Kalender
             </div>
+
           </div>
           <div className="flex-[4]">
             {(() => {
               switch (displayed) { //Switch between displaying committee, text, or calendar
+                
                 case ManagementDisplay.Text:
-                  return <TextManagementDisplay />
+                  return <TextManagementDisplay pageTexts={props.pageTexts} />
+                
                 case ManagementDisplay.Calendar:
                   return <div>Calendar!</div>
+                
                 default:
                   return <CommitteeManagementDisplay committee={selectedCommittee} />
               }
