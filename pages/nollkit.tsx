@@ -5,6 +5,7 @@ import Page from '../components/Page'
 import YearContext from '../util/YearContext'
 import { Member, PrismaClient } from '@prisma/client'
 import { useContext } from 'react'
+import Divider from '../components/Divider'
 
 export const getServerSideProps = async () => {
   const prisma = new PrismaClient()
@@ -38,6 +39,7 @@ const Nollkit: NextPage<NollkitProps> = ({ allMembers }) => {
           <br /><br />
           För att hela denna resan ska gå runt har vi lite olika ansvarsområden som kan läsa om nedan. Vi ser framåt att träffa er alla i augusti!
         </PageInfo>
+        <Divider />
 
         <div className="flex flex-col lg:w-3/5 items-center mt-32 lg:mt-48">
           {
