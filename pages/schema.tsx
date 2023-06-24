@@ -27,16 +27,12 @@ export const getServerSideProps = async () => {
     }
   )
 
-  console.log(calenderLinks)
-
   const calendarEvents = await Promise.all(calenderLinks.map(async calenderLink => {
     return await ical.async.fromURL(calenderLink.url)
     .catch(() => {
       return { error: "Failed to fetch calendar from the following URL: " + calenderLink.url }
     })
   }))
-  console.log(calendarEvents)
-
 
   const stringifiedCalendars = calendarEvents.map(events => JSON.stringify(events))
 
