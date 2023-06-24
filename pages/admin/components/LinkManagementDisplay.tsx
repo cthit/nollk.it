@@ -14,7 +14,7 @@ export default function LinkManagmenetDisplay(props: LinkManagementDisplayProps)
 
     <div className="flex flex-col gap-8 pb-8">
       {
-        links.map( (link, index) => {
+        links.sort( (a,b) => a.id > b.id ? 1 : -1 ).map( (link, index) => {
           return (
             <div key={link.id}>
               <h2 className="text-3xl pb-2">{link.id}</h2>

@@ -17,8 +17,27 @@ export const getServerSideProps = async () => {
 
   const prisma = new PrismaClient()
 
-  const calendarURLs = (await prisma.links.findFirst())?.calendarURLs ?? []
-  const calendarEvents = await Promise.all(calendarURLs.map(async url => await ical.async.fromURL(url)))
+  const calenderLinks = await prisma.links.findMany(
+    {
+      where: {
+        id: {
+          startsWith: "_kalender"
+        }
+      }
+    }
+  )
+
+  console.log(calenderLinks)
+
+  const calendarEvents = await Promise.all(calenderLinks.map(async calenderLink => {
+    return await ical.async.fromURL(calenderLink.url)
+    .catch(() => {
+      return { error: "Failed to fetch calendar from the following URL: " + calenderLink.url }
+    })
+  }))
+  console.log(calendarEvents)
+
+
   const stringifiedCalendars = calendarEvents.map(events => JSON.stringify(events))
 
   return {
