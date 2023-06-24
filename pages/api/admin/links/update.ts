@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { PageText, PrismaClient } from "@prisma/client";
+import { Links, PrismaClient } from "@prisma/client";
 import * as jose from "jose";
 
 const prisma = new PrismaClient();
@@ -13,18 +13,17 @@ export default async function update(req: NextApiRequest, res: NextApiResponse) 
     return
   }
 
-  //update each text in the body
-  const pageTexts: PageText[] = req.body
-  const updateTexts = await Promise.all(pageTexts.map(async (text) => {
-    return await prisma.pageText.update({
+  const links: Links[] = req.body
+  const updateLinks = await Promise.all(links.map(async (link) => {
+    return await prisma.links.update({
       where: {
-        page: text.page
+        id: link.id
       },
       data: {
-        content: text.content
+        url: link.url
       }
     })
   }))
     
-  res.json(updateTexts)
+  res.json(updateLinks)
 }

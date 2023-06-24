@@ -37,7 +37,7 @@ function App({ Component, pageProps }: AppProps) {
         <title>NollKIT - Mottagningskommittén inom Teknologsektionen Informationsteknik</title>
         <meta name="description" content="Varje år planerar och arrangerar vi mottagningen för de nyantagna studenterna på programmet Informationsteknik på Chalmers." />
         <link rel="icon" href="/nollbricka.png" />
-        <style>
+        <style jsx>
           {`
             @font-face {
               font-family: 'YearTheme';
@@ -46,7 +46,6 @@ function App({ Component, pageProps }: AppProps) {
           `}
         </style>
       </Head>
-
       <Component {...pageProps} />
     </YearContext.Provider>
   )

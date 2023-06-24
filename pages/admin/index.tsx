@@ -1,12 +1,14 @@
-import { PageText, PrismaClient } from "@prisma/client"
+import { Links, PageText, PrismaClient } from "@prisma/client"
 import { NextPage } from "next"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Button from "../../components/Button"
 import Page from "../../components/Page"
 import { CommitteeWithMembers } from "../../types"
 import { Accordion, AccordionItem } from "./components/Accordion"
 import CommitteeManagementDisplay from "./components/CommitteeManagementDisplay"
 import TextManagementDisplay from "./components/TextManagementDisplay"
+import { useRouter } from "next/router"
+import LinkManagmenetDisplay from "./components/LinkManagementDisplay"
 
 export const getServerSideProps = async () => {
   const prisma = new PrismaClient()
@@ -18,25 +20,37 @@ export const getServerSideProps = async () => {
 
   const pageTexts = await prisma.pageText.findMany()
 
+  const links = await prisma.links.findMany()
+
   return {
-    props: { committees, pageTexts }
+    props: { committees, pageTexts, links }
   }
 }
 
 interface AdminProps {
   committees: CommitteeWithMembers[],
-  pageTexts: PageText[]
+  pageTexts: PageText[],
+  links: Links
 }
 
 enum ManagementDisplay {
   Committee,
   Text,
-  Calendar
+  Link
 }
 
 const Admin: NextPage<AdminProps> = (props: AdminProps) => {
 
+  const router = useRouter()
+
+
   const [displayed, setDisplayed] = useState(ManagementDisplay.Committee)
+
+  useEffect(() => {
+    if (router.query["visa"] === "kommitte") setDisplayed(ManagementDisplay.Committee)
+    if (router.query["visa"] === "text") setDisplayed(ManagementDisplay.Text)
+    if (router.query["visa"] === "länkar") setDisplayed(ManagementDisplay.Link)
+  }, [])
 
   const [committees, setCommittees] = useState<CommitteeWithMembers[]>(props.committees)
   const [selectedCommittee, setSelectedCommittee] = useState(props.committees.sort((a, b) => b.year - a.year)[0])
@@ -53,7 +67,7 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
                 .map((digit) => (
                   <Accordion title={`NollKIT'${digit}X`} fontSize={1.1} key={digit}>
                     {committees.filter((committee) => committee.year.toString().slice(2, 3) === digit).map((committee) => (
-                      <AccordionItem key={committee.year} onClick={() => { setSelectedCommittee(committee); setDisplayed(ManagementDisplay.Committee) }}>
+                      <AccordionItem key={committee.year} onClick={() => { setSelectedCommittee(committee); setDisplayed(ManagementDisplay.Committee); router.push("/admin?visa=kommitte") }}>
                         NollKIT'{committee.year.toString().slice(2)}
                       </AccordionItem>
                     ))}
@@ -73,7 +87,7 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
                   }, ...committees])
                 }}>Ny kommitté</Button>
 
-                { committees.length > 0 ?
+                {committees.length > 0 ?
                   <Button color={"bg-red-600"} action={async () => {
                     if (confirm("Vill du ta bort " + committees[0].year + "?")) {
                       fetch("/api/admin/committee/delete", {
@@ -95,26 +109,32 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
                 }
               </div>
             </Accordion>
-            
-            <div className="text-[1.3em] opacity-80 hover:opacity-100 cursor-pointer" onClick={() => setDisplayed(ManagementDisplay.Text)}>
+
+            <div className="text-[1.3em] opacity-80 hover:opacity-100 cursor-pointer" onClick={() => {
+              setDisplayed(ManagementDisplay.Text)
+              router.push("/admin?visa=text")
+            }}>
               Text
             </div>
 
-            <div className="text-[1.3em] opacity-80 hover:opacity-100 cursor-pointer" onClick={() => setDisplayed(ManagementDisplay.Calendar)}>
-              Kalender
+            <div className="text-[1.3em] opacity-80 hover:opacity-100 cursor-pointer" onClick={() => {
+              setDisplayed(ManagementDisplay.Link)
+              router.push("/admin?visa=länkar")
+            }}>
+              Länkar
             </div>
 
           </div>
           <div className="flex-[4]">
             {(() => {
               switch (displayed) { //Switch between displaying committee, text, or calendar
-                
+
                 case ManagementDisplay.Text:
                   return <TextManagementDisplay pageTexts={props.pageTexts} />
-                
-                case ManagementDisplay.Calendar:
-                  return <div>Calendar!</div>
-                
+
+                case ManagementDisplay.Link:
+                  return <LinkManagmenetDisplay links={props.links} />
+
                 default:
                   return <CommitteeManagementDisplay committee={selectedCommittee} />
               }

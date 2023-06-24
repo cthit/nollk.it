@@ -27,10 +27,8 @@ model Member {
 }
 
 model Links {
-  version        Int      @id @map("_id")
-  deklarationURL String
-  phaddringURL   String
-  calendarURLs   String[]
+  id  String @id @map("_id")
+  url String
 }
 
 model PageText {

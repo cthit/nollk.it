@@ -17,6 +17,7 @@ export default function Page(props: PageProps) {
 
   return (
     <>
+
       {/* Background */}
       <div className="fixed w-screen h-screen overflow-hidden bg-black -z-50">
         <div className={`w-full h-full ${props.blackout ? "opacity-20" : ""}`}>

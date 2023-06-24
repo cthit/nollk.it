@@ -1,30 +1,30 @@
-import { PageText } from "@prisma/client"
 import TextInput from "./TextInput"
 import Button from "../../../components/Button"
 import { useState } from "react"
+import { Links } from "@prisma/client"
 
-interface TextManagementDisplayProps {
-  pageTexts: PageText[]
+interface LinkManagementDisplayProps {
+  links: Links[]
 }
-export default function TextManagementDisplay(props: TextManagementDisplayProps) {
+export default function LinkManagmenetDisplay(props: LinkManagementDisplayProps) {
 
-  const [pageTexts, setPageTexts] = useState(props.pageTexts)
+  const [links, setLinks] = useState(props.links)
 
   return <>
 
     <div className="flex flex-col gap-8 pb-8">
       {
-        pageTexts.map( (pageText, index) => {
+        links.map( (link, index) => {
           return (
-            <div key={pageText.page}>
-              <h2 className="text-3xl pb-2">{pageText.page}</h2>
+            <div key={link.id}>
+              <h2 className="text-3xl pb-2">{link.id}</h2>
               <TextInput
-                placeholder={pageText.page}
-                setValue={inputValue => {
-                  setPageTexts([...pageTexts].with(index, { ...pageText, content: inputValue }))
+                placeholder={link.id}
+                setValue={inputvalue => {
+                  setLinks([...links].with(index, {...link, url: inputvalue}))
                 }}
               >
-                {pageText.content}
+                {link.url}
               </TextInput>
             </div>
           )
@@ -33,13 +33,13 @@ export default function TextManagementDisplay(props: TextManagementDisplayProps)
 
       <div>
         <Button color="bg-green-500" action={() => {
-          fetch('/api/admin/texts/update', {
+          fetch('/api/admin/links/update', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(pageTexts)
-          }).then( res => {
+            body: JSON.stringify(links)
+          }).then(res => {
             if (res.status === 200) {
               alert("Sparat!")
             } else {
@@ -51,7 +51,7 @@ export default function TextManagementDisplay(props: TextManagementDisplayProps)
         </Button>
       </div>
 
-    </div >
+    </div>
 
   </>
 }
