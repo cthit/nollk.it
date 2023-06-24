@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      transitionProperty: {
+        maxheight: 'max-height'
+      },
       fontFamily: {
         //Sets Lato as the default font
         'sans': ['Lato'],

@@ -6,6 +6,7 @@ import YearContext from '../util/YearContext'
 import { Member, PageText, PrismaClient } from '@prisma/client'
 import { useContext } from 'react'
 import ImageWithFallback from '../components/ImageWithFallback'
+import Divider from '../components/Divider'
 
 export const getServerSideProps = async () => {
   const prisma = new PrismaClient()
@@ -44,6 +45,7 @@ const Nollkit: NextPage<NollkitProps> = ({ allMembers, text }) => {
         <PageInfo heading="Vi är NollKIT">
           {text.content}  
         </PageInfo>
+        <Divider />
 
         <div className="flex flex-col lg:w-3/5 items-center">
           <div className="w-full h-36 relative mb-8">

@@ -8,6 +8,7 @@ import Page from "../components/Page";
 import PageMargins from "../components/PageMargins";
 import Button from "../components/Button";
 import { CommitteeWithMembers } from "../types";
+import Divider from "../components/Divider";
 
 const NavBall = (props: { index: number; committeeyear: string; currentPage: number; scrollTo: (to: number) => void }) => {
   return (
@@ -100,6 +101,7 @@ const Pateter: NextPage<PateterProps> = ({ text, allCommittees }) => {
             <PageInfo heading="Pateter">
               {text.content}
             </PageInfo>
+            <Divider />
 
             <div className="absolute bottom-10 flex flex-col gap-4 items-center cursor-pointer py-2" onClick={() => scrollTo(1)}>
               <p className="text-sm italic">Skrolla för pateter</p>

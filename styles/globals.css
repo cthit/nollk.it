@@ -19,6 +19,11 @@
   }
 }
 
+
+:root {
+  --percentage: 10%;
+}
+
 div:hover > .downarrow {
   opacity: 90%;
 }
@@ -31,6 +36,129 @@ div:hover > .downarrow {
   padding: 0.75rem;
   opacity: 100%;
 }
+
+.markdownBox {
+  all: initial;
+}
+
+/* -------------------------------- */
+/* ----- Styling for Timeline ----- */
+/* -------------------------------- */
+
+
+
+
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 40px 0;
+  width: max(80%, 50vw);
+}
+.timeline-container::after {
+  background-color: #09cdda;
+  content: '';
+  position: absolute;
+  left: calc(0% - 2px);
+  width: 4px; 
+  height: 100%;
+  border-radius: 3px;
+}
+
+.timeline-item {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 30px;
+  padding-right: 0;
+  position: relative;
+  margin: 10px 0;
+}
+
+
+.timeline-item-content {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 15px;
+  position: relative;
+  width: max(400px, 50vw);
+  max-width: 70%;
+  text-align: left; 
+}
+.timeline-item-content::after {
+  content: ' ';
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  right: auto;
+  left: -7.5px;
+  box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.2);
+  top: calc(50% - 7.5px);
+  transform: rotate(45deg);
+  width: 15px;
+  height: 15px;
+}
+
+.timeline-item-content > div > h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+}
+
+.timeline-item-content > div > h2, h3 {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+}
+
+.timeline-item-content .tag {
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  position: absolute;
+  text-transform: uppercase;
+}
+
+.timeline-item-content time {
+  color: #777;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+.timeline-item-content p {
+  font-size: 16px;
+  line-height: 24px;
+  margin: 15px 0;
+  align-self: center;
+}
+.timeline-item-content a {
+  font-size: 16px;
+  font-weight: bold;
+  color: rgb(170, 170, 170);
+}
+
+.timeline-item-content a:hover {
+  color: #09cdda;
+}
+
+.timeline-item-content .circle {
+  background-color: #fff;
+  border: 3px solid #09cdda;
+  border-radius: 50%;
+  position: absolute;
+  top: calc(50% - 10px);
+  right: auto;
+  left: -40px;
+  width: 20px;
+  height: 20px;
+  z-index: 100;
+}
+
+
 
 /* -------------------------------- */
 /* --- Styling for FullCalendar --- */
