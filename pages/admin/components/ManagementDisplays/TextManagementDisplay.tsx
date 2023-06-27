@@ -1,6 +1,6 @@
 import { PageText } from "@prisma/client"
-import TextInput from "./TextInput"
-import Button from "../../../components/Button"
+import TextInput from "../TextInput"
+import Button from "../../../../components/Button"
 import { useState } from "react"
 
 interface TextManagementDisplayProps {
@@ -12,11 +12,11 @@ export default function TextManagementDisplay(props: TextManagementDisplayProps)
 
   return <>
 
-    <div className="flex flex-col gap-8 pb-8">
+    <div className="flex flex-col gap-8 pb-8 ">
       {
         pageTexts.map( (pageText, index) => {
           return (
-            <div key={pageText.page}>
+            <div key={pageText.page} className="bg-black/50 px-5 py-3">
               <h2 className="text-3xl pb-2">{pageText.page}</h2>
               <TextInput
                 placeholder={pageText.page}

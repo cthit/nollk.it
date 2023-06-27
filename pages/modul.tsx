@@ -4,10 +4,10 @@ import Button from '../components/Button'
 import Page from '../components/Page'
 import PageInfo from '../components/PageInfo'
 import YearContext from '../util/YearContext'
-import { PageText, PrismaClient } from '@prisma/client'
+import { PageText } from '@prisma/client'
+import { prisma } from '../prisma/prismaclient'
 
 export const getServerSideProps = async () => {
-  const prisma = new PrismaClient()
 
   const text = await prisma.pageText.findFirst({
     where: {

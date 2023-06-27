@@ -4,23 +4,26 @@ import ical from 'node-ical'
 import Page from '../components/Page'
 import Countdown from '../components/Countdown'
 import ToDo from '../components/ToDo'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '../prisma/prismaclient'
 
 export const getServerSideProps = async () => {
-  const prisma = new PrismaClient()
 
   const allStartDates = (await prisma.committee.findMany({
     select: {
       firstDay: true,
     },
-  })).map(c => c.firstDay ?? "").filter(d => d)
+  })).map(committee => committee.firstDay ?? "").filter(day => day)
 
-  const MOTTAGNING_EVENTS_URL = "https://calendar.google.com/calendar/ical/71hb815m1g75pje527e7stt240%40group.calendar.google.com/public/basic.ics"
+  const mottagningenEventsLink = await prisma.links.findFirst({
+    where: {
+      id: "_kalender0",
+    },
+  })
 
-  const mottagningEvents = await ical.async.fromURL(MOTTAGNING_EVENTS_URL)
+  const mottagningEvents = await ical.async.fromURL(mottagningenEventsLink?.url ?? "")
 
   return {
-    props: { unparsedEvents: JSON.stringify(mottagningEvents), criticalDates: allStartDates }
+    props: { unparsedEvents: JSON.stringify(mottagningEvents ?? {}), criticalDates: allStartDates }
   }
 }
 

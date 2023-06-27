@@ -213,7 +213,7 @@ function YearSelector({defaultText, changeYear}: {defaultText: string, changeYea
 
   useEffect(() => {
     (async () => {
-      const fetchedCommittees = await fetch("./api/getCommittees").then(res => res.json()) as Committee[]
+      const fetchedCommittees = await fetch("./api/admin/committee/get").then(res => res.json()) as Committee[]
       setCommittees(fetchedCommittees.sort((a,b) => b.year - a.year))
     })()
   }, [])

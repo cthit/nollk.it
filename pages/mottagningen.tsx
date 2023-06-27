@@ -1,4 +1,4 @@
-import { PageText as PageTextType, Faq, PrismaClient } from "@prisma/client"
+import { PageText as PageTextType, Faq } from "@prisma/client"
 import { NextPage } from "next"
 import { useContext } from "react"
 import ReactMarkdown from "react-markdown"
@@ -8,9 +8,9 @@ import Page from "../components/Page"
 import PageInfo from "../components/PageInfo"
 import PageText from "../components/PageText"
 import YearContext from "../util/YearContext"
+import { prisma } from '../prisma/prismaclient'
 
 export const getServerSideProps = async () => {
-  const prisma = new PrismaClient()
 
   const mottagningenText = (await prisma.pageText.findFirst({
     where: {
@@ -28,7 +28,7 @@ export const getServerSideProps = async () => {
   ))
   const sortedTimeline = timeline.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
-  const faqItems = await prisma.faq.findMany();
+  const faqItems = await prisma.faq.findMany()
   const sortedFaqs = faqItems.sort((a, b) => a.orderInList - b.orderInList)
 
   return {

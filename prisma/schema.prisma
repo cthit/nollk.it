@@ -7,11 +7,10 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
-
+    
 model Committee {
   year             Int      @id @map("_id")
   firstDay         String //Should be in format "YYYY-MM-DDTHH:MM:SS"
-  fontURL          String?
   orderInImageDesc String
   members          Member[]
 }

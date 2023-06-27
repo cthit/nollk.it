@@ -1,8 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
 import * as jose from "jose";
-
-const prisma = new PrismaClient();
+import { prisma } from '../../../../prisma/prismaclient'
 
 export default async function add(req: NextApiRequest, res: NextApiResponse) {
 

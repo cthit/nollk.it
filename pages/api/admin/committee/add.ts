@@ -1,9 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
 import { CommitteeWithMembers } from "../../../../types";
 import * as jose from "jose";
-
-const prisma = new PrismaClient();
+import { prisma } from '../../../../prisma/prismaclient'
 
 export default async function add(req: NextApiRequest, res: NextApiResponse) {
 
@@ -24,7 +22,6 @@ export default async function add(req: NextApiRequest, res: NextApiResponse) {
     data: {
       year: committee.year,
       firstDay: committee.firstDay,
-      fontURL: committee.fontURL,
       orderInImageDesc: committee.orderInImageDesc,
       members: {
         create: membersWithoutYear

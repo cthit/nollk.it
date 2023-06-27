@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
-import Button from "../../../components/Button"
-import { CommitteeWithMembers } from "../../../types"
-import ImageUpload from "./ImageUpload"
-import TextInput from "./TextInput"
-import { Accordion, AccordionItem } from "./Accordion"
+import Button from "../../../../components/Button"
+import { CommitteeWithMembers } from "../../../../types"
+import ImageUpload from "../ImageUpload"
+import TextInput from "../TextInput"
+import { Accordion } from "../Accordion"
 
 interface CommitteeManagementDisplayProps {
   committee: CommitteeWithMembers
@@ -18,13 +18,11 @@ export default function CommitteeManagementDisplay({ committee }: CommitteeManag
 
   const [firstDay, setFirstDay] = useState(committee.firstDay)
   const [orderInImageDesc, setOrderInImageDesc] = useState(committee.orderInImageDesc)
-  const [fontURL, setFontURL] = useState(committee.fontURL)
 
   useEffect(() => {
     setMembers(committee.members)
     setFirstDay(committee.firstDay)
     setOrderInImageDesc(committee.orderInImageDesc)
-    setFontURL(committee.fontURL)
     setYear(committee.year)
   }, [committee])
 
@@ -142,20 +140,12 @@ export default function CommitteeManagementDisplay({ committee }: CommitteeManag
         </TextInput>
       </div>
 
-      <div className="w-2/3">
-        <div className="text-2xl">Länk till font</div>
-        <TextInput placeholder="URL till fonten" setValue={setFontURL}>
-          {fontURL ?? ""}
-        </TextInput>
-      </div>
-
       <div>
         <Button color={"bg-green-500"} action={() => {
           const committeeWithMembers: CommitteeWithMembers = {
             year: committee.year,
             firstDay: firstDay,
             orderInImageDesc: orderInImageDesc,
-            fontURL: fontURL ?? null,
             members: newMembers,
           }
 

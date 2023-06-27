@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react"
 
 interface TextInputProps {
   placeholder: string
-  children: string
+  children?: string
   setValue: (value: string) => void
 }
 
@@ -14,7 +14,7 @@ export default function TextInput({ placeholder, children, setValue }: TextInput
     const textarea = textareaRef.current
     if (textarea) {
       textarea.style.height = "1px"
-      textarea.style.height = `${textarea.scrollHeight}px`
+      textarea.style.height = `${textarea.scrollHeight+1}px`
     }
   }
 

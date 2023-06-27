@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import Page from '../components/Page'
 import ical from 'node-ical'
+import { prisma } from '../prisma/prismaclient'
 
 /*
   To get FullCalendar working with Next we install 'next-transpile-modules' to fix CSS loading issues
@@ -9,13 +9,11 @@ import ical from 'node-ical'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import momentPlugin from '@fullcalendar/moment'
-import { PrismaClient } from '@prisma/client'
 import React, { useContext } from 'react'
 import YearContext from '../util/YearContext'
 
 export const getServerSideProps = async () => {
 
-  const prisma = new PrismaClient()
 
   const calenderLinks = await prisma.links.findMany(
     {

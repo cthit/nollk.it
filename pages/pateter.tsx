@@ -3,12 +3,13 @@ import Precursor from "../components/Precursor"
 import ReactPageScroller from 'react-page-scroller';
 import { useEffect, useState } from "react";
 import PageInfo from "../components/PageInfo";
-import { Committee, PageText, PrismaClient } from "@prisma/client";
+import { Committee, PageText } from "@prisma/client";
 import Page from "../components/Page";
 import PageMargins from "../components/PageMargins";
 import Button from "../components/Button";
 import { CommitteeWithMembers } from "../types";
 import Divider from "../components/Divider";
+import { prisma } from '../prisma/prismaclient';
 
 const NavBall = (props: { index: number; committeeyear: string; currentPage: number; scrollTo: (to: number) => void }) => {
   return (
@@ -21,7 +22,6 @@ const NavBall = (props: { index: number; committeeyear: string; currentPage: num
 
 
 export const getServerSideProps = async () => {
-  const prisma = new PrismaClient()
 
   const text = await prisma.pageText.findFirst({
     where: {

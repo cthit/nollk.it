@@ -14,7 +14,7 @@ export default function PageInfo(props: PageInfo) {
         props.children
       ) : (
         <div className="w-full flex flex-col items-center pb-12 pt-32 lg:pt-48">
-          <div className="font-theme text-6xl mb-6">{props.heading}</div>
+          <div className="font-theme text-5xl lg:text-6xl mb-6 text-center">{props.heading}</div>
           <PageText>
             {props.children}
           </PageText>

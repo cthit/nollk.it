@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Links, PrismaClient } from "@prisma/client";
+import { Links } from "@prisma/client";
 import * as jose from "jose";
-
-const prisma = new PrismaClient();
+import { prisma } from '../../../../prisma/prismaclient'
 
 export default async function update(req: NextApiRequest, res: NextApiResponse) {
 
@@ -14,12 +13,25 @@ export default async function update(req: NextApiRequest, res: NextApiResponse) 
   }
 
   const links: Links[] = req.body
+  const deletedLinks = await prisma.links.deleteMany({
+    where: {
+      NOT: {
+        id: {
+          in: links.map(link => link.id)
+        }
+      }
+    }
+  })
   const updateLinks = await Promise.all(links.map(async (link) => {
-    return await prisma.links.update({
+    return await prisma.links.upsert({
       where: {
         id: link.id
       },
-      data: {
+      update: {
+        url: link.url
+      },
+      create: {
+        id: link.id,
         url: link.url
       }
     })

@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { PageText, PrismaClient } from "@prisma/client";
+import { PageText } from "@prisma/client";
 import * as jose from "jose";
-
-const prisma = new PrismaClient();
+import { prisma } from '../../../../prisma/prismaclient'
 
 export default async function update(req: NextApiRequest, res: NextApiResponse) {
 

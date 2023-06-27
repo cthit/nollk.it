@@ -16,11 +16,11 @@ const ToDo = ({ unparsedEvents }: { unparsedEvents: string }) => {
 
   useEffect(() => {
     if (m >= 1) setTodo({ text: "Vibba", url: "" })
-    if (m >= 3) setTodo({ text: "Phaddra", url: "youtube.com/watch?v=dQw4w9WgXcQ" })
+    if (m >= 3) setTodo({ text: "Phaddra", url: "" })
     if (m >= 5) setTodo({ text: "Phaddervideo", url: "" })
     if (m >= 7) setTodo({ text: "Nolldeklarera", url: "" })
     if (m >= 8 && d >= 14) setTodo({ text: getUpcomingArr(), url: "" })
-    if (m >= 9 && d >= 14) setTodo({ text: "Återhämta", url: "" })
+    if (m >= 9 && d >= 14) setTodo({ text: "Plugga", url: "" })
     if (m >= 10) setTodo({ text: "Aspa", url: "" })
     if (m >= 12) setTodo({ text: "Vibba", url: "" })
   }, [])

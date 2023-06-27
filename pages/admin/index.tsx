@@ -1,17 +1,18 @@
-import { Links, PageText, PrismaClient } from "@prisma/client"
+import { Faq, Links, PageText } from "@prisma/client"
+import { prisma } from '../../prisma/prismaclient'
 import { NextPage } from "next"
 import React, { useEffect, useState } from "react"
 import Button from "../../components/Button"
 import Page from "../../components/Page"
 import { CommitteeWithMembers } from "../../types"
 import { Accordion, AccordionItem } from "./components/Accordion"
-import CommitteeManagementDisplay from "./components/CommitteeManagementDisplay"
-import TextManagementDisplay from "./components/TextManagementDisplay"
+import CommitteeManagementDisplay from "./components/ManagementDisplays/CommitteeManagementDisplay"
+import TextManagementDisplay from "./components/ManagementDisplays/TextManagementDisplay"
+import LinkManagmenetDisplay from "./components/ManagementDisplays/LinkManagementDisplay"
+import FaqManagmenetDisplay from "./components/ManagementDisplays/FaqManagementDisplay"
 import { useRouter } from "next/router"
-import LinkManagmenetDisplay from "./components/LinkManagementDisplay"
 
 export const getServerSideProps = async () => {
-  const prisma = new PrismaClient()
   const committees = await prisma.committee.findMany({
     include: {
       members: true
@@ -22,21 +23,25 @@ export const getServerSideProps = async () => {
 
   const links = await prisma.links.findMany()
 
+  const faqs = await prisma.faq.findMany()
+
   return {
-    props: { committees, pageTexts, links }
+    props: { committees, pageTexts, links, faqs }
   }
 }
 
 interface AdminProps {
-  committees: CommitteeWithMembers[],
-  pageTexts: PageText[],
-  links: Links
+  committees: CommitteeWithMembers[]
+  pageTexts: PageText[]
+  links: Links[]
+  faqs: Faq[]
 }
 
 enum ManagementDisplay {
   Committee,
   Text,
-  Link
+  Link,
+  Faq
 }
 
 const Admin: NextPage<AdminProps> = (props: AdminProps) => {
@@ -50,10 +55,11 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
     if (router.query["visa"] === "kommitte") setDisplayed(ManagementDisplay.Committee)
     if (router.query["visa"] === "text") setDisplayed(ManagementDisplay.Text)
     if (router.query["visa"] === "länkar") setDisplayed(ManagementDisplay.Link)
+    if (router.query["visa"] === "faq") setDisplayed(ManagementDisplay.Faq)
   }, [])
 
-  const [committees, setCommittees] = useState<CommitteeWithMembers[]>(props.committees)
-  const [selectedCommittee, setSelectedCommittee] = useState(props.committees.sort((a, b) => b.year - a.year)[0])
+  const [committees, setCommittees] = useState<CommitteeWithMembers[]>(props.committees.sort((a, b) => b.year - a.year))
+  const [selectedCommittee, setSelectedCommittee] = useState(committees[0])
 
   return (
     <>
@@ -82,7 +88,6 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
                     year: year,
                     firstDay: year + "-01-01T00:00:00",
                     orderInImageDesc: "Från vänster",
-                    fontURL: null,
                     members: []
                   }, ...committees])
                 }}>Ny kommitté</Button>
@@ -97,8 +102,8 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
                         },
                         body: JSON.stringify({ year: committees[0].year }),
                       }).then(() => {
-                        setCommittees(committees.slice(-1))
                         setSelectedCommittee(committees[1])
+                        setCommittees(committees.slice(1))
                       })
                     }
                   }}>
@@ -124,6 +129,13 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
               Länkar
             </div>
 
+            <div className="text-[1.3em] opacity-80 hover:opacity-100 cursor-pointer" onClick={() => {
+              setDisplayed(ManagementDisplay.Faq)
+              router.push("/admin?visa=faq")
+            }}>
+              FAQ
+            </div>
+
           </div>
           <div className="flex-[4]">
             {(() => {
@@ -134,6 +146,9 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
 
                 case ManagementDisplay.Link:
                   return <LinkManagmenetDisplay links={props.links} />
+
+                case ManagementDisplay.Faq:
+                  return <FaqManagmenetDisplay faqs={props.faqs} />
 
                 default:
                   return <CommitteeManagementDisplay committee={selectedCommittee} />
