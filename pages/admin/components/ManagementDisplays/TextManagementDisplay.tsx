@@ -12,7 +12,7 @@ export default function TextManagementDisplay(props: TextManagementDisplayProps)
 
   return <>
 
-    <div className="flex flex-col gap-8 pb-8 ">
+    <div className="flex flex-col gap-8 pb-8">
       {
         pageTexts.map( (pageText, index) => {
           return (

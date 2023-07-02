@@ -35,13 +35,6 @@ model PageText {
   content String
 }
 
-model Link {
-  id            String          @id @default(cuid()) @map("_id")
-  name          String
-  url           String
-  TimeLineEvent TimeLineEvent[]
-}
-
 model Category {
   title         String          @id @map("_id")
   color         String
@@ -54,8 +47,7 @@ model TimeLineEvent {
   text       String
   date       String //Should be in format "YYYY-MM-DD"
   category   Category @relation(fields: [categoryId], references: [title])
-  link       Link?    @relation(fields: [linkId], references: [id])
-  linkId     String?
+  link       String?
   categoryId String
 }
 

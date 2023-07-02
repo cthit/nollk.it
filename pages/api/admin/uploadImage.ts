@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import formidable from "formidable"
 import fs from "fs"
+import * as jose from "jose";
 
 export const config = {
   api: {
@@ -10,7 +11,12 @@ export const config = {
 
 export default async function upload(req: NextApiRequest, res: NextApiResponse) {
 
-  // TODO check if the user is logged in
+  const {payload} = await jose.jwtVerify(req.cookies.token || "", new TextEncoder().encode(process.env.PASSWORD))
+
+  if (!payload) {
+    res.status(401).json({ message: "Unauthorized" })
+    return
+  }
 
   const form = new formidable.IncomingForm()
   form.parse(req, (err, fields, files) => {
