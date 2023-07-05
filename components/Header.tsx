@@ -86,7 +86,7 @@ function DesktopHeader({selectedYear}: {selectedYear?: number}) {
           <div className="w-full flex flex-col items-end relative">
             <Link href="/">
               <a className="w-20 h-20 absolute -top-5">
-                <ImageWithFallback src={`/bilder/${year}/märke.png`} fallbacksrc={`/bilder/reserv/märke.png`} alt={"NollKIT" + year} layout={"fill"} objectFit={"cover"}/>
+                <ImageWithFallback src={`/bilder/${year}/märke.png`} fallbacksrc={`/bilder/reserv/nollbricka_outline.png`} alt={"NollKIT" + year} layout={"fill"} objectFit={"contain"}/>
               </a>
             </Link>
           </div>
@@ -178,7 +178,7 @@ function MobileHeader({selectedYear}: {selectedYear?: number}) {
 
             <Link href="/">
               <a className="w-20 h-20 absolute top-2 left-12">
-                <ImageWithFallback src={`/bilder/${year}/märke.png`} fallbacksrc={`/bilder/reserv/märke.png`} alt={"NollKIT" + year} layout={"fill"} objectFit={"cover"}/>
+                <ImageWithFallback src={`/bilder/${year}/märke.png`} fallbacksrc={`/bilder/reserv/nollbricka_outline.png`} alt={"NollKIT" + year} layout={"fill"} objectFit={"contain"}/>
               </a>
             </Link>
 
