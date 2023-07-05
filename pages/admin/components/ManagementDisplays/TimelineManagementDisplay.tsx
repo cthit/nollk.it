@@ -79,7 +79,7 @@ export default function TextManagementDisplay(props: TimelineManagementDisplayPr
       }
 
       <div className="flex gap-4">
-        <select id="category-select" className="p-1 rounded-md " style={{ backgroundColor: props.categories[0].color }} onChange={
+        <select id="category-select" className="p-1 rounded-md" style={{ backgroundColor: props.categories[0].color }} onChange={
           e => {
             e.target.style.backgroundColor = getCategoryColor(e.target.value)
           }
