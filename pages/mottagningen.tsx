@@ -2,7 +2,7 @@ import { PageText as PageTextType, Faq, TimeLineEvent } from "@prisma/client"
 import { NextPage } from "next"
 import { useContext } from "react"
 import ReactMarkdown from "react-markdown"
-import Accordion from "../components/Accordion"
+import Collapsible from "../components/Collapsible"
 import Divider from "../components/Divider"
 import Page from "../components/Page"
 import PageInfo from "../components/PageInfo"
@@ -114,6 +114,7 @@ const Mottagningen: NextPage<MottagningenProps> = ({ mottagningenText, timelineD
           <div className="mb-12">
             <PageText>Nedan finns en timeline över allting man kan behöva göra innan mottagningen samt deadlines till dessa. Timelinen kan även innehålla lite roliga grejer som även sker efter mottagningen såsom aspning!</PageText>
           </div>
+
           <Timeline data={filteredTimelineData} />
         </div>
 
@@ -125,7 +126,7 @@ const Mottagningen: NextPage<MottagningenProps> = ({ mottagningenText, timelineD
         <div>
           {faqItems.map((faqItem, index) => (
             <div key={index}>
-              <Accordion title={faqItem.question} content={faqItem.answer} />
+              <Collapsible title={faqItem.question} content={faqItem.answer} />
             </div>
           ))}
         </div>
@@ -134,6 +135,5 @@ const Mottagningen: NextPage<MottagningenProps> = ({ mottagningenText, timelineD
     </>
   )
 }
-
 
 export default Mottagningen
