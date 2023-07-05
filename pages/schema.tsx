@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import Page from '../components/Page'
 import ical from 'node-ical'
+import { prisma } from '../prisma/prismaclient'
 
 /*
   To get FullCalendar working with Next we install 'next-transpile-modules' to fix CSS loading issues
@@ -9,16 +9,29 @@ import ical from 'node-ical'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import momentPlugin from '@fullcalendar/moment'
-import { PrismaClient } from '@prisma/client'
 import React, { useContext } from 'react'
 import YearContext from '../util/YearContext'
 
 export const getServerSideProps = async () => {
 
-  const prisma = new PrismaClient()
 
-  const calendarURLs = (await prisma.links.findFirst())?.calendarURLs ?? []
-  const calendarEvents = await Promise.all(calendarURLs.map(async url => await ical.async.fromURL(url)))
+  const calenderLinks = await prisma.links.findMany(
+    {
+      where: {
+        id: {
+          startsWith: "_kalender"
+        }
+      }
+    }
+  )
+
+  const calendarEvents = await Promise.all(calenderLinks.map(async calenderLink => {
+    return await ical.async.fromURL(calenderLink.url)
+    .catch(() => {
+      return { error: "Failed to fetch calendar from the following URL: " + calenderLink.url }
+    })
+  }))
+
   const stringifiedCalendars = calendarEvents.map(events => JSON.stringify(events))
 
   return {
@@ -80,12 +93,6 @@ const Schema: NextPage<SchemaProps> = ({ stringifiedCalendars, firstdayDates }) 
 
   return (
     <>
-      <Head>
-        <title>Schema</title>
-        <meta name="description" content="Här finns schemat, både för mottagningen och introkurserna" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Page blackout>
         <div className="my-32 w-full">
           <FullCalendar

@@ -12,13 +12,9 @@ module.exports = {
         //Sets Lato as the default font
         'sans': ['Lato'],
       },
-      backgroundImage: {
-        'portrait': "url('/bilder/2022/portrait.jpg')",
-        'landscape': "url('/bilder/2022/landscape.jpg')",
-      }
     },
     fontFamily: {
-      'po': ['Passion One'],
+      'theme': ['YearTheme', 'Georama', 'Lato'],
       'lato': ['Lato']
     },
   },

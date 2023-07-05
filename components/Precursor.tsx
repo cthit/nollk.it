@@ -1,6 +1,5 @@
-import Link from "next/link";
 import React from "react";
-import { CommitteeWithMembers } from "../pages/pateter";
+import { CommitteeWithMembers } from "../types";
 import Button from "./Button";
 
 
@@ -20,7 +19,7 @@ const Precursor = ({ committee }: { committee: CommitteeWithMembers }) => {
 
                     {/* Text */}
                     <div>
-                        <h1 className="text-5xl sm:text-6xl font-po mb-4 sm:mb-8">{"NollKIT'" + committee.year.toString().slice(2)}</h1>
+                        <h1 className="text-5xl sm:text-6xl font-theme mb-4 sm:mb-8">{"NollKIT'" + committee.year.toString().slice(2)}</h1>
                         <p className="italic text-lg sm:text-2xl mb-2">{committee.orderInImageDesc}:</p>
 
                         <div className="grid gap-x-10 gap-y-2 items-center text-sm" style={ {gridTemplateColumns: "auto auto"} }>
@@ -31,11 +30,10 @@ const Precursor = ({ committee }: { committee: CommitteeWithMembers }) => {
                                 </React.Fragment>
                             ))}
                         </div>
-                        
-                        <div className="absolute mt-6">
-                            <Button action={() => {location.href="/modul/" + committee.year + ".pdf"}}>
-                                Modul
-                            </Button>
+                        <div className="pt-6">
+                        <Button action={() => {location.href="/modul/" + committee.year + ".pdf"}}>
+                            Modul
+                        </Button>
                         </div>
                     </div>
                 </div>

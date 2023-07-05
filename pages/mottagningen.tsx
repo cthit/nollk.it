@@ -1,4 +1,4 @@
-import { PageText as PageTextType, Faq, PrismaClient } from "@prisma/client"
+import { PageText as PageTextType, Faq, TimeLineEvent } from "@prisma/client"
 import { NextPage } from "next"
 import { useContext } from "react"
 import ReactMarkdown from "react-markdown"
@@ -8,9 +8,10 @@ import Page from "../components/Page"
 import PageInfo from "../components/PageInfo"
 import PageText from "../components/PageText"
 import YearContext from "../util/YearContext"
+import { prisma } from '../prisma/prismaclient'
+import { TimelineEventWithCategory } from "../types"
 
 export const getServerSideProps = async () => {
-  const prisma = new PrismaClient()
 
   const mottagningenText = (await prisma.pageText.findFirst({
     where: {
@@ -22,13 +23,12 @@ export const getServerSideProps = async () => {
     {
       include: {
         category: true,
-        link: true
       }
     }
   ))
   const sortedTimeline = timeline.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
-  const faqItems = await prisma.faq.findMany();
+  const faqItems = await prisma.faq.findMany()
   const sortedFaqs = faqItems.sort((a, b) => a.orderInList - b.orderInList)
 
   return {
@@ -51,27 +51,11 @@ const parseDateTime = (dateString: string) => {
 
 interface MottagningenProps {
   mottagningenText: PageTextType
-  timelineData: TimelineData[]
+  timelineData: TimelineEventWithCategory[]
   faqItems: Faq[]
 }
 
-
-interface TimelineData {
-  text: string,
-  year: string,
-  date: string,
-  category: {
-    title: string,
-    color: string,
-  },
-  link?: {
-    url: string,
-    name: string,
-  }
-}
-
-
-const TimelineItem = ({ data }: { data: TimelineData }) => (
+const TimelineItem = ({ data }: { data: TimelineEventWithCategory }) => (
   <div className="timeline-item">
     <div className="timeline-item-content">
       <span className="tag px-3 py-1 top-3 left-3" style={{ background: data.category.color }}>
@@ -83,10 +67,10 @@ const TimelineItem = ({ data }: { data: TimelineData }) => (
       </div>
       {data.link && (
         <a
-          href={data.link.url}
+          href={data.link}
           target="_blank"
         >
-          {data.link.name}
+          { data.link.split('//').at(-1)?.split('/')[0].split('.').splice(-2).join('.') }
         </a>
       )}
       <span className="circle" />
@@ -94,7 +78,7 @@ const TimelineItem = ({ data }: { data: TimelineData }) => (
   </div>
 );
 
-const Timeline = ({ data }: { data: TimelineData[] }) => {
+const Timeline = ({ data }: { data: TimelineEventWithCategory[] }) => {
   if (data.length > 0) {
     return (
       <div className="timeline-container">

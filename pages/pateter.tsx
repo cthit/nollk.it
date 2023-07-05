@@ -1,14 +1,15 @@
 import { NextPage } from "next"
-import Head from "next/head"
 import Precursor from "../components/Precursor"
 import ReactPageScroller from 'react-page-scroller';
 import { useEffect, useState } from "react";
 import PageInfo from "../components/PageInfo";
-import { Committee, Prisma, PrismaClient } from "@prisma/client";
+import { Committee, PageText } from "@prisma/client";
 import Page from "../components/Page";
 import PageMargins from "../components/PageMargins";
 import Button from "../components/Button";
+import { CommitteeWithMembers } from "../types";
 import Divider from "../components/Divider";
+import { prisma } from '../prisma/prismaclient';
 
 const NavBall = (props: { index: number; committeeyear: string; currentPage: number; scrollTo: (to: number) => void }) => {
   return (
@@ -21,30 +22,35 @@ const NavBall = (props: { index: number; committeeyear: string; currentPage: num
 
 
 export const getServerSideProps = async () => {
-  const prisma = new PrismaClient()
 
-  const allCommittees = await prisma.committee.findMany({
+  const text = await prisma.pageText.findFirst({
+    where: {
+      page: "pateter"
+    }
+  })
+
+  let allCommittees = await prisma.committee.findMany({
     include: {
       members: true
     }
   })
 
+  // Database entries are not necessarily in order, and needs to be sorted
+  allCommittees.sort((a,b) => b.year - a.year)
+  // Remove the current year from the list
   allCommittees.shift()
 
   return {
-    props: { allCommittees: allCommittees }
+    props: { text: text, allCommittees: allCommittees }
   }
 }
 
-export type CommitteeWithMembers = Prisma.CommitteeGetPayload<{
-  include: { members: true };
-}>;
-
 interface PateterProps {
+  text: PageText
   allCommittees: CommitteeWithMembers[]
 }
 
-const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
+const Pateter: NextPage<PateterProps> = ({ text, allCommittees }) => {
 
   const [currentPage, setCurrentPage] = useState<number>(0)
 
@@ -83,12 +89,6 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
 
   return (
     <>
-      <Head>
-        <title>Pateter</title>
-        <meta name="description" content="Pateter är de som har suttit NollKIT tidigare år" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Page blackout unrestrictChildren currentYear={currentYear}>
         <ReactPageScroller
           animationTimer={700}
@@ -99,7 +99,7 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
         >
           <PageMargins>
             <PageInfo heading="Pateter">
-              På Chalmers är patet ett allmänt namn för personer som tidigare suttit i en förening/kommitté. De som har suttit i just NollKIT tidigare år kallas för NollQIT. De kan vara bra att ha lite då och då, både för NollKIT och för Nollan, eftersom de alltid svarar glatt på frågor om NollKIT råkar vara borta för stunden.
+              {text.content}
             </PageInfo>
             <Divider />
 
@@ -118,14 +118,14 @@ const Pateter: NextPage<PateterProps> = ({ allCommittees }) => {
         </ReactPageScroller>
 
         <div className="fixed flex flex-col items-center right-4 self-center top-1/4">
-          <NavBall index={0} scrollTo={() => scrollTo(0)} currentPage={currentPage} committeeyear={"Top"} ></NavBall>
+          <NavBall index={0} scrollTo={() => scrollTo(0)} currentPage={currentPage} committeeyear={"Till toppen"} ></NavBall>
           {allCommittees.map((committee: Committee, index) => (
             <NavBall key={index} index={index + 1} scrollTo={() => scrollTo(index + 1)} currentPage={currentPage} committeeyear={committee.year.toString().slice(-2)}></NavBall>
           ))}
         </div>
         <div className={`fixed right-10 bottom-10 transition-opacity duration-300 ${topButtonShown ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
           <Button action={() => scrollTo(0)}> 
-            Till toppen
+            Tillbaka till toppen
           </Button>
         </div>
       </Page>

@@ -20,8 +20,7 @@ export default function Countdown({ criticalDates }: { criticalDates: string[] }
   const ctx = useContext(YearContext)
 
   const findCriticalDate = (criticalDates: string[], year: string): string => {
-    const criticalDate = criticalDates.find(d => d.includes(year)) ?? ""
-    return criticalDate
+    return criticalDates.find(d => d.includes(year)) ?? ""
   }
 
   function getTimeLeft(year: string): TimeLeft {
@@ -53,11 +52,14 @@ export default function Countdown({ criticalDates }: { criticalDates: string[] }
   }
 
   useEffect(() => {
-    setTimeLeft(getTimeLeft(ctx.year))
     const downtick = setInterval(() => {
-      if (criticalDatePassed(getTimeLeft(ctx.year))) clearInterval(downtick)
       setTimeLeft(getTimeLeft(ctx.year))
     }, 1000)
+
+    return () => {
+      clearInterval(downtick)
+      setTimeLeft(getTimeLeft(ctx.year))
+    }
   }, [ctx.year])
 
   return (
@@ -65,18 +67,18 @@ export default function Countdown({ criticalDates }: { criticalDates: string[] }
       {
         criticalDatePassed(timeLeft) ?
           criticalDatePassed(timeLeft, 90) ?
-            <div className="flex flex-col items-center font-po drop-sh pb-2">
+            <div className="flex flex-col items-center font-theme drop-sh pb-2">
               <p className="text-2xl">Mottagningen skedde för</p>
               <p className="text-7xl">{-timeLeft.days}</p>
               <p className="text-3xl">dagar sedan</p>
             </div>
             :
-            <div className="flex flex-col items-center font-po drop-sh pb-2">
+            <div className="flex flex-col items-center font-theme drop-sh pb-2">
               <p className="text-7xl">Mottagningen</p>
               <p className="text-3xl">har börjat!!</p>
             </div>
           :
-          <div className="font-po drop-sh grid grid-cols-2 grid-rows-3 items-end w-fit pb-2" style={{ gridTemplateColumns: "auto auto", gridTemplateRows: "auto auto auto" }}>
+          <div className="font-theme drop-sh grid grid-cols-2 grid-rows-3 items-end w-fit pb-2" style={{ gridTemplateColumns: "auto auto", gridTemplateRows: "auto auto auto" }}>
             <div className="text-8xl row-span-2 col-span-1 text-right pr-3 leading-[0.75]">{timeLeft.days}</div>
             <div className="text-2xl row-span-1 col-span-1 leading-[0.75]">{timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds}</div>
             {/* Here 'ar' is added using ::after to "dag" to keep width consistent. Otherwise it will change the width when the timer ticks */}

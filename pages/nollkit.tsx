@@ -3,25 +3,33 @@ import Head from 'next/head'
 import PageInfo from '../components/PageInfo'
 import Page from '../components/Page'
 import YearContext from '../util/YearContext'
-import { Member, PrismaClient } from '@prisma/client'
+import { Member, PageText } from '@prisma/client'
 import { useContext } from 'react'
+import ImageWithFallback from '../components/ImageWithFallback'
 import Divider from '../components/Divider'
+import { prisma } from '../prisma/prismaclient'
 
 export const getServerSideProps = async () => {
-  const prisma = new PrismaClient()
 
   const allMembers = await prisma.member.findMany()
 
+  const text = await prisma.pageText.findFirst({
+    where: {
+      page: "nollkit"
+    }
+  })
+
   return {
-    props: { allMembers: allMembers }
+    props: { allMembers: allMembers, text: text }
   }
 }
 
 interface NollkitProps {
   allMembers: Member[]
+  text: PageText
 }
 
-const Nollkit: NextPage<NollkitProps> = ({ allMembers }) => {
+const Nollkit: NextPage<NollkitProps> = ({ allMembers, text }) => {
 
   const ctx = useContext(YearContext)
 
@@ -35,26 +43,30 @@ const Nollkit: NextPage<NollkitProps> = ({ allMembers }) => {
 
       <Page blackout>
         <PageInfo heading="Vi är NollKIT">
-          Hej du Nollan! När du tar dina första steg in på Chalmers är det vi åtta som har planerat fyra veckor med aktiviteter och arrangemang allt för att du ska lära känna din klass bättre och kunna få reda på vad Chalmers som skola har att erbjuda.
-          <br /><br />
-          För att hela denna resan ska gå runt har vi lite olika ansvarsområden som kan läsa om nedan. Vi ser framåt att träffa er alla i augusti!
+          {text.content}  
         </PageInfo>
         <Divider />
 
-        <div className="flex flex-col lg:w-3/5 items-center mt-32 lg:mt-48">
+        <div className="flex flex-col lg:w-3/5 items-center">
+          
+          <div className="w-full h-36 relative mb-8">
+            <ImageWithFallback src={`/bilder/${ctx.year}/logotyp.png`} layout="fill" objectFit="contain" />
+          </div>
+
           {
-            allMembers.filter(m => m.year.toString() === ctx.year).sort( (a, b) => a.orderInImage - b.orderInImage).map((n, i) => {
+            allMembers.filter(member => member.year.toString() === ctx.year).sort( (a, b) => a.orderInImage - b.orderInImage).map((member, index) => {
               return (
-                <div key={n.role} className="grid grid-cols-5 gap-5 mb-8">
+                <div key={member.role} className="grid grid-cols-5 gap-5 mb-8">
 
+                  {index % 2 === 0 ? <></> : <NollkitDesc member={member} textIsOnTheLeftSide={true} />}
+                  <div className="col-span-2 aspect-[4/5] relative">
+                    <ImageWithFallback src={`/bilder/${ctx.year}/poster/${member.role}.jpg`} layout="fill" objectFit="cover"/>
+                  </div>
+                  {index % 2 === 0 ? <NollkitDesc member={member} textIsOnTheLeftSide={false} /> : <></>}
 
-                  {i % 2 === 0 ? <></> : <NollkitDesc {...n} />}
-                  <div className={`col-span-2 bg-cover bg-top aspect-[4/5]`} style={{ backgroundImage: `url('/bilder/${ctx.year}/poster/${n.role}.jpg` }}></div>
-                  {i % 2 === 0 ? <NollkitDesc {...n} /> : <></>}
-
-                  {/* Renders text below if mobile */}
-                  <div className="col-span-5 md:hidden">
-                    <NollkitText {...n} />
+                  {/* Renders text below instead if mobile */}
+                  <div className="col-span-5 lg:hidden">
+                    <NollkitText {...member} />
                   </div>
                 </div>
               )
@@ -68,24 +80,24 @@ const Nollkit: NextPage<NollkitProps> = ({ allMembers }) => {
 
 export default Nollkit
 
-function NollkitDesc(props: Member) {
+function NollkitDesc({member, textIsOnTheLeftSide}: {member: Member, textIsOnTheLeftSide: boolean}) {
   return (
-    <div className="flex flex-col col-span-3">
-      <div className="font-po text-4xl">{props.name}</div>
-      <div className="text-2xl font-medium italic mb-3">{props.role}</div>
+    <div className={`flex flex-col col-span-3 ${textIsOnTheLeftSide ? "text-left" : "text-right lg:text-left"}`}>
+      <div className="font-theme text-3xl pb-1">{member.name}</div>
+      <div className="text-2xl font-medium italic mb-3">{member.role}</div>
 
-      <div className="hidden md:block">
-        <NollkitText {...props} />
+      <div className="hidden lg:block">
+        <NollkitText {...member} />
       </div>
     </div>
   )
 }
 
-function NollkitText(props: Member) {
+function NollkitText(member: Member) {
   return (
     <>
-      <div className="font-light italic mb-1">{props.greeting}</div>
-      <div className="font-light">{props.text}</div>
+      <div className="font-light italic mb-1">{member.greeting}</div>
+      <div className="font-light text-justify">{member.text}</div>
     </>
   )
 }

@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import YearContext from "../util/YearContext";
+import ImageWithFallback from "./ImageWithFallback";
 
 const headerCategories = [
   {
@@ -85,7 +86,7 @@ function DesktopHeader({selectedYear}: {selectedYear?: number}) {
           <div className="w-full flex flex-col items-end relative">
             <Link href="/">
               <a className="w-20 h-20 absolute -top-5">
-                <img src={`/bilder/${year}/märke.png`} alt="NollKIT'22" />
+                <ImageWithFallback src={`/bilder/${year}/märke.png`} fallbacksrc={`/bilder/reserv/nollbricka_outline.png`} alt={"NollKIT" + year} layout={"fill"} objectFit={"contain"}/>
               </a>
             </Link>
           </div>
@@ -137,7 +138,6 @@ function MobileHeader({selectedYear}: {selectedYear?: number}) {
 
   return (
     <YearContext.Consumer>
-
       {({ year, changeYear }) => {
          if (selectedYear) {
           year = selectedYear.toString()
@@ -178,7 +178,7 @@ function MobileHeader({selectedYear}: {selectedYear?: number}) {
 
             <Link href="/">
               <a className="w-20 h-20 absolute top-2 left-12">
-                <img src={`/bilder/${year}/märke.png`} alt="NollKIT'22" />
+                <ImageWithFallback src={`/bilder/${year}/märke.png`} fallbacksrc={`/bilder/reserv/nollbricka_outline.png`} alt={"NollKIT" + year} layout={"fill"} objectFit={"contain"}/>
               </a>
             </Link>
 
@@ -212,10 +212,9 @@ function YearSelector({defaultText, changeYear}: {defaultText: string, changeYea
   const [committees, setCommittees] = useState<Committee[]>([])
 
   useEffect(() => {
-    console.log("useEffect");
     (async () => {
-      const fetchedCommittees = await fetch("./api/getCommittees").then(res => res.json())
-      setCommittees(fetchedCommittees)
+      const fetchedCommittees = await fetch("./api/admin/committee/get").then(res => res.json()) as Committee[]
+      setCommittees(fetchedCommittees.sort((a,b) => b.year - a.year))
     })()
   }, [])
   

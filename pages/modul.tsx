@@ -1,26 +1,38 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import { useContext } from 'react'
 import Button from '../components/Button'
 import Page from '../components/Page'
 import PageInfo from '../components/PageInfo'
 import YearContext from '../util/YearContext'
+import { PageText } from '@prisma/client'
+import { prisma } from '../prisma/prismaclient'
 
-const Modul: NextPage = () => {
+export const getServerSideProps = async () => {
+
+  const text = await prisma.pageText.findFirst({
+    where: {
+      page: "modul"
+    }
+  })
+
+  return {
+    props: { text: text }
+  }
+}
+
+interface ModulPageProps {
+  text: PageText
+}
+
+const Modul: NextPage<ModulPageProps> = ({ text }) => {
 
   const ctx = useContext(YearContext)
 
   return (
     <>
-      <Head>
-        <title>Modul</title>
-        <meta name="description" content="Modulen är din handbok för alla frågor kring mottagningen" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Page blackout>
         <PageInfo heading="Nollmodulen">
-          Innan du börjar på Chalmers finns det en hel del att lära sig. Därför har vi skapat Nollmodulen, en liten handbok med massor av nyttig information som kommer vara dig behjälplig, både innan, under och efter mottagningen.
+          {text.content}
         </PageInfo>
         <Button action={() => {location.href="/modul/" + ctx.year + ".pdf"}}>
           Här hittar du årets modul

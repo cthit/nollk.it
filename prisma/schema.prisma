@@ -7,11 +7,10 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
-
+    
 model Committee {
   year             Int      @id @map("_id")
   firstDay         String //Should be in format "YYYY-MM-DDTHH:MM:SS"
-  fontURL          String?
   orderInImageDesc String
   members          Member[]
 }
@@ -23,26 +22,17 @@ model Member {
   text         String?
   Committee    Committee @relation(fields: [year], references: [year])
   year         Int
-  orderInImage Int
+  orderInImage Int // 1-indexed
 }
 
 model Links {
-  version        Int      @id @map("_id")
-  deklarationURL String
-  phaddringURL   String
-  calendarURLs   String[]
+  id  String @id @map("_id")
+  url String
 }
 
 model PageText {
   page    String @id @map("_id")
   content String
-}
-
-model Link {
-  id            String          @id @default(cuid()) @map("_id")
-  name          String
-  url           String
-  TimeLineEvent TimeLineEvent[]
 }
 
 model Category {
@@ -57,8 +47,7 @@ model TimeLineEvent {
   text       String
   date       String //Should be in format "YYYY-MM-DD"
   category   Category @relation(fields: [categoryId], references: [title])
-  link       Link?    @relation(fields: [linkId], references: [id])
-  linkId     String?
+  link       String?
   categoryId String
 }
 
