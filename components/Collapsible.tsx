@@ -10,14 +10,16 @@ const Collapsible = (props: CollapsibleProps) => {
     const [isActive, setIsActive] = useState(false);
 
     return (
-        <div className="w-[60vw] min-w-[300px] m-10 transition-all rounded-md duration-700 flex bg-[#000]/[.6]" onClick={() => setIsActive(!isActive)}>
+        <div className="w-[60vw] min-w-[300px] m-10 transition-all rounded-md duration-700 flex bg-black/60" onClick={() => setIsActive(!isActive)}>
             <div className="w-full" >
                 <div className="flex justify-between items-center rounded-md border p-2 border-neutral-400" >
                     <div className='text-2xl m-2'>{props.title}</div>
                     <div className='text-2xl m-2'>{isActive ? '-' : '+'}</div>
                 </div>
-                {<div className={`transition-all duration-500 overflow-hidden mx-4 ${isActive ? "max-h-[400px] h-auto my-4" : "max-h-0"} `}>
-                    {<ReactMarkdown children={props.content}></ReactMarkdown>}
+                {<div className={`transition-all grid duration-500 px-3 ${isActive ? "grid-rows-[1fr] p-3" : "grid-rows-[0fr]"} `}>
+                    <div className="overflow-hidden">
+                        {<ReactMarkdown children={props.content}></ReactMarkdown>}
+                    </div>
                 </div>}
             </div>
         </div>

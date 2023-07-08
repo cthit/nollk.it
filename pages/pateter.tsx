@@ -92,7 +92,7 @@ const Pateter: NextPage<PateterProps> = ({ text, allCommittees }) => {
       <Page blackout unrestrictChildren currentYear={currentYear}>
         <ReactPageScroller
           animationTimer={700}
-          animationTimerBuffer={0}
+          animationTimerBuffer={700}
           renderAllPagesOnFirstRender={true}
           onBeforePageScroll={handlePageChange}
           customPageNumber={currentPage}
@@ -117,7 +117,7 @@ const Pateter: NextPage<PateterProps> = ({ text, allCommittees }) => {
 
         </ReactPageScroller>
 
-        <div className="fixed flex flex-col items-center right-4 self-center top-1/4">
+        <div className="fixed flex flex-col items-center -right-2 lg:right-4 self-center top-1/4">
           <NavBall index={0} scrollTo={() => scrollTo(0)} currentPage={currentPage} committeeyear={"Till toppen"} ></NavBall>
           {allCommittees.map((committee: Committee, index) => (
             <NavBall key={index} index={index + 1} scrollTo={() => scrollTo(index + 1)} currentPage={currentPage} committeeyear={committee.year.toString().slice(-2)}></NavBall>
