@@ -36,7 +36,7 @@ const Index: NextPage<IndexProps> = (props) => {
   return (
     <>
       <Page>
-        <div className="mt-28 flex flex-col gap-6 items-center lg:flex-row lg:mt-32 lg:gap-[20vw]">
+        <div className="mt-28 flex flex-col gap-6 items-center lg:flex-row lg:mt-32 lg:gap-[24vw]">
           <Countdown criticalDates={props.criticalDates} />
           <ToDo unparsedEvents={props.unparsedEvents} />
         </div>
