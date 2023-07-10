@@ -21,7 +21,9 @@ export default function TextManagementDisplay(props: TextManagementDisplayProps)
               <TextInput
                 placeholder={pageText.page}
                 setValue={inputValue => {
-                  setPageTexts([...pageTexts].with(index, { ...pageText, content: inputValue }))
+                  const newPageTexts = [...pageTexts]
+                  newPageTexts[index].content = inputValue
+                  setPageTexts(newPageTexts)
                 }}
               >
                 {pageText.content}

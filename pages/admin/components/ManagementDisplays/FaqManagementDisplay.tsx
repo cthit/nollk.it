@@ -65,14 +65,18 @@ export default function FaqManagementDisplay(props: FaqManagementDisplay) {
               <div className="flex flex-col flex-grow">
                 <TextInput placeholder="Fråga" setValue={
                   inputValue => {
-                    setFaqs(faqs.with(index, { ...faq, question: inputValue }))
+                    const newFaqs = [...faqs]
+                    newFaqs[index].question = inputValue
+                    setFaqs(newFaqs)
                   }
                 }>
                   {faq.question}
                 </TextInput>
                 <TextInput placeholder="Svar" setValue={
                   inputValue => {
-                    setFaqs(faqs.with(index, { ...faq, answer: inputValue }))
+                    const newFaqs = [...faqs]
+                    newFaqs[index].answer = inputValue
+                    setFaqs(newFaqs)
                   }
                 }>
                   {faq.answer}
@@ -94,7 +98,9 @@ export default function FaqManagementDisplay(props: FaqManagementDisplay) {
 
       <div>
         <Button color="bg-red-500" action={() => {
-          setFaqs(faqs.toSpliced(-1, 1))
+          const newFaqs = [...faqs]
+          newFaqs.splice(-1, 1)
+          setFaqs(newFaqs)
         }}>
           Ta bort nedersta frågan
         </Button>

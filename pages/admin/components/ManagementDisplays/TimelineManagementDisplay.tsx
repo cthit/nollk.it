@@ -41,7 +41,9 @@ export default function TextManagementDisplay(props: TimelineManagementDisplayPr
               <div className="flex items-start justify-between">
                 <div className="p-1 px-2" style={{ backgroundColor: getCategoryColor(event.categoryId) }}>{event.categoryId}</div>
                 <Button color="bg-red-500" action={() => {
-                  setShownEvents([...shownEvents].toSpliced(index, 1))
+                  const newShownEvents = [...shownEvents]
+                  newShownEvents.splice(index, 1)
+                  setShownEvents(newShownEvents)
                 }}>
                   Ta bort
                 </Button>
@@ -49,7 +51,9 @@ export default function TextManagementDisplay(props: TimelineManagementDisplayPr
 
               <TextInput placeholder="Datum ÅÅÅÅ-MM-DD" setValue={
                 inputValue => {
-                  setShownEvents([...shownEvents].with(index, { ...event, date: inputValue }))
+                  const newShownEvents = [...shownEvents]
+                  newShownEvents[index].date = inputValue
+                  setShownEvents(newShownEvents)
                 }
               }>
                 {event.date}
@@ -58,7 +62,9 @@ export default function TextManagementDisplay(props: TimelineManagementDisplayPr
               <TextInput
                 placeholder="Text skriven i markdown"
                 setValue={inputValue => {
-                  setShownEvents([...shownEvents].with(index, { ...event, text: inputValue }))
+                  const newShownEvents = [...shownEvents]
+                  newShownEvents[index].text = inputValue
+                  setShownEvents(newShownEvents)
                 }}
               >
                 {event.text}
@@ -67,7 +73,9 @@ export default function TextManagementDisplay(props: TimelineManagementDisplayPr
               <TextInput
                 placeholder="Eventuell länk"
                 setValue={inputValue => {
-                  setShownEvents([...shownEvents].with(index, { ...event, link: inputValue }))
+                  const newShownEvents = [...shownEvents]
+                  newShownEvents[index].link = inputValue
+                  setShownEvents(newShownEvents)
                 }}
               >
                 {event.link as string}

@@ -6,7 +6,7 @@ import { Links } from "@prisma/client"
 interface LinkManagementDisplayProps {
   links: Links[]
 }
-export default function LinkManagmenetDisplay(props: LinkManagementDisplayProps) {
+export default function LinkManagementDisplay(props: LinkManagementDisplayProps) {
 
   const [links, setLinks] = useState(props.links)
 
@@ -24,7 +24,9 @@ export default function LinkManagmenetDisplay(props: LinkManagementDisplayProps)
                 <TextInput
                   placeholder={link.id}
                   setValue={inputvalue => {
-                    setLinks(links.with(index, { ...link, url: inputvalue }))
+                    const newLinks = [...links]
+                    newLinks[index].url = inputvalue
+                    setLinks(newLinks)
                   }}
                 >
                   {link.url}
@@ -32,7 +34,9 @@ export default function LinkManagmenetDisplay(props: LinkManagementDisplayProps)
               </div>
               <div className="">
                 <Button color="bg-red-600" action={() => {
-                  setLinks(links.toSpliced(index, 1))
+                  const newLinks = [...links]
+                  newLinks.splice(index, 1)
+                  setLinks(newLinks)
                 }}>
                   Ta bort
                 </Button>

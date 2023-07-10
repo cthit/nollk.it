@@ -8,7 +8,7 @@ import { CommitteeWithMembers } from "../../types"
 import { Accordion, AccordionItem } from "./components/Accordion"
 import CommitteeManagementDisplay from "./components/ManagementDisplays/CommitteeManagementDisplay"
 import TextManagementDisplay from "./components/ManagementDisplays/TextManagementDisplay"
-import LinkManagmenetDisplay from "./components/ManagementDisplays/LinkManagementDisplay"
+import LinkManagementDisplay from "./components/ManagementDisplays/LinkManagementDisplay"
 import FaqManagmenetDisplay from "./components/ManagementDisplays/FaqManagementDisplay"
 import { useRouter } from "next/router"
 import TimelineManagementDisplay from "./components/ManagementDisplays/TimelineManagementDisplay"
@@ -136,7 +136,7 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
             </Accordion>
 
             {
-              MANAGEMENT_DISPLAYS.toSpliced(0, 1).map((display) => (
+              MANAGEMENT_DISPLAYS.slice(1).map((display) => (
                 <div key={display.address} className="text-[1.3em] opacity-80 hover:opacity-100 cursor-pointer" onClick={() => {
                   setDisplayed(display.address)
                   router.push("/admin?visa=" + display.address)
@@ -160,7 +160,7 @@ const Admin: NextPage<AdminProps> = (props: AdminProps) => {
                   return <TextManagementDisplay pageTexts={props.pageTexts} />
 
                 case "länkar":
-                  return <LinkManagmenetDisplay links={props.links} />
+                  return <LinkManagementDisplay links={props.links} />
 
                 case "faq":
                   return <FaqManagmenetDisplay faqs={props.faqs} />
