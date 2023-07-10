@@ -10,7 +10,7 @@ const Collapsible = (props: CollapsibleProps) => {
     const [isActive, setIsActive] = useState(false);
 
     return (
-        <div className="w-[60vw] min-w-[300px] m-10 transition-all rounded-md duration-700 flex bg-black/60" onClick={() => setIsActive(!isActive)}>
+        <div className="transition-all rounded-md duration-700 flex bg-black/60" onClick={() => setIsActive(!isActive)}>
             <div className="w-full" >
                 <div className="flex justify-between items-center rounded-md border p-2 border-neutral-400" >
                     <div className='text-2xl m-2'>{props.title}</div>

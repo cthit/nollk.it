@@ -108,8 +108,8 @@ const Mottagningen: NextPage<MottagningenProps> = ({ mottagningenText, timelineD
 
         <Divider />
 
-        <div className="timeline-box mt-[20vh] flex flex-col items-center">
-          <div className="font-bold text-6xl font-po text-center mb-12">Timeline</div>
+        <div className="timeline-box mt-8 flex flex-col items-center">
+          <div className="text-6xl font-theme text-center mb-12">Tidslinje</div>
 
           <div className="mb-12">
             <PageText>Nedan finns en timeline över allting man kan behöva göra innan mottagningen samt deadlines till dessa. Timelinen kan även innehålla lite roliga grejer som även sker efter mottagningen såsom aspning!</PageText>
@@ -120,10 +120,10 @@ const Mottagningen: NextPage<MottagningenProps> = ({ mottagningenText, timelineD
 
         <Divider />
 
-        <div className="font-po font-bold w-[60vw] mt-8 ml-4">
-          <span className="text-4xl">Frequently Asked Questions</span>
+        <div className="text-6xl font-theme text-center mt-8">
+          Frequently Asked Questions
         </div>
-        <div>
+        <div className="flex flex-col gap-4 lg:w-1/2 my-8">
           {faqItems.map((faqItem, index) => (
             <div key={index}>
               <Collapsible title={faqItem.question} content={faqItem.answer} />

@@ -11,7 +11,7 @@ export default function Countdown({ criticalDates }: { criticalDates: string[] }
   }
 
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
-    days: 0,
+    days: 100,
     hours: 0,
     minutes: 0,
     seconds: 0,
@@ -66,10 +66,10 @@ export default function Countdown({ criticalDates }: { criticalDates: string[] }
     <>
       {
         criticalDatePassed(timeLeft) ?
-          criticalDatePassed(timeLeft, 90) ?
+          criticalDatePassed(timeLeft, 27) ?
             <div className="flex flex-col items-center font-theme drop-sh pb-2">
               <p className="text-2xl">Mottagningen skedde för</p>
-              <p className="text-7xl">{-timeLeft.days}</p>
+              <p className="text-7xl">{-timeLeft.days-27}</p>
               <p className="text-3xl">dagar sedan</p>
             </div>
             :
