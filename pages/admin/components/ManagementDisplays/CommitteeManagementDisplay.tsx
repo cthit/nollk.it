@@ -3,7 +3,7 @@ import Button from "../../../../components/Button"
 import { CommitteeWithMembers } from "../../../../types"
 import ImageUpload from "../ImageUpload"
 import TextInput from "../TextInput"
-import { Accordion } from "../Accordion"
+import Accordion from "../Accordion"
 
 interface CommitteeManagementDisplayProps {
   committee: CommitteeWithMembers

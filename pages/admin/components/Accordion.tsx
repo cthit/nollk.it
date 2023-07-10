@@ -6,7 +6,7 @@ interface AccordionProps {
   children?: React.ReactNode
 }
 
-export function Accordion({ title, fontSize, children }: AccordionProps) {
+export default function Accordion({ title, fontSize, children }: AccordionProps) {
   const [open, setOpen] = useState(false)
   return (
     <div className="pt-1">
