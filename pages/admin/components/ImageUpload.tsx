@@ -57,7 +57,7 @@ export default function ImageUpload({ title, url, type }: ImageUploadProps) {
 
 const uploadImage = async (url: string, file: File) => {
 
-  if (file.size > 4_000_000) return alert("Bilden är för stor, max 4MB")
+  if (file.size > 1_500_000) return alert("Bilden är för stor, max 1,5 MB")
 
   const formData = new FormData()
   formData.append('file', file)
