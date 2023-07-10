@@ -1,6 +1,6 @@
 import { Category, Committee, TimeLineEvent } from "@prisma/client"
-import TextInput from "../TextInput"
-import Button from "../../../../components/Button"
+import TextInput from "../admin/TextInput"
+import Button from "../Button"
 import { useState } from "react"
 
 interface TimelineManagementDisplayProps {

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
-import Button from "../../../../components/Button"
-import { CommitteeWithMembers } from "../../../../types"
-import ImageUpload from "../ImageUpload"
-import TextInput from "../TextInput"
-import Accordion from "../Accordion"
+import Button from "../Button"
+import { CommitteeWithMembers } from "../../types"
+import ImageUpload from "../admin/ImageUpload"
+import TextInput from "../admin/TextInput"
+import Accordion from "../admin/Accordion"
 
 interface CommitteeManagementDisplayProps {
   committee: CommitteeWithMembers

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { hasImage } from "../../../util"
+import { hasImage } from "../../util"
 import Image from "next/image"
 
 interface ImageUploadProps {
