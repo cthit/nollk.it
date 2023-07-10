@@ -60,7 +60,7 @@ const Nollkit: NextPage<NollkitProps> = ({ allMembers, text }) => {
 
                   {index % 2 === 0 ? <></> : <NollkitDesc member={member} textIsOnTheLeftSide={true} />}
                   <div className="col-span-2 aspect-[4/5] relative">
-                    <ImageWithFallback src={`/bilder/${ctx.year}/poster/${member.role}.jpg`} layout="fill" objectFit="cover"/>
+                    <ImageWithFallback src={`/bilder/${ctx.year}/poster/${member.role.replaceAll(" ", "_")}.jpg`} layout="fill" objectFit="cover"/>
                   </div>
                   {index % 2 === 0 ? <NollkitDesc member={member} textIsOnTheLeftSide={false} /> : <></>}
 

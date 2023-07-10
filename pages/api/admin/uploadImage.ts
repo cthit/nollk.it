@@ -28,7 +28,7 @@ export default async function upload(req: NextApiRequest, res: NextApiResponse) 
 
     const file = files.file as formidable.File
 
-    const directoryPath = ("public/bilder/" + imgPath).split('/').slice(0, -1).join('/')
+    const directoryPath = ("public/bilder/" + imgPath.replaceAll(" ", "_")).split('/').slice(0, -1).join('/')
     console.log(directoryPath)
     if (!fs.existsSync(directoryPath)) {
       fs.mkdirSync(directoryPath, { recursive: true })
