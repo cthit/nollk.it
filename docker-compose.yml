@@ -1,6 +1,17 @@
 version: "3.3"
 
 services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: nollkit
+      MONGO_INITDB_ROOT_PASSWORD: nollkit
   nextjs:
     ports:
       - 3000:3000
@@ -8,10 +19,14 @@ services:
       context: ./
       dockerfile: Dockerfile
     volumes:
-      - app:/usr/src/app
+      - images:/usr/src/app/public/bilder
       - next:/usr/src/app/.next
+    environment:
+      - DATABASE_URL=mongodb://nollkit:nollkit@mongo:27017/db?authSource=admin&retryWrites=true&w=majority
     env_file:
       - .env
 volumes:
-  app:
+  images:
   next:
+networks:
+  default:
