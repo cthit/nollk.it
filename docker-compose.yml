@@ -1,19 +1,6 @@
 version: "3.3"
 
 services:
-  mongo:
-    image: mongo:4.4.18
-    container_name: mongo
-    restart: always
-    ports:
-      - 27017:27017
-    volumes:
-      - ./originalData:/data/db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: nollkit
-      MONGO_INITDB_ROOT_PASSWORD: nollkit
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", --replSet", "nollkitdb"]
-
   nextjs:
     ports:
       - 3000:3000
@@ -26,6 +13,21 @@ services:
     environment:
       - DATABASE_URL=mongodb://nollkit:nollkit@mongo:27017/db?authSource=admin&retryWrites=true&w=majority
       - PASSWORD=123
+    
+  mongo:
+    image: mongo:4.4.18
+    container_name: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data/originalData:/data/db
+      - ./data/mongo/conf:/etc/mongo
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: nollkit
+    #   MONGO_INITDB_ROOT_PASSWORD: nollkit
+    command: --replSet nollkitdb --bind_ip_all
+    # entrypoint: [ "/usr/bin/mongod", "--replSet", "nollkitdb", "--bind_ip-all"]
 
   mongo.replicationData.one:
     container_name: "mongo.replicationData.one"
@@ -37,9 +39,10 @@ services:
     depends_on:
       - mongo      
     volumes:
-      - ./replicationData.one:/data/db
+      - ./data/replicationData.one:/data/db
     restart: unless-stopped
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", --replSet", "nollkitdb"]
+    command: --replSet nollkitdb --bind_ip_all
+    # entrypoint: [ "/usr/bin/mongod", "--replSet", "nollkitdb", "--bind_ip-all"]
   
   mongo.replicationData.two:
     container_name: "mongo.replicationData.two"
@@ -51,9 +54,10 @@ services:
     depends_on:
       - mongo
     volumes:
-      - ./replicationData.two:/data/db
+      - ./data/replicationData.two:/data/db
     restart: unless-stopped
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", --replSet", "nollkitdb"]
+    command: --replSet nollkitdb --bind_ip_all
+    # entrypoint: [ "/usr/bin/mongod", "--replSet", "nollkitdb", "--bind_ip-all"]
 
 volumes:
   images:
