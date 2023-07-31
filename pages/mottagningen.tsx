@@ -70,7 +70,7 @@ const TimelineItem = ({ data }: { data: TimelineEventWithCategory }) => (
           href={data.link}
           target="_blank"
         >
-          { data.link.split('//').at(-1)?.split('/')[0].split('.').splice(-2).join('.') }
+          {data.link.split('//').at(-1)?.split('/')[0].split('.').splice(-2).join('.')}
         </a>
       )}
       <span className="circle" />
@@ -108,15 +108,10 @@ const Mottagningen: NextPage<MottagningenProps> = ({ mottagningenText, timelineD
 
         <Divider />
 
-        <div className="timeline-box mt-8 flex flex-col items-center">
-          <div className="text-6xl font-theme text-center mb-12">Tidslinje</div>
-
-          <div className="mb-12">
-            <PageText>Nedan finns en timeline över allting man kan behöva göra innan mottagningen samt deadlines till dessa. Timelinen kan även innehålla lite roliga grejer som även sker efter mottagningen såsom aspning!</PageText>
-          </div>
-
-          <Timeline data={filteredTimelineData} />
-        </div>
+        <PageInfo heading="Tidslinje">
+          Nedan finns en timeline över allting man kan behöva göra innan mottagningen samt deadlines till dessa. Timelinen kan även innehålla lite roliga grejer som även sker efter mottagningen såsom aspning!
+        </PageInfo>
+        <Timeline data={filteredTimelineData} />
 
         <Divider />
 
