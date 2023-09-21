@@ -9,7 +9,7 @@ import { prisma } from '../prisma/prismaclient'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import momentPlugin from '@fullcalendar/moment'
-import momentTimezonePlugin  from '@fullcalendar/moment-timezone'
+import momentTimezonePlugin from '@fullcalendar/moment-timezone'
 import React, { useContext } from 'react'
 import YearContext from '../util/YearContext'
 
@@ -28,20 +28,20 @@ export const getServerSideProps = async () => {
 
   const calendarEvents = await Promise.all(calenderLinks.map(async calenderLink => {
     return await ical.async.fromURL(calenderLink.url)
-    .catch(() => {
-      return { error: "Failed to fetch calendar from the following URL: " + calenderLink.url }
-    })
+      .catch(() => {
+        return { error: "Failed to fetch calendar from the following URL: " + calenderLink.url }
+      })
   }))
 
-  //move each startdate and enddate two hours forward to fix timezone issues
-  ;(calendarEvents as any).forEach( (events: any) => {
-    for (const key in events) {
-      const event = events[key]
-      if (event.type !== "VEVENT") continue
-      event.start.setHours(event.start.getHours() + 2)
-      event.end.setHours(event.end.getHours() + 2)
-    }
-  })
+    //move each startdate and enddate two hours forward to fix timezone issues
+    ; (calendarEvents as any).forEach((events: any) => {
+      for (const key in events) {
+        const event = events[key]
+        if (event.type !== "VEVENT") continue
+        event.start.setHours(event.start.getHours() + 2)
+        event.end.setHours(event.end.getHours() + 2)
+      }
+    })
 
   const stringifiedCalendars = calendarEvents.map(events => JSON.stringify(events))
 
@@ -107,7 +107,7 @@ const Schema: NextPage<SchemaProps> = ({ stringifiedCalendars, firstdayDates }) 
       <Page blackout>
         <div className="my-32 w-full">
           <FullCalendar
-            plugins={[ timeGridPlugin, momentPlugin, momentTimezonePlugin ]}
+            plugins={[timeGridPlugin, momentPlugin, momentTimezonePlugin]}
             ref={calendarRef}
             locale={"sv"}
             timeZone={"Asia/Seoul"}
@@ -139,9 +139,156 @@ const Schema: NextPage<SchemaProps> = ({ stringifiedCalendars, firstdayDates }) 
               }
             }}
           />
+          
         </div>
+        <FullcalenderStyling />
       </Page>
     </>
+  )
+}
+
+
+const FullcalenderStyling = () => {
+  return (
+    <style jsx>
+      {`/* -------------------------------- */
+        /* --- Styling for FullCalendar --- */
+        /* -------------------------------- */
+        /* Background shading of current day */
+        .fc .fc-timegrid-col.fc-day-today {
+          background-color: hsla(0, 0%, 100%, 0.07);
+        }
+
+        /* Hours on the left side of the calendar */
+        .fc .fc-timegrid-slot-label-cushion {
+          vertical-align: middle;
+          padding-left: 10px;
+          padding-right: 10px;
+          font-size: 10px;
+        }
+
+        /* Transparent borders */
+        .fc th,
+        .fc td {
+          border: 1px solid hsla(0, 0%, 100%, 0.1);
+        }
+
+        /* Transparent borders */
+        .fc-theme-standard .fc-scrollgrid {
+          border: none;
+          border-top: 1px solid hsla(0, 0%, 100%, 0.1);
+          border-left: 1px solid hsla(0, 0%, 100%, 0.1);
+        }
+
+        /* Transparent borders */
+        .fc-theme-standard td {
+          border: 1px solid hsla(0, 0%, 100%, 0.1);
+        }
+
+        /* Buttons in the top right */
+        .fc .fc-button-group>.fc-button {
+          background-color: hsla(0, 0%, 100%, 0);
+          border: none;
+          text-align: center;
+        }
+
+        /* Buttons in the top right on hover */
+        .fc .fc-button-group>.fc-button:hover {
+          background-color: hsla(0, 0%, 0%, 0.2);
+        }
+
+        /* Buttons in the top right on click */
+        .fc .fc-button-group>.fc-button:active {
+          background-color: hsla(0, 0%, 0%, 0.4);
+        }
+
+        /* Buttons in the top right don't give feedback on hover when disabled */
+        .fc .fc-button-primary:disabled:hover {
+          background-color: hsla(0, 0%, 0%, 0);
+        }
+
+        /* Buttons in top right don't show focus selection box */
+        .fc .fc-button-primary {
+          box-shadow: none !important;
+        }
+
+        /* Distance between calendar and buttons */
+        .fc .fc-toolbar.fc-header-toolbar {
+          margin-bottom: 16px;
+        }
+
+        /* Current time indicator line */
+        .fc .fc-timegrid-now-indicator-line {
+          border: none;
+          border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+        }
+
+        /* Hides current time indicator arrow */
+        .fc .fc-timegrid-now-indicator-arrow {
+          display: none;
+        }
+
+        /* Toolbar title styling */
+        .fc .fc-toolbar-title {
+          font-size: 1.25rem;
+          font-style: italic;
+          text-transform: capitalize;
+        }
+
+        /* Calendar event blocks */
+        .fc-timegrid-event .fc-event-main {
+          padding: 2px 4px 0;
+        }
+
+        /* Remove outer border from calendar events */
+        .fc-timegrid-event-harness-inset .fc-timegrid-event {
+          box-shadow: none;
+        }
+
+        /* Remove inner event border */
+        .fc-v-event {
+          border: none;
+        }
+
+        /* Height of each hour */
+        .fc .fc-timegrid-slot-label {
+          height: 30px;
+        }
+
+        /* Event time */
+        .fc-timegrid-event .fc-event-time {
+          font-size: 8px;
+          white-space: break-spaces;
+        }
+
+        /* Event title */
+        .fc-v-event .fc-event-title-container {
+          font-size: 10px;
+          font-weight: bold;
+          margin-top: -2px;
+        }
+
+        /* Decreases size of day/month numbers on mobile */
+        @media (max-width: 1024px) {
+
+          /*  */
+          .fc .fc-col-header-cell-cushion {
+            font-size: 10px;
+          }
+
+          /* Event time */
+          .fc-timegrid-event .fc-event-time {
+            font-size: 7px;
+          }
+
+          /* Event title */
+          .fc-v-event .fc-event-title-container {
+            font-size: 8px;
+            font-weight: bold;
+            margin-top: -2px;
+          }
+}`}
+    </style>
   )
 }
 
