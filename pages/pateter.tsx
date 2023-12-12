@@ -1,5 +1,6 @@
 import { NextPage } from "next"
-import Precursor from "../components/Precursor"
+import { Precursor, MobilePrecursor } from "../components/Precursor"
+
 import ReactPageScroller from 'react-page-scroller';
 import { useEffect, useState } from "react";
 import PageInfo from "../components/PageInfo";
@@ -36,7 +37,7 @@ export const getServerSideProps = async () => {
   })
 
   // Database entries are not necessarily in order, and needs to be sorted
-  allCommittees.sort((a,b) => b.year - a.year)
+  allCommittees.sort((a, b) => b.year - a.year)
   // Remove the current year from the list
   allCommittees.shift()
 
@@ -79,13 +80,28 @@ const Pateter: NextPage<PateterProps> = ({ text, allCommittees }) => {
     setCurrentPage(index)
     changeBgOpacity(index)
     toggleTopButton(index)
-    index === 0 ? setCurrentYear(new Date().getFullYear()) : setCurrentYear(allCommittees[index-1].year) // kind of ugly but there's no better way?
+    index === 0 ? setCurrentYear(new Date().getFullYear()) : setCurrentYear(allCommittees[index - 1].year) // kind of ugly but there's no better way?
   };
 
   // set currentyear to current year with useEffect
   useEffect(() => {
     setCurrentYear(new Date().getFullYear())
   }, [])
+
+  return (
+    <>
+      <div className="lg:hidden">
+        <MobilePateter text={text} allCommittees={allCommittees} />
+      </div>
+      <div className="hidden lg:block">
+        <DesktopPateter text={text} allCommittees={allCommittees} currentYear={currentYear} handlePageChange={handlePageChange} scrollTo={scrollTo} currentPage={currentPage} topButtonShown={topButtonShown} />
+      </div>
+    </>
+  )
+
+}
+
+function DesktopPateter({ text, allCommittees, currentYear, handlePageChange, scrollTo, currentPage, topButtonShown }: { text: PageText, allCommittees: CommitteeWithMembers[], currentYear: number, handlePageChange: (index: number) => void, scrollTo: (index: number) => void, currentPage: number, topButtonShown: boolean }) {
 
   return (
     <>
@@ -124,13 +140,38 @@ const Pateter: NextPage<PateterProps> = ({ text, allCommittees }) => {
           ))}
         </div>
         <div className={`fixed right-10 bottom-10 transition-opacity duration-300 ${topButtonShown ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-          <Button action={() => scrollTo(0)}> 
+          <Button action={() => scrollTo(0)}>
             Tillbaka till toppen
           </Button>
         </div>
       </Page>
     </>
   )
+}
+
+function MobilePateter({ text, allCommittees }: PateterProps) {
+
+  return (
+    <>
+      <Page blackout>
+          <PageInfo heading="Pateter">
+            {text.content}
+          </PageInfo>
+          <Divider />
+          <div className="m-10 flex flex-col gap-4 items-center cursor-pointer py-2" >
+            <p className="text-sm italic">Skrolla för pateter</p>
+            <img className="downarrow w-10 transition opacity-60" src={"/down.svg"} alt="arrow down" />
+          </div>
+
+        {allCommittees.map(committee => (
+          <div key={committee.year}>
+            <MobilePrecursor committee={committee} />
+          </div>
+        ))}
+      </Page>
+    </>
+  )
+
 }
 
 export default Pateter
