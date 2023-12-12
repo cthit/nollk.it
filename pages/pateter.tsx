@@ -51,6 +51,16 @@ interface PateterProps {
   allCommittees: CommitteeWithMembers[]
 }
 
+interface PateterDesktopProps {
+  text: PageText
+  allCommittees: CommitteeWithMembers[]
+  currentYear: number
+  handlePageChange: (index: number) => void
+  scrollTo: (index: number) => void
+  currentPage: number
+  topButtonShown: boolean
+}
+
 const Pateter: NextPage<PateterProps> = ({ text, allCommittees }) => {
 
   const [currentPage, setCurrentPage] = useState<number>(0)
@@ -101,7 +111,7 @@ const Pateter: NextPage<PateterProps> = ({ text, allCommittees }) => {
 
 }
 
-function DesktopPateter({ text, allCommittees, currentYear, handlePageChange, scrollTo, currentPage, topButtonShown }: { text: PageText, allCommittees: CommitteeWithMembers[], currentYear: number, handlePageChange: (index: number) => void, scrollTo: (index: number) => void, currentPage: number, topButtonShown: boolean }) {
+function DesktopPateter({ text, allCommittees, currentYear, handlePageChange, scrollTo, currentPage, topButtonShown }: PateterDesktopProps) {
 
   return (
     <>
