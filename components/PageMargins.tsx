@@ -1,5 +1,5 @@
 interface PageMarginsProps {
-  children?: React.ReactNode
+  children?: React.ReactNode;
 }
 
 const PageMargins = (props: PageMarginsProps) => {
@@ -9,7 +9,7 @@ const PageMargins = (props: PageMarginsProps) => {
         {props.children}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PageMargins
+export default PageMargins;
