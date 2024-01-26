@@ -1,24 +1,13 @@
 import { NextPage } from "next";
 import Precursor from "../components/Precursor";
-import ReactPageScroller from "react-page-scroller";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PageInfo from "../components/PageInfo";
-import { Committee, PageText } from "@prisma/client";
+import { PageText } from "@prisma/client";
 import Page from "../components/Page";
-import PageMargins, { horizontalPadding } from "../components/PageMargins";
 import Button from "../components/Button";
 import { CommitteeWithMembers } from "../types";
 import Divider from "../components/Divider";
 import { prisma } from "../prisma/prismaclient";
-
-const NavBall = (props: { index: number; committeeyear: string; currentPage: number; scrollTo: (to: number) => void }) => {
-  return (
-    <div onClick={() => { props.scrollTo(props.index) }} className="h-0 w-0 p-2.5 flex justify-end relative items-center m-px navBallBox cursor-pointer">
-      <span className="transition-all opacity-0 navBallLabel">{props.committeeyear}</span>
-      <span className={`navBall ${props.index === props.currentPage ? 'bg-slate-100' : ''} border visible p-1.5 border-slate-100 opacity-50 rounded-full m-2 transition-all duration-200`}></span>
-    </div>
-  )
-};
 
 export const getServerSideProps = async () => {
   const text = await prisma.pageText.findFirst({
@@ -49,82 +38,48 @@ interface PateterProps {
 }
 
 const Pateter: NextPage<PateterProps> = ({ text, allCommittees }) => {
-  return (
-    <>
-    
-    <Page blackout ignoreMargins>
-      <div className="snap-y snap-mandatory flex flex-col items-center h-screen overflow-y-scroll">
-        <div className="snap-start h-full flex flex-col items-center justify-between w-10/12 lg:w-3/4">
-          <PageInfo heading="Pateter">{text.content}</PageInfo>
-          <Divider />
-        </div>
-        {allCommittees.map((committee) => (
-          <div key={committee.year} className="snap-start">
-            <Precursor committee={committee} />
-          </div>
-        ))}
-      </div>
-    </Page>
-    <div className="fixed right-10 bottom-10 transition-opacity duration-300">
-      <Button action={() => {document.querySelector("body")?.scrollTo(0,0); console.log("dab")}}>Tillbaka till toppen</Button>
-    </div>
-    </>
-  );
+  const [showToTopButton, setShowToTopButton] = useState(false);
+  const [showScrollDownButton, setShowScrollDownButton] = useState(true);
 
-  const [currentPage, setCurrentPage] = useState<number>(0);
+  function handleScroll() {
+    const boundary = document.querySelector("#boundary");
+    const pateter = document.querySelector("#pateter");
 
-  const changeBgOpacity = (index: number) => {
-    const fp = document.getElementById("first-page");
-    if (!fp) return;
-    if (index === 0) {
-      fp.style.background = "rgba(0,0,0,0.8)";
-    } else {
-      fp.style.background = "rgba(0,0,0,0.9)";
-    }
-  };
-  const scrollTo = (index: number) => {
-    setCurrentPage(index);
-  };
+    if (!boundary) return;
+    if (!pateter) return;
 
-  const [topButtonShown, setTopButtonShown] = useState<boolean>(false);
+    setShowToTopButton(boundary.getBoundingClientRect().top <= 0);
 
-  const toggleTopButton = (index: number) => {
-    index === 0 ? setTopButtonShown(false) : setTopButtonShown(true);
-  };
+    console.log(pateter.scrollTop);
+    setShowScrollDownButton(pateter.scrollTop <= 0);
+  }
 
-  const [currentYear, setCurrentYear] = useState<number>(0);
+  function scrollToFirst() {
+    const boundary = document.querySelector("#boundary");
 
-  const handlePageChange = (index: number) => {
-    setCurrentPage(index);
-    changeBgOpacity(index);
-    toggleTopButton(index);
-    index === 0
-      ? setCurrentYear(new Date().getFullYear())
-      : setCurrentYear(allCommittees[index - 1].year); // kind of ugly but there's no better way?
-  };
+    if (!boundary) return;
 
-  // set currentyear to current year with useEffect
-  useEffect(() => {
-    setCurrentYear(new Date().getFullYear());
-  }, []);
+    boundary.scrollIntoView({ behavior: "smooth" });
+  }
 
   return (
     <>
-      <Page blackout ignoreMargins currentYear={currentYear}>
-        <ReactPageScroller
-          animationTimer={700}
-          animationTimerBuffer={700}
-          renderAllPagesOnFirstRender={true}
-          onBeforePageScroll={handlePageChange}
-          customPageNumber={currentPage}
+      <Page blackout ignoreMargins>
+        <div
+          id="pateter"
+          className="snap-y snap-mandatory flex flex-col items-center h-screen overflow-y-auto"
+          onScroll={() => handleScroll()}
         >
-          <PageMargins>
+          <div className="snap-start h-full flex flex-col items-center w-10/12 lg:w-3/4 min-h-screen">
             <PageInfo heading="Pateter">{text.content}</PageInfo>
             <Divider />
-
             <div
-              className="absolute bottom-10 flex flex-col gap-4 items-center cursor-pointer py-2"
-              onClick={() => scrollTo(1)}
+              className={`absolute bottom-10 flex flex-col gap-4 items-center cursor-pointer py-2 transition duration-700 ${
+                showScrollDownButton
+                  ? "opacity-100 pointer-events-auto"
+                  : "opacity-0 pointer-events-none"
+              }`}
+              onClick={() => scrollToFirst()}
             >
               <p className="text-sm italic">Skrolla för pateter</p>
               <img
@@ -133,40 +88,34 @@ const Pateter: NextPage<PateterProps> = ({ text, allCommittees }) => {
                 alt="arrow down"
               />
             </div>
-          </PageMargins>
-
+          </div>
+          {/* used to to know whether user has scrolled far enough */}
+          <div id="boundary"></div>{" "}
           {allCommittees.map((committee) => (
-            <div key={committee.year}>
+            <div key={committee.year} className="snap-start">
               <Precursor committee={committee} />
             </div>
           ))}
-        </ReactPageScroller>
-
-        <div className="fixed flex flex-col items-center -right-2 lg:right-4 self-center top-1/4">
-          <NavBall
-            index={0}
-            scrollTo={() => scrollTo(0)}
-            currentPage={currentPage}
-            committeeyear={"Till toppen"}
-          ></NavBall>
-          {allCommittees.map((committee: Committee, index) => (
-            <NavBall
-              key={index}
-              index={index + 1}
-              scrollTo={() => scrollTo(index + 1)}
-              currentPage={currentPage}
-              committeeyear={committee.year.toString().slice(-2)}
-            ></NavBall>
-          ))}
-        </div>
-        <div
-          className={`fixed right-10 bottom-10 transition-opacity duration-300 ${
-            topButtonShown ? "opacity-100" : "opacity-0 pointer-events-none"
-          }`}
-        >
-          <Button action={() => scrollTo(0)}>Tillbaka till toppen</Button>
         </div>
       </Page>
+      <div
+        className={`fixed right-10 bottom-10 transition-opacity duration-300 ${
+          showToTopButton
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <Button
+          color="bg-black/20"
+          action={() => {
+            document
+              .querySelector("#pateter")
+              ?.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+        >
+          Tillbaka till toppen
+        </Button>
+      </div>
     </>
   );
 };
