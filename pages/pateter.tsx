@@ -11,14 +11,14 @@ import { CommitteeWithMembers } from "../types";
 import Divider from "../components/Divider";
 import { prisma } from "../prisma/prismaclient";
 
-/*const NavBall = (props: { index: number; committeeyear: string; currentPage: number; scrollTo: (to: number) => void }) => {
+const NavBall = (props: { index: number; committeeyear: string; currentPage: number; scrollTo: (to: number) => void }) => {
   return (
     <div onClick={() => { props.scrollTo(props.index) }} className="h-0 w-0 p-2.5 flex justify-end relative items-center m-px navBallBox cursor-pointer">
       <span className="transition-all opacity-0 navBallLabel">{props.committeeyear}</span>
       <span className={`navBall ${props.index === props.currentPage ? 'bg-slate-100' : ''} border visible p-1.5 border-slate-100 opacity-50 rounded-full m-2 transition-all duration-200`}></span>
     </div>
   )
-};*/
+};
 
 export const getServerSideProps = async () => {
   const text = await prisma.pageText.findFirst({
@@ -50,6 +50,8 @@ interface PateterProps {
 
 const Pateter: NextPage<PateterProps> = ({ text, allCommittees }) => {
   return (
+    <>
+    
     <Page blackout ignoreMargins>
       <div className="snap-y snap-mandatory flex flex-col items-center h-screen overflow-y-scroll">
         <div className="snap-start h-full flex flex-col items-center justify-between w-10/12 lg:w-3/4">
@@ -63,6 +65,10 @@ const Pateter: NextPage<PateterProps> = ({ text, allCommittees }) => {
         ))}
       </div>
     </Page>
+    <div className="fixed right-10 bottom-10 transition-opacity duration-300">
+      <Button action={() => {document.querySelector("body")?.scrollTo(0,0); console.log("dab")}}>Tillbaka till toppen</Button>
+    </div>
+    </>
   );
 
   const [currentPage, setCurrentPage] = useState<number>(0);
