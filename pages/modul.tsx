@@ -37,8 +37,6 @@ const Modul: NextPage<ModulPageProps> = ({ text }) => {
         <Button action={() => {location.href="/modul/" + ctx.year + ".pdf"}}>
           Här hittar du årets modul
         </Button>
-
-        <a href={"/sparvagn"}>Gå till spårvagnssafari</a>
       </Page>
     </>
   )
