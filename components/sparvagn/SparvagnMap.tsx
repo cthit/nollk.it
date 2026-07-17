@@ -301,9 +301,10 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
     setPois((prev) => {
       let changed = false;
       const next = prev.map((poi) => {
-        if (!poi.unlocked && distanceToPoi(userLocation, poi) <= poi.geoFenceDistance) {
+        const isInsideFence = distanceToPoi(userLocation, poi) <= poi.geoFenceDistance;
+        if (poi.unlocked !== isInsideFence) {
           changed = true;
-          return { ...poi, unlocked: true };
+          return { ...poi, unlocked: isInsideFence };
         }
         return poi;
       });
