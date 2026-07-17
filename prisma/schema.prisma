@@ -7,7 +7,7 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
-    
+
 model Committee {
   year             Int      @id @map("_id")
   firstDay         String //Should be in format "YYYY-MM-DDTHH:MM:SS"
@@ -56,4 +56,18 @@ model Faq {
   question    String
   answer      String
   orderInList Int
+}
+
+model Poi {
+  id               String @id @default(cuid()) @map("_id")
+  name             String
+  lat              Float
+  lng              Float
+  score            Int
+  geoFenceDistance Int
+  taskName         String
+  fullTask         String
+  nearestStop      String
+  transportMode    String
+  unlocked         Boolean?
 }

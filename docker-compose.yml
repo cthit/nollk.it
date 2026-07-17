@@ -13,6 +13,7 @@ services:
     environment:
       - DATABASE_URL=mongodb://mongo:27017/db
       - PASSWORD=123
+      - SPARVAGN_PASSWORD=NollKIT26
     
   mongo:
     image: mongo:7.0

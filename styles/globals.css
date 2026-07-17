@@ -22,6 +22,12 @@
 
 :root {
   --percentage: 10%;
+  --bg: #07111f;
+  --panel: rgba(10, 24, 41, 0.92);
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --accent: #38bdf8;
+  --accent-2: #f59e0b;
 }
 
 div:hover > .downarrow {
