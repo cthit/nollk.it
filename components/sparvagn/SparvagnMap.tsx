@@ -179,6 +179,7 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
   const userMarkerRef = useRef<LeafletCircleMarker | null>(null);
   const watchIdRef = useRef<number | null>(null);
   const refreshTimerRef = useRef<number | null>(null);
+  const hasCenteredOnLocationRef = useRef(false);
 
   const [pois, setPois] = useState<Poi[]>(() => poi.map((p) => ({ ...p, unlocked: false })));
   // console.log("Rendering SparvagnMap with pois:", pois);
@@ -298,12 +299,17 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
     }
 
     setPois((prev) => {
+      let changed = false;
       const next = prev.map((poi) => {
         if (!poi.unlocked && distanceToPoi(userLocation, poi) <= poi.geoFenceDistance) {
+          changed = true;
           return { ...poi, unlocked: true };
         }
         return poi;
       });
+      if (!changed) {
+        return prev;
+      }
       return next;
     });
   }, [userLocation]);
@@ -322,8 +328,9 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
         return;
       }
 
-      if (!hasCenteredOnLocation) {
+      if (!hasCenteredOnLocationRef.current) {
         map.setView([location.lat, location.lng], 16);
+        hasCenteredOnLocationRef.current = true;
         setHasCenteredOnLocation(true);
       }
       if (userMarkerRef.current) {
@@ -338,7 +345,7 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
         }).addTo(map);
       }
     },
-    [hasCenteredOnLocation]
+    []
   );
 
   const onLocationError = useCallback(() => {
