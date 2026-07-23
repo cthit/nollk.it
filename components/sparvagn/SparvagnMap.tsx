@@ -178,6 +178,8 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
   const transitLayerRef = useRef<LeafletLayerGroup | null>(null);
   const userMarkerRef = useRef<LeafletCircleMarker | null>(null);
   const watchIdRef = useRef<number | null>(null);
+  const locationPollTimerRef = useRef<number | null>(null);
+  const locationAnimationFrameRef = useRef<number | null>(null);
   const refreshTimerRef = useRef<number | null>(null);
   const hasCenteredOnLocationRef = useRef(false);
 
@@ -198,6 +200,34 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
     () => transitNetwork.lines.map((line) => `${line.name} - ${line.color}`),
     []
   );
+
+  const stopLocationAnimation = useCallback(() => {
+    if (locationAnimationFrameRef.current !== null) {
+      window.cancelAnimationFrame(locationAnimationFrameRef.current);
+      locationAnimationFrameRef.current = null;
+    }
+  }, []);
+
+  const renderUserLocation = useCallback((location: UserLocation) => {
+    const map = mapRef.current;
+    const L = leafletRef.current;
+    if (!map || !L) {
+      return;
+    }
+
+    if (userMarkerRef.current) {
+      userMarkerRef.current.setLatLng([location.lat, location.lng]);
+      return;
+    }
+
+    userMarkerRef.current = L.circleMarker([location.lat, location.lng], {
+      radius: 8,
+      color: "#38bdf8",
+      fillColor: "#38bdf8",
+      fillOpacity: 0.95,
+      weight: 3
+    }).addTo(map);
+  }, []);
 
   useEffect(() => {
     temporalFetchPois();
@@ -335,52 +365,83 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
         setHasCenteredOnLocation(true);
       }
       if (userMarkerRef.current) {
-        userMarkerRef.current.setLatLng([location.lat, location.lng]);
+        stopLocationAnimation();
+
+        const start = userMarkerRef.current.getLatLng();
+        const startTime = performance.now();
+        const duration = 900;
+
+        const step = (now: number) => {
+          const progress = Math.min(1, (now - startTime) / duration);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const lat = start.lat + (location.lat - start.lat) * eased;
+          const lng = start.lng + (location.lng - start.lng) * eased;
+          userMarkerRef.current?.setLatLng([lat, lng]);
+
+          if (progress < 1) {
+            locationAnimationFrameRef.current = window.requestAnimationFrame(step);
+          } else {
+            locationAnimationFrameRef.current = null;
+          }
+        };
+
+        locationAnimationFrameRef.current = window.requestAnimationFrame(step);
       } else {
-        userMarkerRef.current = L.circleMarker([location.lat, location.lng], {
-          radius: 8,
-          color: "#38bdf8",
-          fillColor: "#38bdf8",
-          fillOpacity: 0.95,
-          weight: 3
-        }).addTo(map);
+        renderUserLocation(location);
       }
     },
-    []
+    [renderUserLocation, stopLocationAnimation]
   );
 
   const onLocationError = useCallback(() => {
     setStatus("Location access was blocked, so the POIs stay locked until you enable it.");
   }, []);
 
-  const centerOnUserLocation = useCallback(() => {
+  const startLocationTracking = useCallback(() => {
     if (typeof window === "undefined" || !navigator.geolocation) {
       onLocationError();
       return;
     }
 
-    if (userLocation && mapRef.current) {
-      mapRef.current.setView([userLocation.lat, userLocation.lng], 16);
-      return;
-    }
-
     if (watchIdRef.current !== null) {
       navigator.geolocation.clearWatch(watchIdRef.current);
+      watchIdRef.current = null;
+    }
+
+    if (locationPollTimerRef.current !== null) {
+      window.clearInterval(locationPollTimerRef.current);
+      locationPollTimerRef.current = null;
     }
 
     navigator.geolocation.getCurrentPosition(onLocationSuccess, onLocationError, {
       enableHighAccuracy: true,
       timeout: 10000,
-      maximumAge: 30000
+      maximumAge: 5000
     });
 
     watchIdRef.current = navigator.geolocation.watchPosition(onLocationSuccess, onLocationError, {
       enableHighAccuracy: true,
-      maximumAge: 10000,
+      maximumAge: 2500,
       timeout: 15000
     });
 
-  }, [onLocationError, onLocationSuccess, userLocation]);
+    locationPollTimerRef.current = window.setInterval(() => {
+      navigator.geolocation.getCurrentPosition(onLocationSuccess, onLocationError, {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      });
+    }, 3000);
+  }, [onLocationError, onLocationSuccess]);
+
+  const centerOnUserLocation = useCallback(() => {
+    if (userLocation && mapRef.current) {
+      mapRef.current.setView([userLocation.lat, userLocation.lng], 16);
+      return;
+    }
+
+    startLocationTracking();
+  }, [startLocationTracking, userLocation]);
 
   const loadPoisFromFile = useCallback(async (file: File) => {
     const text = await file.text();
@@ -531,10 +592,19 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
 
       if (watchIdRef.current !== null && typeof window !== "undefined" && navigator.geolocation) {
         navigator.geolocation.clearWatch(watchIdRef.current);
+        watchIdRef.current = null;
       }
+
+      if (locationPollTimerRef.current !== null) {
+        window.clearInterval(locationPollTimerRef.current);
+        locationPollTimerRef.current = null;
+      }
+
+      stopLocationAnimation();
 
       if (refreshTimerRef.current !== null) {
         window.clearInterval(refreshTimerRef.current);
+        refreshTimerRef.current = null;
       }
 
       if (mapRef.current) {
