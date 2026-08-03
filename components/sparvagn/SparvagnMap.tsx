@@ -1,19 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "../../styles/SparvagnMap.module.css";
 import { transitNetwork, transitStops as initialTransitStops } from "../../lib/sparvagn/transit";
+import {preparedTransitSegments} from "../../lib/sparvagn/transitSegments";
 import type { TransitStop, UserLocation } from "../../lib/sparvagn/types";
 import type { Poi } from "@prisma/client";
-
-
-
-
-
 
 interface SparvagnMapProps {
   poi: Poi[];
 }
-
-
 
 type LeafletModule = typeof import("leaflet");
 type LeafletMap = import("leaflet").Map;
@@ -114,7 +108,6 @@ function normalizePoi(raw: Record<string, unknown>, index: number): Poi {
     transportMode: String(raw.transportMode ?? raw.mode ?? raw.transitMode ?? "tram/bus"),
     unlocked: Boolean(raw.unlocked)
   };
-
 }
 
 function parsePoiPayload(payload: unknown): Poi[] {
@@ -156,7 +149,6 @@ function buildPopupContent(poi: Poi, isUnlocked: boolean) {
     ? `<div class="sparvagn-popup-meta">Closest stop: ${poi.nearestStop} (${poi.transportMode})</div>`
     : "";
 
-
   return `
     <div class="sparvagn-popup-card">
       <div class="sparvagn-popup-title">${poi.name}</div>
@@ -184,7 +176,6 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
   const hasCenteredOnLocationRef = useRef(false);
 
   const [pois, setPois] = useState<Poi[]>(() => poi.map((p) => ({ ...p, unlocked: false })));
-  // console.log("Rendering SparvagnMap with pois:", pois);
   const [transitStops] = useState<TransitStop[]>(initialTransitStops);
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
   const [hasCenteredOnLocation, setHasCenteredOnLocation] = useState(false);
@@ -241,12 +232,8 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
           throw new Error(`Failed to fetch POIs: ${response.statusText}`);
         }
         const data: Poi[] = await response.json();
-        console.log("Fetching POIs temporally")
-        // update the POIs state with the new POIs in prisma
-        // compare names to see if they are different, if so update the state
-        if (JSON.stringify(data.map(poi => poi.name)) !== JSON.stringify(pois.map(poi => poi.name))) {
+        if (JSON.stringify(data.map((poi) => poi.name)) !== JSON.stringify(pois.map((poi) => poi.name))) {
           setPois(data);
-          console.log("Updated POIs with new data from the server");
         }
         return data;
       } catch (error) {
@@ -254,11 +241,8 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
         return [];
       }
     };
-    setInterval(fetchPois, 60000); // Fetch every 60 seconds
-  }
-
-
-
+    setInterval(fetchPois, 60000);
+  };
 
   const buildMarkerIcon = useCallback(
     (L: LeafletModule, poi: Poi) => {
@@ -270,7 +254,6 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
         iconAnchor: [21, 21]
       });
     },
-
     [pois]
   );
 
@@ -464,7 +447,6 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
     }
 
     const newPois = parsePoiPayload(parseCsv(text));
-    // update the POIs state with the new POIs in prisma
     fetch("/api/sparvagn/poi/update", {
       method: "POST",
       headers: {
@@ -478,7 +460,6 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
         setStatus("Failed to update POIs in the database.");
       }
     });
-
   }, []);
 
   useEffect(() => {
@@ -494,6 +475,9 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
       }
 
       const L = await import("leaflet");
+
+      await import("leaflet-polylineoffset");
+
       if (!mounted || !mapContainerRef.current) {
         return;
       }
@@ -502,7 +486,8 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
 
       const map = L.map(mapContainerRef.current, {
         zoomControl: true,
-        attributionControl: true
+        attributionControl: true,
+        preferCanvas: true,
       }).setView([57.6887, 11.9804], 15);
 
       const baseLayers = {
@@ -519,19 +504,18 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
       baseLayers["Transit-friendly"].addTo(map);
 
       const transitLayer = L.layerGroup();
-      transitNetwork.lines.forEach((line) => {
-        const path = line.stops.map((stop) => [stop.lat, stop.lng]) as [number, number][];
-        if (path.length > 1) {
-          L.polyline(path, {
-            color: line.color,
-            weight: 4,
-            opacity: 0.85,
-            lineCap: "round",
-            lineJoin: "round"
-          })
-            .bindTooltip(line.name)
-            .addTo(transitLayer);
-        }
+
+      preparedTransitSegments.forEach((seg) => {
+        L.polyline([seg.p1, seg.p2], {
+          color: seg.color,
+          weight: 3.5,
+          opacity: 0.9,
+          lineCap: "butt",
+          lineJoin: "round",
+          offset: seg.offset,
+        } as L.PolylineOptions & { offset: number })
+          .bindTooltip(seg.name)
+          .addTo(transitLayer);
       });
 
       transitLayer.addTo(map);
@@ -562,8 +546,6 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
 
       markerLayer.addTo(map);
 
-
-
       updatePoiMarkers();
       updateStopMarkers();
 
@@ -580,7 +562,6 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
       });
 
       poiMarkersRef.current.forEach((marker) => marker.addTo(map));
-
 
       mapRef.current = map;
     };
@@ -612,7 +593,6 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
         mapRef.current = null;
       }
     };
-
   }, []);
 
   useEffect(() => {
@@ -620,10 +600,6 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
       return;
     }
     updatePoiMarkers();
-
-    // if (pois.length > 0) {
-    //   mapRef.current.fitBounds(pois.map((poi) => [poi.lat, poi.lng] as [number, number]), { padding: [30, 30] });
-    // }
   }, [pois, updatePoiMarkers]);
 
   useEffect(() => {
@@ -719,8 +695,6 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
               onChange={(event) => setAdminPassword(event.target.value)}
               onKeyDown={(event) => {
                 if (event.key === "Enter") {
-                  const unlocked = adminPassword.trim() === ADMIN_PASSWORD;
-                  // setAdminUnlocked(unlocked);
                   fetch("/api/sparvagn/login", {
                     method: "POST",
                     headers: {
@@ -743,7 +717,6 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
               <button
                 type="button"
                 onClick={() => {
-                  const unlocked = adminPassword.trim() === ADMIN_PASSWORD;
                   fetch("/api/sparvagn/login", {
                     method: "POST",
                     headers: {
