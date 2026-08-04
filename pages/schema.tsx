@@ -67,9 +67,9 @@ const Schema: NextPage<SchemaProps> = ({
   firstdayDates,
 }) => {
   const calendarColors = [
-    "#0bb", // turquoise
+    "#09cdda", // turquoise
+    "#e32d87", // pink
     "#0b4", // green
-    "#b03", // red
     "#bb0", // yellow
     "#50b", // purple
     "#b40", // orange
