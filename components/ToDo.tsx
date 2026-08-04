@@ -1,7 +1,12 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
-const ToDo = ({ unparsedEvents }: { unparsedEvents: string }) => {
+interface ToDoProps {
+  unparsedEvents: string,
+  calendarLoadFailed: boolean,
+}
+
+const ToDo = ({ unparsedEvents, calendarLoadFailed }: ToDoProps) => {
 
   const [todo, setTodo] = useState<{ text: string, url: string }>({ text: "", url: "" })
 
@@ -29,7 +34,9 @@ const ToDo = ({ unparsedEvents }: { unparsedEvents: string }) => {
     <div className="font-theme drop-sh">
       <div className="text-3xl">Att göra:</div>
       <div className="text-5xl lg:text-7xl whitespace-nowrap">
-        {todo.url !== "" ?
+        {calendarLoadFailed ?
+          "Kalendern kunde inte hämtas"
+          : todo.url !== "" ?
           <Link href={todo.url}>
             <a>{todo.text} -&gt;</a>
           </Link>
