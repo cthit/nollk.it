@@ -176,6 +176,7 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
   const hasCenteredOnLocationRef = useRef(false);
 
   const [pois, setPois] = useState<Poi[]>(() => poi.map((p) => ({ ...p, unlocked: false })));
+  // console.log("Rendering SparvagnMap with pois:", pois);
   const [transitStops] = useState<TransitStop[]>(initialTransitStops);
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
   const [hasCenteredOnLocation, setHasCenteredOnLocation] = useState(false);
@@ -232,6 +233,9 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
           throw new Error(`Failed to fetch POIs: ${response.statusText}`);
         }
         const data: Poi[] = await response.json();
+        console.log("Fetching POIs temporally")
+        // update the POIs state with the new POIs in prisma
+        // compare names to see if they are different, if so update the state
         if (JSON.stringify(data.map((poi) => poi.name)) !== JSON.stringify(pois.map((poi) => poi.name))) {
           setPois(data);
         }
@@ -241,7 +245,7 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
         return [];
       }
     };
-    setInterval(fetchPois, 60000);
+    setInterval(fetchPois, 60000); // Fetch every 60 seconds
   };
 
   const buildMarkerIcon = useCallback(
@@ -447,6 +451,7 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
     }
 
     const newPois = parsePoiPayload(parseCsv(text));
+    // update the POIs state with the new POIs in prisma
     fetch("/api/sparvagn/poi/update", {
       method: "POST",
       headers: {
@@ -605,6 +610,10 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
       return;
     }
     updatePoiMarkers();
+
+    // if (pois.length > 0) {
+    //   mapRef.current.fitBounds(pois.map((poi) => [poi.lat, poi.lng] as [number, number]), { padding: [30, 30] });
+    // }
   }, [pois, updatePoiMarkers]);
 
   useEffect(() => {
@@ -700,6 +709,8 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
               onChange={(event) => setAdminPassword(event.target.value)}
               onKeyDown={(event) => {
                 if (event.key === "Enter") {
+                  const unlocked = adminPassword.trim() === ADMIN_PASSWORD;
+                  // setAdminUnlocked(unlocked);
                   fetch("/api/sparvagn/login", {
                     method: "POST",
                     headers: {
@@ -722,6 +733,7 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
               <button
                 type="button"
                 onClick={() => {
+                  const unlocked = adminPassword.trim() === ADMIN_PASSWORD;
                   fetch("/api/sparvagn/login", {
                     method: "POST",
                     headers: {
