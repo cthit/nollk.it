@@ -8,7 +8,7 @@ export interface PreparedSegment {
   offset: number;
 }
 
-const OFFSET_GAP = 4.5;
+const OFFSET_GAP = 5;
 
 export const preparedTransitSegments: PreparedSegment[] = (() => {
   interface LocalSegmentData {
@@ -40,7 +40,6 @@ export const preparedTransitSegments: PreparedSegment[] = (() => {
     }
   });
 
-  // Flatten into ready-to-render segment objects with fixed offsets
   const prepared: PreparedSegment[] = [];
 
   segmentMap.forEach((seg) => {

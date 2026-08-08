@@ -493,15 +493,19 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
       const baseLayers = {
         "Transit-friendly": L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
           maxZoom: 19,
-          attribution: "&copy; OpenStreetMap contributors &copy; CARTO"
+          attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
+          keepBuffer: 16,
         }),
         Standard: L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           maxZoom: 19,
-          attribution: "&copy; OpenStreetMap contributors"
+          attribution: "&copy; OpenStreetMap contributors",
+          keepBuffer: 16,
         })
       };
 
       baseLayers["Transit-friendly"].addTo(map);
+
+      const transitRenderer = L.canvas({ padding: 2 });
 
       const transitLayer = L.layerGroup();
 
@@ -513,6 +517,7 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
           lineCap: "butt",
           lineJoin: "round",
           offset: seg.offset,
+          renderer: transitRenderer,
         } as L.PolylineOptions & { offset: number })
           .bindTooltip(seg.name)
           .addTo(transitLayer);
