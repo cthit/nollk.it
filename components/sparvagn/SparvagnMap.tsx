@@ -514,7 +514,7 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
           color: seg.color,
           weight: 3.5,
           opacity: 0.9,
-          lineCap: "butt",
+          lineCap: "round",
           lineJoin: "round",
           offset: seg.offset,
           renderer: transitRenderer,
