@@ -1,19 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "../../styles/SparvagnMap.module.css";
 import { transitNetwork, transitStops as initialTransitStops } from "../../lib/sparvagn/transit";
+import {preparedTransitSegments} from "../../lib/sparvagn/transitSegments";
 import type { TransitStop, UserLocation } from "../../lib/sparvagn/types";
 import type { Poi } from "@prisma/client";
-
-
-
-
-
 
 interface SparvagnMapProps {
   poi: Poi[];
 }
-
-
 
 type LeafletModule = typeof import("leaflet");
 type LeafletMap = import("leaflet").Map;
@@ -114,7 +108,6 @@ function normalizePoi(raw: Record<string, unknown>, index: number): Poi {
     transportMode: String(raw.transportMode ?? raw.mode ?? raw.transitMode ?? "tram/bus"),
     unlocked: Boolean(raw.unlocked)
   };
-
 }
 
 function parsePoiPayload(payload: unknown): Poi[] {
@@ -155,7 +148,6 @@ function buildPopupContent(poi: Poi, isUnlocked: boolean) {
   const stopHint = poi.nearestStop
     ? `<div class="sparvagn-popup-meta">Closest stop: ${poi.nearestStop} (${poi.transportMode})</div>`
     : "";
-
 
   return `
     <div class="sparvagn-popup-card">
@@ -244,9 +236,8 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
         console.log("Fetching POIs temporally")
         // update the POIs state with the new POIs in prisma
         // compare names to see if they are different, if so update the state
-        if (JSON.stringify(data.map(poi => poi.name)) !== JSON.stringify(pois.map(poi => poi.name))) {
+        if (JSON.stringify(data.map((poi) => poi.name)) !== JSON.stringify(pois.map((poi) => poi.name))) {
           setPois(data);
-          console.log("Updated POIs with new data from the server");
         }
         return data;
       } catch (error) {
@@ -255,10 +246,7 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
       }
     };
     setInterval(fetchPois, 60000); // Fetch every 60 seconds
-  }
-
-
-
+  };
 
   const buildMarkerIcon = useCallback(
     (L: LeafletModule, poi: Poi) => {
@@ -270,7 +258,6 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
         iconAnchor: [21, 21]
       });
     },
-
     [pois]
   );
 
@@ -478,7 +465,6 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
         setStatus("Failed to update POIs in the database.");
       }
     });
-
   }, []);
 
   useEffect(() => {
@@ -494,6 +480,9 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
       }
 
       const L = await import("leaflet");
+
+      await import("leaflet-polylineoffset");
+
       if (!mounted || !mapContainerRef.current) {
         return;
       }
@@ -502,36 +491,41 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
 
       const map = L.map(mapContainerRef.current, {
         zoomControl: true,
-        attributionControl: true
+        attributionControl: true,
+        preferCanvas: true,
       }).setView([57.6887, 11.9804], 15);
 
       const baseLayers = {
         "Transit-friendly": L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
           maxZoom: 19,
-          attribution: "&copy; OpenStreetMap contributors &copy; CARTO"
+          attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
+          keepBuffer: 16,
         }),
         Standard: L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           maxZoom: 19,
-          attribution: "&copy; OpenStreetMap contributors"
+          attribution: "&copy; OpenStreetMap contributors",
+          keepBuffer: 16,
         })
       };
 
       baseLayers["Transit-friendly"].addTo(map);
 
+      const transitRenderer = L.canvas({ padding: 2 });
+
       const transitLayer = L.layerGroup();
-      transitNetwork.lines.forEach((line) => {
-        const path = line.stops.map((stop) => [stop.lat, stop.lng]) as [number, number][];
-        if (path.length > 1) {
-          L.polyline(path, {
-            color: line.color,
-            weight: 4,
-            opacity: 0.85,
-            lineCap: "round",
-            lineJoin: "round"
-          })
-            .bindTooltip(line.name)
-            .addTo(transitLayer);
-        }
+
+      preparedTransitSegments.forEach((seg) => {
+        L.polyline([seg.p1, seg.p2], {
+          color: seg.color,
+          weight: 3.5,
+          opacity: 0.9,
+          lineCap: "round",
+          lineJoin: "round",
+          offset: seg.offset,
+          renderer: transitRenderer,
+        } as L.PolylineOptions & { offset: number })
+          .bindTooltip(seg.name)
+          .addTo(transitLayer);
       });
 
       transitLayer.addTo(map);
@@ -562,8 +556,6 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
 
       markerLayer.addTo(map);
 
-
-
       updatePoiMarkers();
       updateStopMarkers();
 
@@ -580,7 +572,6 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
       });
 
       poiMarkersRef.current.forEach((marker) => marker.addTo(map));
-
 
       mapRef.current = map;
     };
@@ -612,7 +603,6 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
         mapRef.current = null;
       }
     };
-
   }, []);
 
   useEffect(() => {
