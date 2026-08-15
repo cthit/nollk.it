@@ -679,6 +679,8 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
           <p>
             Spårvagnssafari är en klassisk poängjakt som går ut på att ni ska samla så många poäng som möjligt genom att åka till platser och lösa utmaningar runt om i
             Göteborg.
+          </p>
+          <p>
             På kartan kan ni trycka på de olika poängen/utmaningarna för att läsa hint vad utmaningen går ut på och hur nära ni ska vara. När ni är nära nog låses utmaningen upp och blir grön, då kan ni läsa hela utmaningens frågeställning.
           </p>
           <p>Alla svar skickas till Maestro på Slack.</p>

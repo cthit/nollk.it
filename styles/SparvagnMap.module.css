@@ -280,41 +280,6 @@
   display: none;
 }
 
-/* :global(.leaflet-control-attribution) {
-  font-size: 10px;
-}
-
-:global(.leaflet-popup-content-wrapper) {
-  border-radius: 14px;
-  padding: 6px;
-}
-
-:global(.leaflet-popup-content) {
-  margin: 10px 12px;
-  min-width: 180px;
-} */
-
-.sparvagn-popup-card {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.sparvagn-popup-title {
-  font-size: 1rem;
-  font-weight: 800;
-}
-
-.sparvagn-popup-score {
-  color: var(--accent-2);
-  font-weight: 800;
-}
-
-.sparvagn-popup-meta {
-  color: var(--muted);
-  font-size: 0.8rem;
-} 
-
 @media (max-width: 640px) {
   .mapControls {
     flex-direction: column;
