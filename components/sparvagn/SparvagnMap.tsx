@@ -151,11 +151,12 @@ function buildPopupContent(poi: Poi, isUnlocked: boolean) {
 
   return `
     <div class="sparvagn-popup-card">
-      <div class="sparvagn-popup-title">${poi.name}</div>
-      <div class="sparvagn-popup-score">${poi.score} pts</div>
-      <div><strong>${isUnlocked ? "Challenge" : "Hint"}</strong></div>
+      <div class="sparvagn-popup-title"><strong>${poi.name}</strong></div>
+      <div></div>
+      <div class="sparvagn-popup-score">${poi.score} poäng</div>
+      <div><strong>${isUnlocked ? "Fråga:" : "Hint:"}</strong></div>
       <div>${isUnlocked ? poi.fullTask : poi.taskName}</div>
-      <div class="sparvagn-popup-meta">Unlock radius: ${poi.geoFenceDistance} m</div>
+      <div class="sparvagn-popup-meta">Upplåsningsradie: ${poi.geoFenceDistance} m</div>
       ${stopHint}
     </div>
   `;
@@ -168,7 +169,7 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
   const poiMarkersRef = useRef<LeafletMarker[]>([]);
   const stopMarkersRef = useRef<LeafletMarker[]>([]);
   const transitLayerRef = useRef<LeafletLayerGroup | null>(null);
-  const userMarkerRef = useRef<LeafletCircleMarker | null>(null);
+  const userMarkerRef = useRef<LeafletMarker | null>(null);
   const watchIdRef = useRef<number | null>(null);
   const locationPollTimerRef = useRef<number | null>(null);
   const locationAnimationFrameRef = useRef<number | null>(null);
@@ -189,7 +190,17 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
   const [autoRefreshEnabled, setAutoRefreshEnabled] = useState(false);
 
   const lineLegend = useMemo(
-    () => transitNetwork.lines.map((line) => `${line.name} - ${line.color}`),
+    () =>
+      transitNetwork.lines.map((line) => {
+        const firstStopName = line.stops[0]?.name;
+        const lastStopName = line.stops[line.stops.length - 1]?.name;
+
+        if (!firstStopName || !lastStopName || firstStopName === lastStopName) {
+          return line.name;
+        }
+
+        return `${line.name} – ${firstStopName}–${lastStopName}`;
+      }),
     []
   );
 
@@ -211,13 +222,25 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
       userMarkerRef.current.setLatLng([location.lat, location.lng]);
       return;
     }
-
-    userMarkerRef.current = L.circleMarker([location.lat, location.lng], {
-      radius: 8,
-      color: "#38bdf8",
-      fillColor: "#38bdf8",
-      fillOpacity: 0.95,
-      weight: 3
+    const userIcon = L.divIcon({
+      html: `
+          <svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+              <filter id="gpsShadow" x="-50%" y="-50%" width="400%" height="400%">
+              <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="rgba(14,116,144,0.55)" />
+              </filter>
+          </defs>
+          <circle cx="11" cy="11" r="9" fill="#38bdf8" fill-opacity="0.18" />
+          <circle cx="11" cy="11" r="6.3" fill="#38bdf8" stroke="#ffffff" stroke-width="2.2" filter="url(#gpsShadow)" />
+          </svg>
+      `,
+      className: "",
+      iconSize: [22, 22],
+      iconAnchor: [11, 11],
+    });
+    userMarkerRef.current = L.marker([location.lat, location.lng], {
+      icon: userIcon,
+      zIndexOffset: 1000
     }).addTo(map);
   }, []);
 
@@ -641,7 +664,7 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
       <header className={styles.appHeader}>
         <div className={styles.brand} onClick={() => setRulesOpen((prev) => !prev)} role="button" tabIndex={0}>
           <h1>Spårvagnssafari</h1>
-          <p>Tryck på en markör för att se utmaningen...</p>
+          <p>Tryck här för att läsa hur det fungerar</p>
         </div>
         <button type="button" className={styles.adminToggle} aria-label="Open admin tools" onClick={() => setAdminOpen(true)}>
           ⚙
@@ -654,19 +677,22 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
         <div className={`${styles.rulesCard} ${rulesOpen ? styles.active : ""}`} role="dialog" aria-live="polite">
           <h2>Hur det fungerar</h2>
           <p>
-            Spårvagnssafari går ut på att ni ska samla så många poäng som möjligt genom att åka till och lösa utmaningar runt om i
+            Spårvagnssafari är en klassisk poängjakt som går ut på att ni ska samla så många poäng som möjligt genom att åka till platser och lösa utmaningar runt om i
             Göteborg.
+            På kartan kan ni trycka på de olika poängen/utmaningarna för att läsa hint vad utmaningen går ut på och hur nära ni ska vara. När ni är nära nog låses utmaningen upp och blir grön, då kan ni läsa hela utmaningens frågeställning.
           </p>
+          <p>Alla svar skickas till Maestro på Slack.</p>
           <h2>VIKTIGT!</h2>
           <p>Ni har en begränsad tid att åka till alla olika platser. Välj noga vilka utmaningar ni vill göra.</p>
           <p>Man hinner inte med alla.</p>
-          <h3>Lunch tider hos Hubbau:</h3>
+          <h3>Lunchtider hos Hubbau:</h3>
           <ul>
-            <li>11:30-12:00 Grupp 1</li>
-            <li>12:30-13:00 Grupp 2</li>
-            <li>13:30-14:00 Grupp 3</li>
+            <li>11:50-12:30 Grupp 1 & 2</li>
+            <li>12:30-13:10 Grupp 3 & 4</li>
+            <li>13:10-13:50 Grupp 5 & 6</li>
+            <li>13:50-14:30 Grupp 7 & 8</li>
           </ul>
-          <h2>Ni ska vara tillbaka på Chalmerplatsen innan 15:01</h2>
+          <h2>Ni ska vara tillbaka på Chalmerplatsen innan 15:16</h2>
         </div>
 
         <button type="button" className={styles.transitToggle} onClick={() => setLegendOpen((prev) => !prev)}>
