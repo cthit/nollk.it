@@ -156,7 +156,7 @@ function buildPopupContent(poi: Poi, isUnlocked: boolean) {
       <div class="sparvagn-popup-score">${poi.score} poäng</div>
       <div><strong>${isUnlocked ? "Fråga:" : "Hint:"}</strong></div>
       <div>${isUnlocked ? poi.fullTask : poi.taskName}</div>
-      <div class="sparvagn-popup-meta">Upplåsnings radie: ${poi.geoFenceDistance} m</div>
+      <div class="sparvagn-popup-meta">Upplåsningsradie: ${poi.geoFenceDistance} m</div>
       ${stopHint}
     </div>
   `;
@@ -169,7 +169,7 @@ export default function SparvagnMap({ poi }: SparvagnMapProps) {
   const poiMarkersRef = useRef<LeafletMarker[]>([]);
   const stopMarkersRef = useRef<LeafletMarker[]>([]);
   const transitLayerRef = useRef<LeafletLayerGroup | null>(null);
-  const userMarkerRef = useRef<LeafletCircleMarker | null>(null);
+  const userMarkerRef = useRef<LeafletMarker | null>(null);
   const watchIdRef = useRef<number | null>(null);
   const locationPollTimerRef = useRef<number | null>(null);
   const locationAnimationFrameRef = useRef<number | null>(null);
