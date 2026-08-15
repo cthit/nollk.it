@@ -294,23 +294,23 @@
   min-width: 180px;
 } */
 
-:global(.sparvagn-popup-card) {
+.sparvagn-popup-card {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-:global(.sparvagn-popup-title) {
+.sparvagn-popup-title {
   font-size: 1rem;
   font-weight: 800;
 }
 
-:global(.sparvagn-popup-score) {
+.sparvagn-popup-score {
   color: var(--accent-2);
   font-weight: 800;
 }
 
-:global(.sparvagn-popup-meta) {
+.sparvagn-popup-meta {
   color: var(--muted);
   font-size: 0.8rem;
 } 
