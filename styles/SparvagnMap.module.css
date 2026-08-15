@@ -292,7 +292,7 @@
 :global(.leaflet-popup-content) {
   margin: 10px 12px;
   min-width: 180px;
-}
+} */
 
 :global(.sparvagn-popup-card) {
   display: flex;
@@ -313,7 +313,7 @@
 :global(.sparvagn-popup-meta) {
   color: var(--muted);
   font-size: 0.8rem;
-} */
+} 
 
 @media (max-width: 640px) {
   .mapControls {
