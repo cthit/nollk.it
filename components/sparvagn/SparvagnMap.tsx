@@ -154,8 +154,8 @@ function buildPopupContent(poi: Poi, isUnlocked: boolean) {
       <div class="sparvagn-popup-title"><strong>${poi.name}</strong></div>
       <div></div>
       <div class="sparvagn-popup-score">${poi.score} poäng</div>
-      <div><strong>${isUnlocked ? "Fråga:" : "Hint:"}</strong></div>
-      <div>${isUnlocked ? poi.fullTask : poi.taskName}</div>
+      <div class="sparvagn-popup-hint"><strong>${isUnlocked ? "Fråga:" : "Hint:"}</strong></div>
+      <div class="sparvagn-popup-hint">${isUnlocked ? poi.fullTask : poi.taskName}</div>
       <div class="sparvagn-popup-meta">Upplåsningsradie: ${poi.geoFenceDistance} m</div>
       ${stopHint}
     </div>

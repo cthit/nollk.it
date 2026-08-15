@@ -295,24 +295,24 @@
 } */
 
 .sparvagn-popup-card {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  display: flex !important; 
+  flex-direction: column !important;
+  gap: 6px !important;
 }
 
 .sparvagn-popup-title {
-  font-size: 1rem;
-  font-weight: 800;
+  font-size: 1rem !important;
+  font-weight: 800 !important;
 }
 
 .sparvagn-popup-score {
-  color: var(--accent-2);
-  font-weight: 800;
+  color: var(--accent-2) !important;
+  font-weight: 800 !important;
 }
 
 .sparvagn-popup-meta {
-  color: var(--muted);
-  font-size: 0.8rem;
+  color: var(--muted) !important;
+  font-size: 0.8rem !important;
 } 
 
 @media (max-width: 640px) {

@@ -48,6 +48,71 @@ div:hover > .downarrow {
 }
 
 
+.leaflet-popup-content-wrapper,
+.leaflet-popup-content,
+.leaflet-popup-tip,
+.leaflet-container {
+  font-family: 'Lato', sans-serif;
+}
+
+.sparvagn-popup-card {
+  font-family: 'Lato', sans-serif;
+  /* color: #f0f2f4; */
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 180px;
+  max-width: 260px;
+}
+
+.sparvagn-popup-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #333;
+  line-height: 1.3;
+}
+
+.sparvagn-popup-score {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #facc15;
+}
+
+.sparvagn-popup-meta {
+  font-size: 0.76rem;
+  color: #333;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(2, 6, 23, 0.28);
+}
+
+.leaflet-popup-content {
+  margin: 12px 14px;
+}
+
+.leaflet-popup-tip {
+  background: rgba(10, 24, 41, 0.96);
+}
+
+.leaflet-popup-hint {
+  color: #333
+}
+
+.sparvagn-popup-score {
+  color: var(--accent-2);
+  font-weight: 800;
+}
+
+.sparvagn-popup-meta {
+  color: var(--muted);
+  font-size: 0.8rem;
+} 
+
+
+
 /* -------------------------------- */
 /* ----- Styling for Timeline ----- */
 /* -------------------------------- */
