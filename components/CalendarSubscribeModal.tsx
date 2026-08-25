@@ -22,7 +22,7 @@ const CalendarSubscribeModal = (props: CalendarSubscribeModalProps) => {
                 </CalendarLink>
                 <CalendarLink href={props.url}>Apple Kalender</CalendarLink>
                 <CalendarLink
-                    href={`https://outlook.office.com/owa/?path=/calendar/action/compose&rru=addsubscription&url=${encodeURIComponent(
+                    href={`https://outlook.office.com/calendar/0/addcalendar?url=${encodeURIComponent(
                         props.url
                     )}`}
                 >
